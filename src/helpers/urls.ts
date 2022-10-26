@@ -1,3 +1,4 @@
 export const urls = {
-  homePage: '/',
+  login: '/',
+  inventoryMeters: '/inventory-meters',
 } as const

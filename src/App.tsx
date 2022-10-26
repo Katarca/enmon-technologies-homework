@@ -1,13 +1,26 @@
+import { InventoryMeters } from './components/InventoryMeters'
+import { Login } from './components/Login'
+import { Route, Routes } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
+import { urls } from './helpers/urls'
 import React from 'react'
+import styled from 'styled-components'
 
 export function App() {
   return (
-    <div>
+    <Div_App>
+      <Routes>
+        <Route path={urls.login} element={<Login />} />
+        <Route path={urls.inventoryMeters} element={<InventoryMeters />} />
+      </Routes>
       <GlobalStyle />
-    </div>
+    </Div_App>
   )
 }
+
+const Div_App = styled.div`
+  min-height: 100vh;
+`
 
 const GlobalStyle = createGlobalStyle`
     *,
