@@ -2,16 +2,18 @@ export const styles = {
   colors: {
     white: '#ffffff',
     black: '#000000',
+    primaryGreen: '#1B9991',
+    grey100: '#F0F2F5',
+    grey200: '#BFBFBF',
   },
   spacing: {
-    xxs: '5px',
-    xs: '10px',
-    sm: '20px',
-    md: '50px',
-    lg: '70px',
-    xl: '120px',
+    xs: '5px',
+    s: '10px',
+    m: '15px',
   },
-  fontSize: {},
+  fontSize: {
+    s: '1.4rem',
+  },
 } as const
 
 export const device = {
