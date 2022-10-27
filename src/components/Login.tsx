@@ -23,7 +23,7 @@ export const Login = () => {
           <LockIcon />
           <CustomInput type='password' placeholder='password' />
         </Div_InputContainer>
-        <CustomButton width='100%' backgroundcolor={styles.colors.primaryGreen}>
+        <CustomButton width='100%' color='green'>
           <P_BodyText color={styles.colors.white}>Log in</P_BodyText>
         </CustomButton>
       </Div_LoginContainer>
@@ -62,6 +62,9 @@ const Div_InputContainer = styled.div`
   }
   &:hover {
     border-color: ${styles.colors.primaryGreen};
+  }
+  &:focus-within {
+    box-shadow: 0 0 3px ${styles.colors.primaryGreen};
   }
 `
 const iconStyles = css`
