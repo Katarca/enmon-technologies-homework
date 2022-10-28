@@ -1,5 +1,6 @@
 import { InventoryMeters } from './components/InventoryMeters'
 import { Login } from './components/Login'
+import { ProtectedRoute } from './components/ProtectedRoute'
 import { Route, Routes } from 'react-router-dom'
 import { UserContextProvider } from './context/UserContext'
 import { createGlobalStyle } from 'styled-components'
@@ -13,7 +14,7 @@ export function App() {
       <div>
         <Routes>
           <Route path={urls.login} element={<Login />} />
-          <Route path={urls.inventoryMeters} element={<InventoryMeters />} />
+          <Route path={urls.inventoryMeters} element={<ProtectedRoute />} />
         </Routes>
         <GlobalStyle />
       </div>
