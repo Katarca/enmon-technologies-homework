@@ -2,11 +2,11 @@ import { genericHookContextBuilder } from '../utils/genericHookContextBuilder'
 import React, { useState } from 'react'
 
 const useLogicState = () => {
-  const [user, setUser] = useState('')
+  const [userJwt, setUserJwt] = useState(null as null | string)
 
   return {
-    user,
-    setUser,
+    userJwt,
+    setUserJwt,
   }
 }
 

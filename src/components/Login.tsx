@@ -3,10 +3,12 @@ import { CustomInput } from './Input'
 import { H1_Heading } from './Heading'
 import { P_BodyText } from './BodyText'
 import { UserStateContext } from '../context/UserContext'
-import { ReactComponent as invalidIcon } from '../icons/ivalid-icon.svg'
+import { ReactComponent as invalidIcon } from '../icons/invalid-icon.svg'
 import { ReactComponent as lockIcon } from '../icons/lock-icon.svg'
 import { ReactComponent as personIcon } from '../icons/person-icon.svg'
 import { styles } from '../helpers/theme'
+import { urls } from '../helpers/urls'
+import { useNavigate } from 'react-router-dom'
 import React, { useContext, useState } from 'react'
 import axios from 'axios'
 import styled, { css } from 'styled-components'
@@ -21,8 +23,9 @@ export const Login = () => {
   const [passwordError, setPasswordError] = useState(null as null | 'Please enter password')
 
   const userContext = useContext(UserStateContext)
+  const navigate = useNavigate()
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setEmailError(null)
     setPasswordError(null)
     setInvalidCredentials(null)
@@ -39,21 +42,16 @@ export const Login = () => {
       isValid = false
     }
     if (!isValid) return
-    axios
-      .post(`${process.env.REACT_APP_API_URL}api/auth/local`, {
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}api/auth/local`, {
         identifier: email?.trim(),
         password: password?.trim(),
       })
-      .then(function (response) {
-        if (response.status === 200) {
-          userContext.setUser(response.data.jwt)
-        }
-      })
-      .catch(function (error) {
-        if (error.response.status !== 200) {
-          setInvalidCredentials('Invalid credentials')
-        }
-      })
+      userContext.setUserJwt(response.data.jwt)
+      navigate(urls.inventoryMeters)
+    } catch (error) {
+      setInvalidCredentials('Invalid credentials')
+    }
   }
 
   return (
