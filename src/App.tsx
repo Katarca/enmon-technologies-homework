@@ -1,5 +1,6 @@
 import { InventoryMeters } from './components/InventoryMeters'
 import { Login } from './components/Login'
+import { PageNotFound } from './components/404'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { Route, Routes } from 'react-router-dom'
 import { UserContextProvider } from './context/UserContext'
@@ -15,6 +16,7 @@ export function App() {
         <Routes>
           <Route path={urls.login} element={<Login />} />
           <Route path={urls.inventoryMeters} element={<ProtectedRoute />} />
+          <Route path='*' element={<PageNotFound />} />
         </Routes>
         <GlobalStyle />
       </div>

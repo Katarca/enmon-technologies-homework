@@ -1,5 +1,6 @@
 import { CustomButton } from './Button'
 import { CustomInput } from './Input'
+import { Div_Container } from './Container'
 import { H1_Heading } from './Heading'
 import { P_BodyText } from './BodyText'
 import { UserStateContext } from '../context/UserContext'
@@ -89,13 +90,6 @@ export const Login = () => {
     </Div_Container>
   )
 }
-
-const Div_Container = styled.div`
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`
 
 const Div_LoginContainer = styled.div`
   padding: ${styles.spacing.s};
