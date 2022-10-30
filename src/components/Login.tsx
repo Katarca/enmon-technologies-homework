@@ -59,7 +59,7 @@ export const Login = () => {
     <Div_Container>
       <Div_LoginContainer>
         <Div_HeadingContainer>
-          <H1_Heading>Log in</H1_Heading>
+          <H1_Heading color={styles.colors.primaryGreen}>Log in</H1_Heading>
         </Div_HeadingContainer>
         {invalidCredentials ? (
           <Div_InvalidContainer>

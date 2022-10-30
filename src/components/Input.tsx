@@ -14,12 +14,12 @@ export const CustomInput = styled(Input)`
     outline: none;
   }
   &::placeholder {
-    color: ${styles.colors.grey200};
+    color: ${styles.colors.grey300};
   }
   &:-ms-input-placeholder {
-    color: ${styles.colors.grey200};
+    color: ${styles.colors.grey300};
   }
   &::-ms-input-placeholder {
-    color: ${styles.colors.grey200};
+    color: ${styles.colors.grey300};
   }
 `

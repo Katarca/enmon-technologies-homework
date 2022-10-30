@@ -7,15 +7,18 @@ export const styles = {
     red200: '#FF4D6A',
     primaryGreen: '#1B9991',
     grey100: '#F0F2F5',
-    grey200: '#BFBFBF',
+    grey200: '#D9D9D9',
+    grey300: '#BFBFBF',
   },
   spacing: {
     xs: '5px',
     s: '10px',
     m: '15px',
+    l: '25px',
   },
   fontSize: {
     s: '1.4rem',
+    m: '2rem',
   },
 } as const
 
