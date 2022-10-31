@@ -1,11 +1,12 @@
 export const styles = {
   colors: {
     white: '#ffffff',
-    black: '#000000',
+    black: '#252525',
     pink100: '#FFF2F0',
     pink200: '#FFCCC7',
     red200: '#FF4D6A',
     primaryGreen: '#1B9991',
+    grey50: '#FAFAFA',
     grey100: '#F0F2F5',
     grey200: '#D9D9D9',
     grey300: '#BFBFBF',
