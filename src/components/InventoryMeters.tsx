@@ -1,6 +1,7 @@
 import { CustomButton } from './Button'
 import { H1_Heading } from './Heading'
 import { P_BodyText } from './BodyText'
+import { Pagination } from './Pagination'
 import { UserStateContext } from '../context/UserContext'
 import { ReactComponent as arrowIcon } from '../icons/arrow-icon.svg'
 import { styles } from '../helpers/theme'
@@ -8,24 +9,31 @@ import { urls } from '../helpers/urls'
 import { useComponentDidMount } from '../utils/useComponentDidMount'
 import { useNavigate } from 'react-router-dom'
 import React, { useContext, useEffect, useState } from 'react'
-import ReactPaginate from 'react-paginate'
 import axios from 'axios'
 import styled, { css } from 'styled-components'
 
 type SortField = 'id' | 'serial_number' | 'meter_type' | 'inventory_location_building.name'
 type SortOrder = 'ASC' | 'DESC'
+type Accessibility =
+  | 'tenant'
+  | 'floodedShaft'
+  | 'good'
+  | 'basement'
+  | 'shaft'
+  | 'high'
+  | 'veryHigh'
+  | undefined
 
 export const InventoryMeters = () => {
   const userContext = useContext(UserStateContext)
   const [loading, setLoading] = useState(false)
-  const [inventoryMeters, setInventoryMeters] = useState(null as null | any)
+  const [inventoryMeters, setInventoryMeters] = useState(null as null | [])
   const [sortField, setSortField] = useState<SortField>('id')
   const [sortOrder, setSortOrder] = useState<SortOrder>('ASC')
   const [offset, setOffset] = useState(0)
   const [dataCount, setDataCount] = useState(0)
 
-  const dataPerPage = 10
-  const pageCount = Math.ceil(dataCount / dataPerPage)
+  const itemsPerPage = 10
 
   const navigate = useNavigate()
 
@@ -47,8 +55,8 @@ export const InventoryMeters = () => {
     }
   }
 
-  const handlePageClick = (event: any) => {
-    const newOffset = (event.selected * dataPerPage) % dataCount
+  const handlePageClick = (selectedItem: { selected: number }) => {
+    const newOffset = (selectedItem.selected * itemsPerPage) % dataCount
     setOffset(newOffset)
   }
 
@@ -85,7 +93,7 @@ export const InventoryMeters = () => {
     navigate(urls.login)
   }
 
-  const fetchSortedData = (clickedField: SortField) => {
+  const handleSort = (clickedField: SortField) => {
     if (clickedField !== sortField) {
       setSortOrder('ASC')
       setSortField(clickedField)
@@ -112,7 +120,7 @@ export const InventoryMeters = () => {
                 <Div_HeaderContainer
                   active={sortField === 'id'}
                   sortOrder={sortOrder}
-                  onClick={() => fetchSortedData('id')}
+                  onClick={() => handleSort('id')}
                 >
                   <P_BodyText>ID</P_BodyText>
                   <ArrowIcon />
@@ -122,7 +130,7 @@ export const InventoryMeters = () => {
                 <Div_HeaderContainer
                   active={sortField === 'serial_number'}
                   sortOrder={sortOrder}
-                  onClick={() => fetchSortedData('serial_number')}
+                  onClick={() => handleSort('serial_number')}
                 >
                   <P_BodyText>Serial key</P_BodyText>
                   <ArrowIcon />
@@ -132,7 +140,7 @@ export const InventoryMeters = () => {
                 <Div_HeaderContainer
                   active={sortField === 'meter_type'}
                   sortOrder={sortOrder}
-                  onClick={() => fetchSortedData('meter_type')}
+                  onClick={() => handleSort('meter_type')}
                 >
                   <P_BodyText>Meter Type</P_BodyText>
                 </Div_HeaderContainer>
@@ -151,7 +159,7 @@ export const InventoryMeters = () => {
                 <Div_HeaderContainer
                   active={sortField === 'inventory_location_building.name'}
                   sortOrder={sortOrder}
-                  onClick={() => fetchSortedData('inventory_location_building.name')}
+                  onClick={() => handleSort('inventory_location_building.name')}
                 >
                   <P_BodyText>Building</P_BodyText>
                   <ArrowIcon />
@@ -180,21 +188,21 @@ export const InventoryMeters = () => {
                     : null}
                 </Td_InventoryTd>
                 <Td_InventoryTd>
-                  {meter.accessibility?.split(';').map((accessibility: any, i: number) => (
-                    <Span_AccessibilitySpan key={i}>{accessibility}</Span_AccessibilitySpan>
-                  ))}
+                  {meter.accessibility
+                    ?.split(';')
+                    .map((accessibility: Accessibility, i: number) => (
+                      <Span_AccessibilitySpan key={i}>{accessibility}</Span_AccessibilitySpan>
+                    ))}
                 </Td_InventoryTd>
               </tr>
             ))}
           </tbody>
         </Table_InventoryTable>
-        <ReactPaginate
-          breakLabel='...'
-          nextLabel='next >'
-          onPageChange={handlePageClick}
+        <Pagination
+          handlePageClick={handlePageClick}
+          itemsPerPage={itemsPerPage}
+          itemsCount={dataCount}
           pageRangeDisplayed={5}
-          pageCount={pageCount}
-          previousLabel='< previous'
         />
       </Div_Box>
     </>
