@@ -7,7 +7,8 @@ import { styles } from '../helpers/theme'
 import { urls } from '../helpers/urls'
 import { useComponentDidMount } from '../utils/useComponentDidMount'
 import { useNavigate } from 'react-router-dom'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import ReactPaginate from 'react-paginate'
 import axios from 'axios'
 import styled, { css } from 'styled-components'
 
@@ -20,14 +21,18 @@ export const InventoryMeters = () => {
   const [inventoryMeters, setInventoryMeters] = useState(null as null | any)
   const [sortField, setSortField] = useState<SortField>('id')
   const [sortOrder, setSortOrder] = useState<SortOrder>('ASC')
+  const [offset, setOffset] = useState(0)
+  const [dataCount, setDataCount] = useState(0)
+
+  const dataPerPage = 10
+  const pageCount = Math.ceil(dataCount / dataPerPage)
 
   const navigate = useNavigate()
 
-  const fetchData = async (field: SortField, order: SortOrder) => {
-    setLoading(true)
+  const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}api/inventory-meters?_start=0&_limit=10&_sort=${field}:${order}`,
+        `${process.env.REACT_APP_API_URL}api/inventory-meters?_start=${offset}&_limit=10&_sort=${sortField}:${sortOrder}`,
         {
           headers: {
             Authorization: `Bearer ${userContext.userJwt}`,
@@ -42,9 +47,38 @@ export const InventoryMeters = () => {
     }
   }
 
+  const handlePageClick = (event: any) => {
+    const newOffset = (event.selected * dataPerPage) % dataCount
+    setOffset(newOffset)
+  }
+
   useComponentDidMount(async () => {
-    fetchData(sortField, sortOrder)
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}api/inventory-meters?_start=${offset}&_limit=10&_sort=${sortField}:${sortOrder}`,
+        {
+          headers: {
+            Authorization: `Bearer ${userContext.userJwt}`,
+          },
+        }
+      )
+      const count = await axios.get(`${process.env.REACT_APP_API_URL}api/inventory-meters`, {
+        headers: {
+          Authorization: `Bearer ${userContext.userJwt}`,
+        },
+      })
+      setDataCount(count.data.length)
+      setInventoryMeters(response.data)
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
   })
+
+  useEffect(() => {
+    fetchData()
+  }, [sortField, sortOrder, offset])
 
   const handleLogout = () => {
     userContext.setUserJwt(null)
@@ -55,13 +89,10 @@ export const InventoryMeters = () => {
     if (clickedField !== sortField) {
       setSortOrder('ASC')
       setSortField(clickedField)
-      fetchData(clickedField, 'ASC')
     } else if (clickedField === sortField && sortOrder === 'ASC') {
       setSortOrder('DESC')
-      fetchData(clickedField, 'DESC')
     } else {
       setSortOrder('ASC')
-      fetchData(clickedField, 'ASC')
     }
   }
 
@@ -73,7 +104,7 @@ export const InventoryMeters = () => {
           <P_BodyText>Logout</P_BodyText>
         </CustomButton>
       </Div_Box>
-      <Div_Box>
+      <Div_Box column={true}>
         <Table_InventoryTable>
           <Thead_InventoryThead>
             <tr>
@@ -157,17 +188,30 @@ export const InventoryMeters = () => {
             ))}
           </tbody>
         </Table_InventoryTable>
+        <ReactPaginate
+          breakLabel='...'
+          nextLabel='next >'
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel='< previous'
+        />
       </Div_Box>
     </>
   )
 }
 
-const Div_Box = styled.div`
+const Div_Box = styled.div<{ column?: boolean }>`
   background-color: ${styles.colors.white};
   padding: ${styles.spacing.m} ${styles.spacing.l};
   margin: ${styles.spacing.m};
   display: flex;
   justify-content: space-between;
+  ${({ column }) =>
+    column &&
+    css`
+      flex-direction: column;
+    `}
 `
 
 const Table_InventoryTable = styled.table`
@@ -185,17 +229,12 @@ const Div_HeaderContainer = styled.div<{
   padding: ${styles.spacing.l} ${styles.spacing.m};
   justify-content: space-between;
   cursor: pointer;
-  ${({ active }) =>
-    active &&
-    css`
-      background-color: ${styles.colors.grey100};
-    `}
   ${({ active, sortOrder }) =>
     active &&
-    sortOrder === 'DESC' &&
     css`
       & > svg {
-        transform: rotate(0deg);
+        ${sortOrder === 'DESC' && 'transform: rotate(0deg)'};
+        fill: ${styles.colors.black};
       }
     `}
 `
