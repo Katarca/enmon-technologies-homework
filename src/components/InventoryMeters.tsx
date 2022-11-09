@@ -215,6 +215,7 @@ const Div_Box = styled.div<{ column?: boolean }>`
   margin: ${styles.spacing.m};
   display: flex;
   justify-content: space-between;
+  align-items: flex-end;
   ${({ column }) =>
     column &&
     css`
