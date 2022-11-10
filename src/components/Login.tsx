@@ -2,8 +2,10 @@ import { CustomButton } from './Button'
 import { CustomInput } from './Input'
 import { Div_Container } from './Container'
 import { H1_Heading } from './Heading'
+import { LOGIN } from '../graphql/mutations/loginMutation'
 import { P_BodyText } from './BodyText'
 import { UserStateContext } from '../context/UserContext'
+import { client } from '../index'
 import { ReactComponent as invalidIcon } from '../icons/invalid-icon.svg'
 import { ReactComponent as lockIcon } from '../icons/lock-icon.svg'
 import { ReactComponent as personIcon } from '../icons/person-icon.svg'
@@ -11,7 +13,6 @@ import { styles } from '../helpers/theme'
 import { urls } from '../helpers/urls'
 import { useNavigate } from 'react-router-dom'
 import React, { useContext, useState } from 'react'
-import axios from 'axios'
 import styled, { css } from 'styled-components'
 
 export const Login = () => {
@@ -44,11 +45,16 @@ export const Login = () => {
     }
     if (!isValid) return
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}api/auth/local`, {
-        identifier: email?.trim(),
-        password: password?.trim(),
+      const response = await client.mutate({
+        mutation: LOGIN,
+        variables: {
+          input: {
+            identifier: email?.trim(),
+            password: password?.trim(),
+          },
+        },
       })
-      userContext.setUserJwt(response.data.jwt)
+      userContext.setUserJwt(response.data.login.jwt)
       navigate(urls.inventoryMeters)
     } catch (error) {
       setInvalidCredentials('Invalid credentials')
