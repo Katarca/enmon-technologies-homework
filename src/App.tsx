@@ -1,4 +1,3 @@
-import { InventoryMeters } from './components/InventoryMeters'
 import { Login } from './components/Login'
 import { PageNotFound } from './components/404'
 import { ProtectedRoute } from './components/ProtectedRoute'
@@ -12,14 +11,12 @@ import React from 'react'
 export function App() {
   return (
     <UserContextProvider>
-      <div>
-        <Routes>
-          <Route path={urls.login} element={<Login />} />
-          <Route path={urls.inventoryMeters} element={<ProtectedRoute />} />
-          <Route path='*' element={<PageNotFound />} />
-        </Routes>
-        <GlobalStyle />
-      </div>
+      <Routes>
+        <Route path={urls.login} element={<Login />} />
+        <Route path={urls.inventoryMeters} element={<ProtectedRoute />} />
+        <Route path='*' element={<PageNotFound />} />
+      </Routes>
+      <GlobalStyle />
     </UserContextProvider>
   )
 }

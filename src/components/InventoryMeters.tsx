@@ -1,4 +1,5 @@
 import { CustomButton } from './Button'
+import { Div_SubContainer } from './Container'
 import { GET_INVENTORY_METERS, GET_INVENTORY_METERS_COUNT } from '../graphql/getInventoryMeters'
 import { H1_Heading } from './Heading'
 import { InventoryMeter } from '../../generated/types'
@@ -17,7 +18,7 @@ export const InventoryMeters = () => {
   const userContext = useContext(UserStateContext)
   const [loading, setLoading] = useState(false)
   const [inventoryMeters, setInventoryMeters] = useState(null as null | InventoryMeter[])
-  const [sortField, setSortField] = useState('id:desc')
+  const [sortField, setSortField] = useState('id:asc')
   const [offset, setOffset] = useState(0)
   const [dataCount, setDataCount] = useState(0)
 
@@ -84,13 +85,13 @@ export const InventoryMeters = () => {
 
   return (
     <>
-      <Div_Box>
+      <Div_SubContainer>
         <H1_Heading fontSize={styles.fontSize.m}>Inventory Meters List</H1_Heading>
         <CustomButton color='white' onClick={() => handleLogout()}>
           <P_BodyText>Logout</P_BodyText>
         </CustomButton>
-      </Div_Box>
-      <Div_Box column={true}>
+      </Div_SubContainer>
+      <Div_SubContainer column={true}>
         <Div_TableContainer>
           <Table_InventoryTable>
             <Thead_InventoryThead>
@@ -169,7 +170,9 @@ export const InventoryMeters = () => {
                   </Td_InventoryTd>
                   <Td_InventoryTd>
                     {meter.accessibility?.split(';').map((accessibility, i) => (
-                      <Span_AccessibilitySpan key={i}>{accessibility}</Span_AccessibilitySpan>
+                      <Span_AccessibilitySpan key={i} accessibility={accessibility}>
+                        {accessibility}
+                      </Span_AccessibilitySpan>
                     ))}
                   </Td_InventoryTd>
                 </Tr_InventoryTr>
@@ -183,23 +186,10 @@ export const InventoryMeters = () => {
           itemsCount={dataCount}
           pageRangeDisplayed={5}
         />
-      </Div_Box>
+      </Div_SubContainer>
     </>
   )
 }
-const Div_Box = styled.div<{ column?: boolean }>`
-  background-color: ${styles.colors.white};
-  padding: ${styles.spacing.m} ${styles.spacing.l};
-  margin: ${styles.spacing.m};
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  ${({ column }) =>
-    column &&
-    css`
-      flex-direction: column;
-    `}
-`
 
 const Div_TableContainer = styled.div`
   overflow: auto;
@@ -212,7 +202,7 @@ const Table_InventoryTable = styled.table`
 `
 const Thead_InventoryThead = styled.thead`
   background-color: ${styles.colors.grey50};
-  border-bottom: 1px solid ${styles.colors.grey100};
+  border-bottom: ${styles.borderProperty.primary} ${styles.colors.grey100};
 `
 
 const Div_HeaderContainer = styled.div<{
@@ -233,8 +223,8 @@ const Div_HeaderContainer = styled.div<{
     `}
 `
 const Tr_InventoryTr = styled.tr`
-  border-bottom: 1px solid ${styles.colors.grey50};
-  transition: 0.5s ease-in-out;
+  border-bottom: ${styles.borderProperty.primary} ${styles.colors.grey50};
+  transition: ${styles.transition.primary};
   &:hover {
     background-color: ${styles.colors.grey50};
   }
@@ -245,12 +235,43 @@ const Td_InventoryTd = styled.td`
   color: ${styles.colors.black};
   padding: ${styles.spacing.l};
 `
-const Span_AccessibilitySpan = styled.span`
-  margin-right: ${styles.spacing.xs};
+const Span_AccessibilitySpan = styled.span<{ accessibility: string }>`
+  margin: 0 ${styles.spacing.xs} ${styles.spacing.xs} 0;
   display: inline-block;
+  padding: ${styles.spacing.xxs} ${styles.spacing.xs};
+  font-size: ${styles.fontSize.xs};
+  border-radius: ${styles.borderRadius.primary};
+  border: ${styles.borderProperty.primary} transparent;
+  background-color: ${props =>
+    props.accessibility === 'good'
+      ? styles.colors.green100
+      : props.accessibility === 'tenant' ||
+        props.accessibility === 'shaft' ||
+        props.accessibility === 'high' ||
+        props.accessibility === 'basement'
+      ? styles.colors.orange100
+      : styles.colors.pink100};
+  color: ${props =>
+    props.accessibility === 'good'
+      ? styles.colors.primaryGreen
+      : props.accessibility === 'tenant' ||
+        props.accessibility === 'shaft' ||
+        props.accessibility === 'high' ||
+        props.accessibility === 'basement'
+      ? styles.colors.orange200
+      : styles.colors.red200};
+  border-color: ${props =>
+    props.accessibility === 'good'
+      ? styles.colors.primaryGreen
+      : props.accessibility === 'tenant' ||
+        props.accessibility === 'shaft' ||
+        props.accessibility === 'high' ||
+        props.accessibility === 'basement'
+      ? styles.colors.orange200
+      : styles.colors.red200};
 `
 const ArrowIcon = styled(arrowIcon)`
-  width: 10px;
+  width: ${styles.iconWidth.xs};
   fill: ${styles.colors.grey300};
   margin-left: ${styles.spacing.xs};
   transform: rotate(-180deg);

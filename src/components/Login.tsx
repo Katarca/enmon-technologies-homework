@@ -108,7 +108,7 @@ const Div_LoginContainer = styled.div`
 
 const Div_HeadingContainer = styled.div`
   padding: ${styles.spacing.s} 0;
-  border-bottom: 2px solid ${styles.colors.primaryGreen};
+  border-bottom: ${styles.borderProperty.secondary} ${styles.colors.primaryGreen};
   width: fit-content;
   margin-bottom: ${styles.spacing.s};
 `
@@ -116,8 +116,8 @@ const Div_InputContainer = styled.div`
   display: flex;
   padding: ${styles.spacing.xs} ${styles.spacing.s};
   background-color: ${styles.colors.white};
-  border: 1px solid ${styles.colors.white};
-  transition: 0.5s ease-in-out;
+  border: ${styles.borderProperty.primary} ${styles.colors.white};
+  transition: ${styles.transition.primary};
   & > input {
     width: 100%;
   }
@@ -130,7 +130,7 @@ const Div_InputContainer = styled.div`
 `
 const inputIconStyles = css`
   fill: ${styles.colors.primaryGreen};
-  width: 15px;
+  width: ${styles.iconWidth.s};
 `
 
 const PersonIcon = styled(personIcon)`
@@ -140,7 +140,7 @@ const LockIcon = styled(lockIcon)`
   ${inputIconStyles}
 `
 const InvalidIcon = styled(invalidIcon)`
-  width: 15px;
+  width: ${styles.iconWidth.s};
   fill: ${styles.colors.red200};
   margin-right: ${styles.spacing.s};
 `
@@ -149,5 +149,5 @@ const Div_InvalidContainer = styled.div`
   display: flex;
   padding: ${styles.spacing.s} ${styles.spacing.m};
   background-color: ${styles.colors.pink100};
-  border: 1px solid ${styles.colors.pink200};
+  border: ${styles.borderProperty.primary} ${styles.colors.pink200};
 `

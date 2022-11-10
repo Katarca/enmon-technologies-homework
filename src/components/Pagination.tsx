@@ -35,8 +35,8 @@ const StyledReactPaginate = styled(ReactPaginate).attrs({
     min-width: 30px;
     height: 30px;
     display: flex;
-    border-radius: 2px;
-    border: 1px solid ${styles.colors.grey200};
+    border-radius: ${styles.borderRadius.primary};
+    border: ${styles.borderProperty.primary} ${styles.colors.grey200};
     cursor: pointer;
     padding: 0 ${styles.spacing.xs};
     margin-right: ${styles.spacing.xs};

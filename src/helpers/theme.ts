@@ -5,21 +5,40 @@ export const styles = {
     pink100: '#FFF2F0',
     pink200: '#FFCCC7',
     red200: '#FF4D6A',
+    orange100: '#FFF7E6',
+    orange200: '#D46B65',
     primaryGreen: '#1B9991',
+    green100: '#F6FFED',
     grey50: '#FAFAFA',
     grey100: '#F0F2F5',
     grey200: '#D9D9D9',
     grey300: '#BFBFBF',
   },
   spacing: {
+    xxs: '2px',
     xs: '5px',
     s: '10px',
     m: '15px',
     l: '25px',
   },
   fontSize: {
+    xs: '1.2rem',
     s: '1.4rem',
     m: '2rem',
+  },
+  iconWidth: {
+    xs: '10px',
+    s: '15px',
+  },
+  transition: {
+    primary: '0.5s ease-in-out',
+  },
+  borderRadius: {
+    primary: '2px',
+  },
+  borderProperty: {
+    primary: '1px solid',
+    secondary: '2px solid',
   },
 } as const
 

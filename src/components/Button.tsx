@@ -11,10 +11,11 @@ export const CustomButton = styled(Button)<{ color: 'green' | 'white'; width?: s
   padding: ${styles.spacing.xs} ${styles.spacing.m};
   background-color: ${props =>
     props.color === 'green' ? styles.colors.primaryGreen : styles.colors.white};
-  border: ${props => (props.color === 'green' ? 'none' : `1px solid ${styles.colors.grey200}`)};
+  border: ${props =>
+    props.color === 'green' ? 'none' : `${styles.borderProperty.primary} ${styles.colors.grey200}`};
   cursor: pointer;
-  transition: 0.5s ease-in-out;
-  border-radius: 2px;
+  transition: ${styles.transition.primary};
+  border-radius: ${styles.borderRadius.primary};
   &:hover {
     opacity: ${props => (props.color === 'green' ? 0.8 : 1)};
     border-color: ${props => (props.color === 'white' ? styles.colors.primaryGreen : '')};
