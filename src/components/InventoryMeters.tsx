@@ -1,15 +1,15 @@
 import { CustomButton } from './Button'
+import { GET_INVENTORY_METERS, GET_INVENTORY_METERS_COUNT } from '../graphql/getInventoryMeters'
 import { H1_Heading } from './Heading'
 import { P_BodyText } from './BodyText'
 import { Pagination } from './Pagination'
 import { UserStateContext } from '../context/UserContext'
 import { ReactComponent as arrowIcon } from '../icons/arrow-icon.svg'
+import { client } from '../index'
 import { styles } from '../helpers/theme'
 import { urls } from '../helpers/urls'
-import { useComponentDidMount } from '../utils/useComponentDidMount'
 import { useNavigate } from 'react-router-dom'
 import React, { useContext, useEffect, useState } from 'react'
-import axios from 'axios'
 import styled, { css } from 'styled-components'
 
 type SortField = 'id' | 'serial_number' | 'meter_type' | 'inventory_location_building.name'
@@ -39,15 +39,30 @@ export const InventoryMeters = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}api/inventory-meters?_start=${offset}&_limit=10&_sort=${sortField}:${sortOrder}`,
-        {
+      const getInventoryMeters = await client.query({
+        query: GET_INVENTORY_METERS,
+        variables: {
+          sort: sortField,
+          start: offset,
+          publicationState: 'PREVIEW',
+          limit: itemsPerPage,
+        },
+        context: {
           headers: {
             Authorization: `Bearer ${userContext.userJwt}`,
           },
-        }
-      )
-      setInventoryMeters(response.data)
+        },
+      })
+      setInventoryMeters(getInventoryMeters.data.inventoryMeters)
+      const getCount = await client.query({
+        query: GET_INVENTORY_METERS_COUNT,
+        context: {
+          headers: {
+            Authorization: `Bearer ${userContext.userJwt}`,
+          },
+        },
+      })
+      setDataCount(getCount.data?.inventoryMetersConnection.aggregate.totalCount)
     } catch (error) {
       console.error(error)
     } finally {
@@ -59,30 +74,6 @@ export const InventoryMeters = () => {
     const newOffset = (selectedItem.selected * itemsPerPage) % dataCount
     setOffset(newOffset)
   }
-
-  useComponentDidMount(async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}api/inventory-meters?_start=${offset}&_limit=10&_sort=${sortField}:${sortOrder}`,
-        {
-          headers: {
-            Authorization: `Bearer ${userContext.userJwt}`,
-          },
-        }
-      )
-      const count = await axios.get(`${process.env.REACT_APP_API_URL}api/inventory-meters`, {
-        headers: {
-          Authorization: `Bearer ${userContext.userJwt}`,
-        },
-      })
-      setDataCount(count.data.length)
-      setInventoryMeters(response.data)
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setLoading(false)
-    }
-  })
 
   useEffect(() => {
     fetchData()
