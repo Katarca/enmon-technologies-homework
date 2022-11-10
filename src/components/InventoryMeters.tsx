@@ -1,6 +1,7 @@
 import { CustomButton } from './Button'
 import { GET_INVENTORY_METERS, GET_INVENTORY_METERS_COUNT } from '../graphql/getInventoryMeters'
 import { H1_Heading } from './Heading'
+import { InventoryMeter } from '../../generated/types'
 import { P_BodyText } from './BodyText'
 import { Pagination } from './Pagination'
 import { UserStateContext } from '../context/UserContext'
@@ -12,24 +13,11 @@ import { useNavigate } from 'react-router-dom'
 import React, { useContext, useEffect, useState } from 'react'
 import styled, { css } from 'styled-components'
 
-type SortField = 'id' | 'serial_number' | 'meter_type' | 'inventory_location_building.name'
-type SortOrder = 'ASC' | 'DESC'
-type Accessibility =
-  | 'tenant'
-  | 'floodedShaft'
-  | 'good'
-  | 'basement'
-  | 'shaft'
-  | 'high'
-  | 'veryHigh'
-  | undefined
-
 export const InventoryMeters = () => {
   const userContext = useContext(UserStateContext)
   const [loading, setLoading] = useState(false)
-  const [inventoryMeters, setInventoryMeters] = useState(null as null | [])
+  const [inventoryMeters, setInventoryMeters] = useState(null as null | InventoryMeter[])
   const [sortField, setSortField] = useState('id:desc')
-  const [sortOrder, setSortOrder] = useState<SortOrder>('ASC')
   const [offset, setOffset] = useState(0)
   const [dataCount, setDataCount] = useState(0)
 
@@ -77,14 +65,14 @@ export const InventoryMeters = () => {
 
   useEffect(() => {
     fetchData()
-  }, [sortField, sortOrder, offset])
+  }, [sortField, offset])
 
   const handleLogout = () => {
     userContext.setUserJwt(null)
     navigate(urls.login)
   }
 
-  const handleSort = (clickedField: SortField) => {
+  const handleSort = (clickedField: string) => {
     if (!sortField.includes(clickedField)) {
       setSortField(`${clickedField}:asc`)
     } else if (sortField === `${clickedField}:asc`) {
@@ -164,7 +152,7 @@ export const InventoryMeters = () => {
             </tr>
           </Thead_InventoryThead>
           <tbody>
-            {inventoryMeters?.map((meter: any) => (
+            {inventoryMeters?.map(meter => (
               <tr key={meter.id}>
                 <Td_InventoryTd>{meter.id}</Td_InventoryTd>
                 <Td_InventoryTd>{meter.serial_number}</Td_InventoryTd>
@@ -179,11 +167,9 @@ export const InventoryMeters = () => {
                     : null}
                 </Td_InventoryTd>
                 <Td_InventoryTd>
-                  {meter.accessibility
-                    ?.split(';')
-                    .map((accessibility: Accessibility, i: number) => (
-                      <Span_AccessibilitySpan key={i}>{accessibility}</Span_AccessibilitySpan>
-                    ))}
+                  {meter.accessibility?.split(';').map((accessibility, i) => (
+                    <Span_AccessibilitySpan key={i}>{accessibility}</Span_AccessibilitySpan>
+                  ))}
                 </Td_InventoryTd>
               </tr>
             ))}
