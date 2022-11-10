@@ -194,7 +194,6 @@ const Div_Box = styled.div<{ column?: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  overflow-x: auto;
   ${({ column }) =>
     column &&
     css`

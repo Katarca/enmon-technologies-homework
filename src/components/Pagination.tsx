@@ -1,4 +1,4 @@
-import { styles } from '../helpers/theme'
+import { breakpoint, styles } from '../helpers/theme'
 import React from 'react'
 import ReactPaginate from 'react-paginate'
 import styled from 'styled-components'
@@ -28,10 +28,10 @@ const StyledReactPaginate = styled(ReactPaginate).attrs({
   activeClassName: 'active',
 })`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   list-style-type: none;
   width: 500px;
-  margin: ${styles.spacing.l};
+  padding: ${styles.spacing.l};
   li {
     min-width: 30px;
     height: 30px;
@@ -40,6 +40,7 @@ const StyledReactPaginate = styled(ReactPaginate).attrs({
     border: 1px solid ${styles.colors.grey200};
     cursor: pointer;
     padding: 0 ${styles.spacing.xs};
+    margin-right: ${styles.spacing.xs};
   }
   li a {
     width: 100%;
@@ -63,5 +64,9 @@ const StyledReactPaginate = styled(ReactPaginate).attrs({
   }
   li.active a {
     color: ${styles.colors.primaryGreen};
+  }
+  ${breakpoint.phone} {
+    width: 100%;
+    flex-wrap: wrap;
   }
 `
