@@ -1,4 +1,4 @@
-import { InventoryMeters } from './InventoryMeters'
+import { InventoryMeters } from './InventoryMeters/InventoryMeters'
 import { Navigate } from 'react-router-dom'
 import { UserStateContext } from '../context/UserContext'
 import { urls } from '../helpers/urls'
