@@ -91,90 +91,92 @@ export const InventoryMeters = () => {
         </CustomButton>
       </Div_Box>
       <Div_Box column={true}>
-        <Table_InventoryTable>
-          <Thead_InventoryThead>
-            <tr>
-              <th>
-                <Div_HeaderContainer
-                  sortField={sortField}
-                  active={sortField.includes('id')}
-                  onClick={() => handleSort('id')}
-                >
-                  <P_BodyText>ID</P_BodyText>
-                  <ArrowIcon />
-                </Div_HeaderContainer>
-              </th>
-              <th>
-                <Div_HeaderContainer
-                  sortField={sortField}
-                  active={sortField.includes('serial_number')}
-                  onClick={() => handleSort('serial_number')}
-                >
-                  <P_BodyText>Serial key</P_BodyText>
-                  <ArrowIcon />
-                </Div_HeaderContainer>
-              </th>
-              <th>
-                <Div_HeaderContainer
-                  sortField={sortField}
-                  active={sortField.includes('meter_type')}
-                  onClick={() => handleSort('meter_type')}
-                >
-                  <P_BodyText>Meter Type</P_BodyText>
-                  <ArrowIcon />
-                </Div_HeaderContainer>
-              </th>
-              <th>
-                <Div_HeaderContainer>
-                  <P_BodyText>What it monitors</P_BodyText>
-                </Div_HeaderContainer>
-              </th>
-              <th>
-                <Div_HeaderContainer>
-                  <P_BodyText>Inventory Location</P_BodyText>
-                </Div_HeaderContainer>
-              </th>
-              <th>
-                <Div_HeaderContainer
-                  sortField={sortField}
-                  active={sortField.includes('inventory_location_building.name')}
-                  onClick={() => handleSort('inventory_location_building.name')}
-                >
-                  <P_BodyText>Building</P_BodyText>
-                  <ArrowIcon />
-                </Div_HeaderContainer>
-              </th>
-              <th>
-                <Div_HeaderContainer>
-                  <P_BodyText>Accessibility</P_BodyText>
-                </Div_HeaderContainer>
-              </th>
-            </tr>
-          </Thead_InventoryThead>
-          <tbody>
-            {inventoryMeters?.map(meter => (
-              <tr key={meter.id}>
-                <Td_InventoryTd>{meter.id}</Td_InventoryTd>
-                <Td_InventoryTd>{meter.serial_number}</Td_InventoryTd>
-                <Td_InventoryTd>{meter.meter_type}</Td_InventoryTd>
-                <Td_InventoryTd>{meter.monitored_entity}</Td_InventoryTd>
-                <Td_InventoryTd>
-                  {meter.inventory_location ? meter.inventory_location.name : null}
-                </Td_InventoryTd>
-                <Td_InventoryTd>
-                  {meter.inventory_location_building
-                    ? meter.inventory_location_building.name
-                    : null}
-                </Td_InventoryTd>
-                <Td_InventoryTd>
-                  {meter.accessibility?.split(';').map((accessibility, i) => (
-                    <Span_AccessibilitySpan key={i}>{accessibility}</Span_AccessibilitySpan>
-                  ))}
-                </Td_InventoryTd>
+        <Div_TableContainer>
+          <Table_InventoryTable>
+            <Thead_InventoryThead>
+              <tr>
+                <th>
+                  <Div_HeaderContainer
+                    sortField={sortField}
+                    active={sortField.includes('id')}
+                    onClick={() => handleSort('id')}
+                  >
+                    <P_BodyText>ID</P_BodyText>
+                    <ArrowIcon />
+                  </Div_HeaderContainer>
+                </th>
+                <th>
+                  <Div_HeaderContainer
+                    sortField={sortField}
+                    active={sortField.includes('serial_number')}
+                    onClick={() => handleSort('serial_number')}
+                  >
+                    <P_BodyText>Serial key</P_BodyText>
+                    <ArrowIcon />
+                  </Div_HeaderContainer>
+                </th>
+                <th>
+                  <Div_HeaderContainer
+                    sortField={sortField}
+                    active={sortField.includes('meter_type')}
+                    onClick={() => handleSort('meter_type')}
+                  >
+                    <P_BodyText>Meter Type</P_BodyText>
+                    <ArrowIcon />
+                  </Div_HeaderContainer>
+                </th>
+                <th>
+                  <Div_HeaderContainer>
+                    <P_BodyText>What it monitors</P_BodyText>
+                  </Div_HeaderContainer>
+                </th>
+                <th>
+                  <Div_HeaderContainer>
+                    <P_BodyText>Inventory Location</P_BodyText>
+                  </Div_HeaderContainer>
+                </th>
+                <th>
+                  <Div_HeaderContainer
+                    sortField={sortField}
+                    active={sortField.includes('inventory_location_building.name')}
+                    onClick={() => handleSort('inventory_location_building.name')}
+                  >
+                    <P_BodyText>Building</P_BodyText>
+                    <ArrowIcon />
+                  </Div_HeaderContainer>
+                </th>
+                <th>
+                  <Div_HeaderContainer>
+                    <P_BodyText>Accessibility</P_BodyText>
+                  </Div_HeaderContainer>
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </Table_InventoryTable>
+            </Thead_InventoryThead>
+            <tbody>
+              {inventoryMeters?.map(meter => (
+                <tr key={meter.id}>
+                  <Td_InventoryTd>{meter.id}</Td_InventoryTd>
+                  <Td_InventoryTd>{meter.serial_number}</Td_InventoryTd>
+                  <Td_InventoryTd>{meter.meter_type}</Td_InventoryTd>
+                  <Td_InventoryTd>{meter.monitored_entity}</Td_InventoryTd>
+                  <Td_InventoryTd>
+                    {meter.inventory_location ? meter.inventory_location.name : null}
+                  </Td_InventoryTd>
+                  <Td_InventoryTd>
+                    {meter.inventory_location_building
+                      ? meter.inventory_location_building.name
+                      : null}
+                  </Td_InventoryTd>
+                  <Td_InventoryTd>
+                    {meter.accessibility?.split(';').map((accessibility, i) => (
+                      <Span_AccessibilitySpan key={i}>{accessibility}</Span_AccessibilitySpan>
+                    ))}
+                  </Td_InventoryTd>
+                </tr>
+              ))}
+            </tbody>
+          </Table_InventoryTable>
+        </Div_TableContainer>
         <Pagination
           handlePageClick={handlePageClick}
           itemsPerPage={itemsPerPage}
@@ -192,6 +194,7 @@ const Div_Box = styled.div<{ column?: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  overflow-x: auto;
   ${({ column }) =>
     column &&
     css`
@@ -199,8 +202,14 @@ const Div_Box = styled.div<{ column?: boolean }>`
     `}
 `
 
+const Div_TableContainer = styled.div`
+  overflow: auto;
+  width: 100%;
+`
+
 const Table_InventoryTable = styled.table`
   width: 100%;
+  border-collapse: collapse;
 `
 const Thead_InventoryThead = styled.thead`
   background-color: ${styles.colors.grey50};

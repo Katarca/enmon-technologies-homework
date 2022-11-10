@@ -33,12 +33,13 @@ const StyledReactPaginate = styled(ReactPaginate).attrs({
   width: 500px;
   margin: ${styles.spacing.l};
   li {
-    width: 30px;
+    min-width: 30px;
     height: 30px;
     display: flex;
     border-radius: 2px;
     border: 1px solid ${styles.colors.grey200};
     cursor: pointer;
+    padding: 0 ${styles.spacing.xs};
   }
   li a {
     width: 100%;
