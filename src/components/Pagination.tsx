@@ -36,13 +36,14 @@ const StyledReactPaginate = styled(ReactPaginate).attrs({
     width: 30px;
     height: 30px;
     display: flex;
-    justify-content: center;
-    align-items: center;
     border-radius: 2px;
     border: 1px solid ${styles.colors.grey200};
     cursor: pointer;
   }
   li a {
+    width: 100%;
+    text-align: center;
+    margin: auto;
     font-size: ${styles.fontSize.s};
     color: ${styles.colors.black};
   }

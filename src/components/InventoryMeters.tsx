@@ -199,7 +199,6 @@ export const InventoryMeters = () => {
     </>
   )
 }
-
 const Div_Box = styled.div<{ column?: boolean }>`
   background-color: ${styles.colors.white};
   padding: ${styles.spacing.m} ${styles.spacing.l};
