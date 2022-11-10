@@ -154,7 +154,7 @@ export const InventoryMeters = () => {
             </Thead_InventoryThead>
             <tbody>
               {inventoryMeters?.map(meter => (
-                <tr key={meter.id}>
+                <Tr_InventoryTr key={meter.id}>
                   <Td_InventoryTd>{meter.id}</Td_InventoryTd>
                   <Td_InventoryTd>{meter.serial_number}</Td_InventoryTd>
                   <Td_InventoryTd>{meter.meter_type}</Td_InventoryTd>
@@ -172,7 +172,7 @@ export const InventoryMeters = () => {
                       <Span_AccessibilitySpan key={i}>{accessibility}</Span_AccessibilitySpan>
                     ))}
                   </Td_InventoryTd>
-                </tr>
+                </Tr_InventoryTr>
               ))}
             </tbody>
           </Table_InventoryTable>
@@ -212,6 +212,7 @@ const Table_InventoryTable = styled.table`
 `
 const Thead_InventoryThead = styled.thead`
   background-color: ${styles.colors.grey50};
+  border-bottom: 1px solid ${styles.colors.grey100};
 `
 
 const Div_HeaderContainer = styled.div<{
@@ -231,10 +232,18 @@ const Div_HeaderContainer = styled.div<{
       }
     `}
 `
+const Tr_InventoryTr = styled.tr`
+  border-bottom: 1px solid ${styles.colors.grey50};
+  transition: 0.5s ease-in-out;
+  &:hover {
+    background-color: ${styles.colors.grey50};
+  }
+`
+
 const Td_InventoryTd = styled.td`
   font-size: ${styles.fontSize.s};
   color: ${styles.colors.black};
-  padding: ${styles.spacing.m} ${styles.spacing.l};
+  padding: ${styles.spacing.l};
 `
 const Span_AccessibilitySpan = styled.span`
   margin-right: ${styles.spacing.xs};

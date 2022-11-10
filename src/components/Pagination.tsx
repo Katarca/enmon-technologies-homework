@@ -30,7 +30,6 @@ const StyledReactPaginate = styled(ReactPaginate).attrs({
   display: flex;
   justify-content: flex-end;
   list-style-type: none;
-  width: 500px;
   padding: ${styles.spacing.l};
   li {
     min-width: 30px;
