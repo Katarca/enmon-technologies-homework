@@ -28,7 +28,7 @@ export const InventoryMeters = () => {
   const userContext = useContext(UserStateContext)
   const [loading, setLoading] = useState(false)
   const [inventoryMeters, setInventoryMeters] = useState(null as null | [])
-  const [sortField, setSortField] = useState<SortField>('id')
+  const [sortField, setSortField] = useState('id:desc')
   const [sortOrder, setSortOrder] = useState<SortOrder>('ASC')
   const [offset, setOffset] = useState(0)
   const [dataCount, setDataCount] = useState(0)
@@ -85,13 +85,12 @@ export const InventoryMeters = () => {
   }
 
   const handleSort = (clickedField: SortField) => {
-    if (clickedField !== sortField) {
-      setSortOrder('ASC')
-      setSortField(clickedField)
-    } else if (clickedField === sortField && sortOrder === 'ASC') {
-      setSortOrder('DESC')
+    if (!sortField.includes(clickedField)) {
+      setSortField(`${clickedField}:asc`)
+    } else if (sortField === `${clickedField}:asc`) {
+      setSortField(`${clickedField}:desc`)
     } else {
-      setSortOrder('ASC')
+      setSortField(`${clickedField}:asc`)
     }
   }
 
@@ -109,8 +108,8 @@ export const InventoryMeters = () => {
             <tr>
               <th>
                 <Div_HeaderContainer
-                  active={sortField === 'id'}
-                  sortOrder={sortOrder}
+                  sortField={sortField}
+                  active={sortField.includes('id')}
                   onClick={() => handleSort('id')}
                 >
                   <P_BodyText>ID</P_BodyText>
@@ -119,8 +118,8 @@ export const InventoryMeters = () => {
               </th>
               <th>
                 <Div_HeaderContainer
-                  active={sortField === 'serial_number'}
-                  sortOrder={sortOrder}
+                  sortField={sortField}
+                  active={sortField.includes('serial_number')}
                   onClick={() => handleSort('serial_number')}
                 >
                   <P_BodyText>Serial key</P_BodyText>
@@ -129,11 +128,12 @@ export const InventoryMeters = () => {
               </th>
               <th>
                 <Div_HeaderContainer
-                  active={sortField === 'meter_type'}
-                  sortOrder={sortOrder}
+                  sortField={sortField}
+                  active={sortField.includes('meter_type')}
                   onClick={() => handleSort('meter_type')}
                 >
                   <P_BodyText>Meter Type</P_BodyText>
+                  <ArrowIcon />
                 </Div_HeaderContainer>
               </th>
               <th>
@@ -148,8 +148,8 @@ export const InventoryMeters = () => {
               </th>
               <th>
                 <Div_HeaderContainer
-                  active={sortField === 'inventory_location_building.name'}
-                  sortOrder={sortOrder}
+                  sortField={sortField}
+                  active={sortField.includes('inventory_location_building.name')}
                   onClick={() => handleSort('inventory_location_building.name')}
                 >
                   <P_BodyText>Building</P_BodyText>
@@ -221,18 +221,18 @@ const Thead_InventoryThead = styled.thead`
 `
 
 const Div_HeaderContainer = styled.div<{
+  sortField?: string
   active?: boolean
-  sortOrder?: SortOrder
 }>`
   display: flex;
   padding: ${styles.spacing.l} ${styles.spacing.m};
   justify-content: space-between;
   cursor: pointer;
-  ${({ active, sortOrder }) =>
+  ${({ active, sortField }) =>
     active &&
     css`
       & > svg {
-        ${sortOrder === 'DESC' && 'transform: rotate(0deg)'};
+        ${sortField?.includes('desc') && 'transform: rotate(0deg)'};
         fill: ${styles.colors.black};
       }
     `}
