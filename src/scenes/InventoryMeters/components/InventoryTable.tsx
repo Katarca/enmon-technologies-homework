@@ -1,4 +1,3 @@
-import { InventoryMeter } from '../../../../generated/types'
 import { P_BodyText } from '../../../components/BodyText'
 import { TableProps } from '../types'
 import { ReactComponent as arrowIcon } from '../../../icons/arrow-icon.svg'
