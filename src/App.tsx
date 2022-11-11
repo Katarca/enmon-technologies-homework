@@ -13,7 +13,14 @@ export function App() {
     <UserContextProvider>
       <Routes>
         <Route path={urls.login} element={<Login />} />
-        <Route path={urls.inventoryMeters} element={<ProtectedRoute />} />
+        <Route
+          path={urls.inventoryMeters}
+          element={<ProtectedRoute location='inventory-meters' />}
+        />
+        <Route
+          path={urls.inventoryMetersDetail}
+          element={<ProtectedRoute location='inventory-meter-detail' />}
+        />
         <Route path='*' element={<PageNotFound />} />
       </Routes>
       <GlobalStyle />

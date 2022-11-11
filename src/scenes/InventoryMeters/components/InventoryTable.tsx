@@ -1,7 +1,11 @@
+import { CustomButton } from '../../../components/Button'
 import { P_BodyText } from '../../../components/BodyText'
+import { RouterLink } from '../../../components/Link'
 import { TableProps } from '../types'
 import { ReactComponent as arrowIcon } from '../../../icons/arrow-icon.svg'
 import { styles } from '../../../helpers/theme'
+import { urlToHttpOptions } from 'url'
+import { urls } from '../../../helpers/urls'
 import React from 'react'
 import styled, { css } from 'styled-components'
 
@@ -66,6 +70,11 @@ export const InventoryTable = (props: TableProps) => {
                 <P_BodyText>Accessibility</P_BodyText>
               </Div_HeaderContainer>
             </th>
+            <th>
+              <Div_HeaderContainer>
+                <P_BodyText>Actions</P_BodyText>
+              </Div_HeaderContainer>
+            </th>
           </tr>
         </Thead_InventoryThead>
         <tbody>
@@ -87,6 +96,13 @@ export const InventoryTable = (props: TableProps) => {
                     {accessibility}
                   </Span_AccessibilitySpan>
                 ))}
+              </Td_InventoryTd>
+              <Td_InventoryTd>
+                <RouterLink to={`${urls.inventoryMeters}/${meter.id}`}>
+                  <CustomButton color='white'>
+                    <P_BodyText>Detail</P_BodyText>
+                  </CustomButton>
+                </RouterLink>
               </Td_InventoryTd>
             </Tr_InventoryTr>
           ))}

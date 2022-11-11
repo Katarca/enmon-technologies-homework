@@ -13,6 +13,10 @@ export const styles = {
     grey100: '#F0F2F5',
     grey200: '#D9D9D9',
     grey300: '#BFBFBF',
+    grey900: '#00000073',
+    blue100: '#E6F7FF',
+    blue200: '#AADFFF',
+    blue500: '#096DD9',
   },
   spacing: {
     xxs: '2px',
@@ -29,6 +33,7 @@ export const styles = {
   iconWidth: {
     xs: '10px',
     s: '15px',
+    m: '20px',
   },
   transition: {
     primary: '0.5s ease-in-out',

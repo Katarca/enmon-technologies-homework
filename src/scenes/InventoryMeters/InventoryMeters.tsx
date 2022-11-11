@@ -13,6 +13,7 @@ import { styles } from '../../helpers/theme'
 import { urls } from '../../helpers/urls'
 import { useNavigate } from 'react-router-dom'
 import React, { useContext, useEffect, useState } from 'react'
+import axios from 'axios'
 
 export const InventoryMeters = () => {
   const userContext = useContext(UserStateContext)
@@ -91,7 +92,7 @@ export const InventoryMeters = () => {
           <P_BodyText>Logout</P_BodyText>
         </CustomButton>
       </Div_SubContainer>
-      <Div_SubContainer column={true}>
+      <Div_SubContainer column={true} alignItems='flex-end'>
         <InventoryTable
           sortField={sortField}
           handleSort={handleSort}
