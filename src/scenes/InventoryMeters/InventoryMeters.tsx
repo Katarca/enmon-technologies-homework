@@ -87,7 +87,7 @@ export const InventoryMeters = () => {
   return (
     <>
       <Div_SubContainer>
-        <H1_Heading fontSize={styles.fontSize.m}>Inventory Meters List</H1_Heading>
+        <H1_Heading fontSize={styles.fontSize.l}>Inventory Meters List</H1_Heading>
         <CustomButton color='white' onClick={() => handleLogout()}>
           <P_BodyText>Logout</P_BodyText>
         </CustomButton>

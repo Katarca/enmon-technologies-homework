@@ -28,7 +28,8 @@ export const styles = {
   fontSize: {
     xs: '1.2rem',
     s: '1.4rem',
-    m: '2rem',
+    m: '1.6rem',
+    l: '2rem',
   },
   iconWidth: {
     xs: '10px',

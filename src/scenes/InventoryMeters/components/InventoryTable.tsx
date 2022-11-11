@@ -1,10 +1,10 @@
 import { CustomButton } from '../../../components/Button'
+import { Label } from './Label'
 import { P_BodyText } from '../../../components/BodyText'
 import { RouterLink } from '../../../components/Link'
 import { TableProps } from '../types'
 import { ReactComponent as arrowIcon } from '../../../icons/arrow-icon.svg'
 import { styles } from '../../../helpers/theme'
-import { urlToHttpOptions } from 'url'
 import { urls } from '../../../helpers/urls'
 import React from 'react'
 import styled, { css } from 'styled-components'
@@ -92,9 +92,9 @@ export const InventoryTable = (props: TableProps) => {
               </Td_InventoryTd>
               <Td_InventoryTd>
                 {meter.accessibility?.split(';').map((accessibility, i) => (
-                  <Span_AccessibilitySpan key={i} accessibility={accessibility}>
+                  <Label key={i} accessibility={accessibility}>
                     {accessibility}
-                  </Span_AccessibilitySpan>
+                  </Label>
                 ))}
               </Td_InventoryTd>
               <Td_InventoryTd>
@@ -156,41 +156,7 @@ const Td_InventoryTd = styled.td`
   color: ${styles.colors.black};
   padding: ${styles.spacing.l};
 `
-const Span_AccessibilitySpan = styled.span<{ accessibility: string }>`
-  margin: 0 ${styles.spacing.xs} ${styles.spacing.xs} 0;
-  display: inline-block;
-  padding: ${styles.spacing.xxs} ${styles.spacing.xs};
-  font-size: ${styles.fontSize.xs};
-  border-radius: ${styles.borderRadius.primary};
-  border: ${styles.borderProperty.primary} transparent;
-  background-color: ${props =>
-    props.accessibility === 'good'
-      ? styles.colors.green100
-      : props.accessibility === 'tenant' ||
-        props.accessibility === 'shaft' ||
-        props.accessibility === 'high' ||
-        props.accessibility === 'basement'
-      ? styles.colors.orange100
-      : styles.colors.pink100};
-  color: ${props =>
-    props.accessibility === 'good'
-      ? styles.colors.primaryGreen
-      : props.accessibility === 'tenant' ||
-        props.accessibility === 'shaft' ||
-        props.accessibility === 'high' ||
-        props.accessibility === 'basement'
-      ? styles.colors.orange200
-      : styles.colors.red200};
-  border-color: ${props =>
-    props.accessibility === 'good'
-      ? styles.colors.primaryGreen
-      : props.accessibility === 'tenant' ||
-        props.accessibility === 'shaft' ||
-        props.accessibility === 'high' ||
-        props.accessibility === 'basement'
-      ? styles.colors.orange200
-      : styles.colors.red200};
-`
+
 const ArrowIcon = styled(arrowIcon)`
   width: ${styles.iconWidth.xs};
   fill: ${styles.colors.grey300};

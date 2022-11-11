@@ -1,4 +1,4 @@
-import { InventoryMeterDetail } from './InventoryMeterDetail'
+import { InventoryMeterDetail } from './InventoryMeters/InventoryMeterDetail'
 import { InventoryMeters } from './InventoryMeters/InventoryMeters'
 import { Navigate } from 'react-router-dom'
 import { UserStateContext } from '../context/UserContext'
