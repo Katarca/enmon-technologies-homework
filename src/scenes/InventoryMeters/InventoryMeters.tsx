@@ -13,7 +13,6 @@ import { styles } from '../../helpers/theme'
 import { urls } from '../../helpers/urls'
 import { useNavigate } from 'react-router-dom'
 import React, { useContext, useEffect, useState } from 'react'
-import axios from 'axios'
 
 export const InventoryMeters = () => {
   const userContext = useContext(UserStateContext)
