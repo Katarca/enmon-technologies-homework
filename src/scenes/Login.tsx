@@ -1,7 +1,7 @@
 import { CustomButton } from '../components/Button'
-import { CustomInput } from '../components/Input'
 import { Div_Container } from '../components/Container'
 import { H1_Heading } from '../components/Heading'
+import { InputElement } from '../components/Input'
 import { LOGIN } from '../graphql/mutations/loginMutation'
 import { P_BodyText } from '../components/BodyText'
 import { UserStateContext } from '../context/UserContext'
@@ -73,19 +73,17 @@ export const Login = () => {
             <P_BodyText>{invalidCredentials}</P_BodyText>
           </Div_InvalidContainer>
         ) : null}
-        <Div_InputContainer>
+        <InputElement type='email' placeholder='email' onChange={e => setEmail(e.target.value)}>
           <PersonIcon />
-          <CustomInput type='email' placeholder='email' onChange={e => setEmail(e.target.value)} />
-        </Div_InputContainer>
+        </InputElement>
         {emailError ? <P_BodyText color={styles.colors.red200}>{emailError}</P_BodyText> : null}
-        <Div_InputContainer>
+        <InputElement
+          type='password'
+          placeholder='password'
+          onChange={e => setPassword(e.target.value)}
+        >
           <LockIcon />
-          <CustomInput
-            type='password'
-            placeholder='password'
-            onChange={e => setPassword(e.target.value)}
-          />
-        </Div_InputContainer>
+        </InputElement>
         {passwordError ? (
           <P_BodyText color={styles.colors.red200}>{passwordError}</P_BodyText>
         ) : null}

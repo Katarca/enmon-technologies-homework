@@ -37,6 +37,10 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: inherit;
     font-family: 'Poppins', sans-serif;
     }
+    *::selection {
+    background: ${styles.colors.primaryGreen};
+    color: ${styles.colors.white};
+    }
 
     html {
     font-size: 62.5%;

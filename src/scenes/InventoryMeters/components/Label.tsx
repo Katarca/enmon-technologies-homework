@@ -5,15 +5,10 @@ import styled from 'styled-components'
 type LabelProps = {
   children: string
   accessibility?: string
-  key?: number
 }
 
 export const Label = (props: LabelProps) => {
-  return (
-    <Span_Label accessibility={props.accessibility} key={props.key}>
-      {props.children}
-    </Span_Label>
-  )
+  return <Span_Label accessibility={props.accessibility}>{props.children}</Span_Label>
 }
 
 const Span_Label = styled.span<{ accessibility?: string }>`

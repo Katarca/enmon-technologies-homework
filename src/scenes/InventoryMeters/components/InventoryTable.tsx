@@ -133,10 +133,11 @@ const Div_HeaderContainer = styled.div<{
   display: flex;
   padding: ${styles.spacing.l} ${styles.spacing.m};
   justify-content: space-between;
-  cursor: pointer;
   ${({ active, sortField }) =>
     active &&
+    sortField &&
     css`
+      cursor: pointer;
       & > svg {
         ${sortField?.includes('desc') && 'transform: rotate(0deg)'};
         fill: ${styles.colors.black};

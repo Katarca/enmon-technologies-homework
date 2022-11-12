@@ -1,4 +1,3 @@
-import { CustomInput } from '../../components/Input'
 import {
   Div_BorderContainer,
   Div_PaddingContainer,
@@ -79,9 +78,6 @@ export const InventoryMeterDetail = () => {
         <Div_BorderContainer>
           <H2_Heading fontSize={styles.fontSize.m}>Details</H2_Heading>
         </Div_BorderContainer>
-        <Div_PaddingContainer>
-          <CustomInput type='text' placeholder='Meter type' />
-        </Div_PaddingContainer>
       </Div_SubContainer>
     </>
   )
@@ -103,13 +99,3 @@ const Div_Box = styled.div`
   display: flex;
   align-items: center;
 `
-
-// const Span_MeterType = styled.span`
-//   padding: ${styles.spacing.xxs} ${styles.spacing.xs};
-//   font-size: ${styles.fontSize.xs};
-//   border-radius: ${styles.borderRadius.primary};
-//   background-color: ${styles.colors.blue100};
-//   border: ${styles.borderProperty.primary} ${styles.colors.blue200};
-//   border-radius: ${styles.borderRadius.primary};
-//   color: ${styles.colors.blue500};
-// `

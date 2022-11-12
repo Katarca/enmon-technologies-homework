@@ -1,25 +1,51 @@
 import { styles } from '../helpers/theme'
-import React, { ComponentProps } from 'react'
+import React, { ComponentProps, ReactNode } from 'react'
 import styled from 'styled-components'
 
-const Input = (props: ComponentProps<'input'>) => {
-  return <input {...props} />
+export const InputElement = ({
+  children,
+  ...rest
+}: {
+  children?: ReactNode
+} & ComponentProps<'input'>) => {
+  return (
+    <Div_InputContainer>
+      {children}
+      <input {...rest} />
+    </Div_InputContainer>
+  )
 }
 
-export const CustomInput = styled(Input)`
-  border: none;
-  text-align: center;
-  font-size: ${styles.fontSize.s};
-  &:focus {
-    outline: none;
+const Div_InputContainer = styled.div`
+  display: flex;
+  padding: ${styles.spacing.xs} ${styles.spacing.s};
+  background-color: ${styles.colors.white};
+  border: ${styles.borderProperty.primary} ${styles.colors.white};
+  transition: ${styles.transition.primary};
+  & > input {
+    width: 100%;
   }
-  &::placeholder {
-    color: ${styles.colors.grey300};
+  &:hover {
+    border-color: ${styles.colors.primaryGreen};
   }
-  &:-ms-input-placeholder {
-    color: ${styles.colors.grey300};
+  &:focus-within {
+    box-shadow: 0 0 3px ${styles.colors.primaryGreen};
   }
-  &::-ms-input-placeholder {
-    color: ${styles.colors.grey300};
+  & > input {
+    border: none;
+    text-align: center;
+    font-size: ${styles.fontSize.s};
+    &:focus {
+      outline: none;
+    }
+    &::placeholder {
+      color: ${styles.colors.grey300};
+    }
+    &:-ms-input-placeholder {
+      color: ${styles.colors.grey300};
+    }
+    &::-ms-input-placeholder {
+      color: ${styles.colors.grey300};
+    }
   }
 `
