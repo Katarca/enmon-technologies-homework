@@ -24,6 +24,7 @@ export const styles = {
     s: '10px',
     m: '15px',
     l: '25px',
+    xl: '50px',
   },
   fontSize: {
     xs: '1.2rem',

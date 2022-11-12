@@ -37,3 +37,50 @@ export const Div_BorderContainer = styled.div`
   border-bottom: ${styles.borderProperty.primary} ${styles.colors.grey100};
   padding: ${styles.spacing.l};
 `
+export const Div_InputContainer = styled.div`
+  display: flex;
+  padding: ${styles.spacing.xs} ${styles.spacing.s};
+  background-color: ${styles.colors.white};
+  border: ${styles.borderProperty.primary} ${styles.colors.white};
+  transition: ${styles.transition.primary};
+  border-radius: ${styles.borderRadius.primary};
+  &.borderElement {
+    border-color: ${styles.colors.grey200};
+    width: fit-content;
+    & > input {
+      text-align: left;
+    }
+  }
+  &:hover {
+    border-color: ${styles.colors.primaryGreen};
+  }
+  &:focus-within {
+    box-shadow: 0 0 3px ${styles.colors.primaryGreen};
+  }
+  & > input {
+    width: 100%;
+    border: none;
+    text-align: center;
+    font-size: ${styles.fontSize.s};
+    &:focus {
+      outline: none;
+    }
+    &::placeholder {
+      color: ${styles.colors.grey300};
+    }
+    &:-ms-input-placeholder {
+      color: ${styles.colors.grey300};
+    }
+    &::-ms-input-placeholder {
+      color: ${styles.colors.grey300};
+    }
+  }
+  & > select {
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    &:focus {
+      outline: none;
+    }
+  }
+`

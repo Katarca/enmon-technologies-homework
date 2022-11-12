@@ -1,3 +1,4 @@
+import { CustomButton } from '../../components/Button'
 import {
   Div_BorderContainer,
   Div_PaddingContainer,
@@ -5,11 +6,15 @@ import {
 } from '../../components/Container'
 import { GET_INVENTORY_METER } from '../../graphql/getInventoryMeters'
 import { H1_Heading, H2_Heading } from '../../components/Heading'
+import { InputElement } from '../../components/Input'
 import { InventoryMeter } from '../../../generated/types'
+import { InventoryMeters } from './InventoryMeters'
 import { Label } from './components/Label'
 import { P_BodyText } from '../../components/BodyText'
 import { RouterLink } from '../../components/Link'
+import { SelectElement } from '../../components/Select'
 import { UserStateContext } from '../../context/UserContext'
+import { accessability, meterTypes } from '../../helpers/variables'
 import { client } from '../../index'
 import { styles } from '../../helpers/theme'
 import { ReactComponent as thinArrowIcon } from '../../icons/thin-arrow-icon.svg'
@@ -78,6 +83,37 @@ export const InventoryMeterDetail = () => {
         <Div_BorderContainer>
           <H2_Heading fontSize={styles.fontSize.m}>Details</H2_Heading>
         </Div_BorderContainer>
+        <Div_FormContainer>
+          <InputElement
+            type='text'
+            defaultValue={inventoryMeter?.serial_number!}
+            className='borderElement'
+            label='Serial Number'
+          />
+          <InputElement
+            type='text'
+            defaultValue={inventoryMeter?.monitored_entity!}
+            className='borderElement'
+            label='Monitored Entity'
+          />
+          <SelectElement
+            label='Meter Type'
+            className='borderElement'
+            options={meterTypes}
+            value={inventoryMeter?.meter_type!}
+          />
+          <SelectElement
+            label='Accessibility'
+            className='borderElement'
+            options={accessability}
+            value={inventoryMeter?.accessibility!}
+          />
+          <Div_ButtonContainer>
+            <CustomButton color='green'>
+              <P_BodyText>Save</P_BodyText>
+            </CustomButton>
+          </Div_ButtonContainer>
+        </Div_FormContainer>
       </Div_SubContainer>
     </>
   )
@@ -98,4 +134,22 @@ const Div_Box = styled.div`
   padding-top: ${styles.spacing.s};
   display: flex;
   align-items: center;
+`
+
+const Div_FormContainer = styled.div`
+  padding: ${styles.spacing.xl};
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  & > div {
+    margin-right: ${styles.spacing.m};
+    margin-bottom: ${styles.spacing.m};
+  }
+`
+const Div_ButtonContainer = styled.div`
+  display: flex;
+  align-items: flex-end;
+  & > button {
+    height: fit-content;
+  }
 `

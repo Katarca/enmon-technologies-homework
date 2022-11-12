@@ -16,6 +16,9 @@ export const CustomButton = styled(Button)<{ color: 'green' | 'white'; width?: s
   cursor: pointer;
   transition: ${styles.transition.primary};
   border-radius: ${styles.borderRadius.primary};
+  & > p {
+    color: ${props => (props.color === 'green' ? styles.colors.white : styles.colors.black)};
+  }
   &:hover {
     opacity: ${props => (props.color === 'green' ? 0.8 : 1)};
     border-color: ${props => (props.color === 'white' ? styles.colors.primaryGreen : '')};

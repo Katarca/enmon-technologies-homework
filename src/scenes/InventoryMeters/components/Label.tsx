@@ -24,7 +24,8 @@ const Span_Label = styled.span<{ accessibility?: string }>`
       : props.accessibility === 'tenant' ||
         props.accessibility === 'shaft' ||
         props.accessibility === 'high' ||
-        props.accessibility === 'basement'
+        props.accessibility === 'basement' ||
+        props.accessibility === 'ceiling'
       ? styles.colors.orange100
       : props.accessibility === 'floodedShaft' || props.accessibility === 'veryHigh'
       ? styles.colors.pink100
@@ -35,7 +36,8 @@ const Span_Label = styled.span<{ accessibility?: string }>`
       : props.accessibility === 'tenant' ||
         props.accessibility === 'shaft' ||
         props.accessibility === 'high' ||
-        props.accessibility === 'basement'
+        props.accessibility === 'basement' ||
+        props.accessibility === 'ceiling'
       ? styles.colors.orange200
       : props.accessibility === 'floodedShaft' || props.accessibility === 'veryHigh'
       ? styles.colors.red200
@@ -46,7 +48,8 @@ const Span_Label = styled.span<{ accessibility?: string }>`
       : props.accessibility === 'tenant' ||
         props.accessibility === 'shaft' ||
         props.accessibility === 'high' ||
-        props.accessibility === 'basement'
+        props.accessibility === 'basement' ||
+        props.accessibility === 'ceiling'
       ? styles.colors.orange200
       : props.accessibility === 'floodedShaft' || props.accessibility === 'veryHigh'
       ? styles.colors.red200

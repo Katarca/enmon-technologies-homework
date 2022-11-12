@@ -88,7 +88,7 @@ export const Login = () => {
           <P_BodyText color={styles.colors.red200}>{passwordError}</P_BodyText>
         ) : null}
         <CustomButton width='100%' color='green' onClick={() => handleLogin()}>
-          <P_BodyText color={styles.colors.white}>Log in</P_BodyText>
+          <P_BodyText>Log in</P_BodyText>
         </CustomButton>
       </Div_LoginContainer>
     </Div_Container>
@@ -110,22 +110,7 @@ const Div_HeadingContainer = styled.div`
   width: fit-content;
   margin-bottom: ${styles.spacing.s};
 `
-const Div_InputContainer = styled.div`
-  display: flex;
-  padding: ${styles.spacing.xs} ${styles.spacing.s};
-  background-color: ${styles.colors.white};
-  border: ${styles.borderProperty.primary} ${styles.colors.white};
-  transition: ${styles.transition.primary};
-  & > input {
-    width: 100%;
-  }
-  &:hover {
-    border-color: ${styles.colors.primaryGreen};
-  }
-  &:focus-within {
-    box-shadow: 0 0 3px ${styles.colors.primaryGreen};
-  }
-`
+
 const inputIconStyles = css`
   fill: ${styles.colors.primaryGreen};
   width: ${styles.iconWidth.s};

@@ -2,17 +2,18 @@ import { Div_InputContainer, Div_PaddingContainer } from './Container'
 import { P_BodyText } from './BodyText'
 import { styles } from '../helpers/theme'
 import React, { ComponentProps, ReactNode } from 'react'
+import styled from 'styled-components'
 
-export const InputElement = ({
-  children,
+export const SelectElement = ({
+  options,
   label,
   className,
   ...props
 }: {
-  children?: ReactNode
+  options: string[]
   label?: string
   className?: string
-} & ComponentProps<'input'>) => {
+} & ComponentProps<'select'>) => {
   return (
     <div>
       {label ? (
@@ -21,8 +22,13 @@ export const InputElement = ({
         </Div_PaddingContainer>
       ) : null}
       <Div_InputContainer className={className}>
-        {children}
-        <input {...props} />
+        <select {...props}>
+          {options.map(option => (
+            <option value={option} key={option}>
+              {option}
+            </option>
+          ))}
+        </select>
       </Div_InputContainer>
     </div>
   )
