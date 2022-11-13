@@ -50,7 +50,11 @@ export const InventoryMeterDetail = () => {
           },
         },
       })
-      setInventoryMeter(getInventoryMeter.data.inventoryMeters[0])
+      setInventoryMeter(
+        getInventoryMeter.data.inventoryMeters
+          ? getInventoryMeter.data.inventoryMeters[0]
+          : undefined
+      )
     } catch (error) {
       setErr(true)
       console.error(error)
@@ -165,7 +169,7 @@ export const InventoryMeterDetail = () => {
             </Div_FormContainer>
           </Div_SubContainer>
         </>
-      ) : inventoryMeter === null ? (
+      ) : inventoryMeter === null && !err ? (
         <Div_SubContainer>
           <P_BodyText>Loading...</P_BodyText>
         </Div_SubContainer>

@@ -3,6 +3,7 @@ import { GET_INVENTORY_METERS, GET_INVENTORY_METERS_COUNT } from '../../graphql/
 import { H1_Heading } from '../../components/Heading'
 import { InventoryMeter } from '../../../generated/types'
 import { InventoryTable } from './components/InventoryTable'
+import { P_BodyText } from '../../components/BodyText'
 import { Pagination } from '../../components/Pagination'
 import { SortField, SortValue } from './types'
 import { UserStateContext } from '../../context/UserContext'
@@ -16,6 +17,7 @@ export const InventoryMeters = () => {
   const [sortField, setSortField] = useState<SortField>('id:asc')
   const [offset, setOffset] = useState(0)
   const [dataCount, setDataCount] = useState(0)
+  const [err, setErr] = useState(false)
 
   const itemsPerPage = 10
 
@@ -47,6 +49,8 @@ export const InventoryMeters = () => {
       setDataCount(getCount.data?.inventoryMetersConnection.aggregate.totalCount)
     } catch (error) {
       console.error(error)
+      setErr(true)
+      setInventoryMeters(null)
     }
   }
 
@@ -75,17 +79,23 @@ export const InventoryMeters = () => {
         <H1_Heading fontSize={styles.fontSize.l}>Inventory Meters List</H1_Heading>
       </Div_SubContainer>
       <Div_SubContainer column={true} alignItems='flex-end'>
-        <InventoryTable
-          sortField={sortField}
-          handleSort={handleSort}
-          inventoryMeters={inventoryMeters}
-        />
-        <Pagination
-          handlePageClick={handlePageClick}
-          itemsPerPage={itemsPerPage}
-          itemsCount={dataCount}
-          pageRangeDisplayed={5}
-        />
+        {err ? (
+          <P_BodyText>Error occurred while fetching data</P_BodyText>
+        ) : (
+          <>
+            <InventoryTable
+              sortField={sortField}
+              handleSort={handleSort}
+              inventoryMeters={inventoryMeters}
+            />
+            <Pagination
+              handlePageClick={handlePageClick}
+              itemsPerPage={itemsPerPage}
+              itemsCount={dataCount}
+              pageRangeDisplayed={5}
+            />
+          </>
+        )}
       </Div_SubContainer>
     </>
   )
