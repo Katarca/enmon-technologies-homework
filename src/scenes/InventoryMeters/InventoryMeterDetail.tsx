@@ -21,7 +21,7 @@ import { ReactComponent as thinArrowIcon } from '../../icons/thin-arrow-icon.svg
 import { urls } from '../../helpers/urls'
 import { useParams } from 'react-router-dom'
 import React, { useContext, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const InventoryMeterDetail = () => {
   const params = useParams<{ id: string }>()
@@ -34,6 +34,8 @@ export const InventoryMeterDetail = () => {
   const [serialNum, setSerialNum] = useState(null as null | string)
 
   const [err, setErr] = useState(false)
+
+  const [dataUpdated, setDataUpdated] = useState(false)
 
   const fetchData = async () => {
     try {
@@ -93,6 +95,8 @@ export const InventoryMeterDetail = () => {
           },
         },
       })
+      setDataUpdated(true)
+      setTimeout(() => setDataUpdated(false), 3000)
       fetchData()
     } catch (error) {
       console.error(error)
@@ -102,7 +106,10 @@ export const InventoryMeterDetail = () => {
   }
 
   return (
-    <>
+    <Div_Wrapper>
+      <Div_UpdatedContainer updated={dataUpdated}>
+        <P_BodyText>Inventory meter updated</P_BodyText>
+      </Div_UpdatedContainer>
       {inventoryMeter ? (
         <>
           <Div_SubContainer column={true}>
@@ -188,9 +195,33 @@ export const InventoryMeterDetail = () => {
           <P_BodyText>Inventory meter not found</P_BodyText>
         </Div_SubContainer>
       )}
-    </>
+    </Div_Wrapper>
   )
 }
+
+const Div_Wrapper = styled.div`
+  position: relative;
+  overflow-x: hidden;
+`
+
+const Div_UpdatedContainer = styled.div<{ updated: boolean }>`
+  position: absolute;
+  background-color: ${styles.colors.white};
+  top: 0;
+  right: -500px;
+  margin: ${styles.spacing.m};
+  padding: ${styles.spacing.m};
+  transition: ${styles.transition.secondary};
+  border: ${styles.borderProperty.primary} ${styles.colors.grey200};
+  border-radius: ${styles.borderRadius.primary};
+  box-shadow: ${styles.boxShadowProperty.primary} ${styles.colors.blue100};
+  ${({ updated }) =>
+    updated &&
+    css`
+      right: 0;
+    `}
+`
+
 const Span_BlackSpan = styled.span`
   color: ${styles.colors.black};
 `

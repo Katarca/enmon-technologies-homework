@@ -39,6 +39,7 @@ export const styles = {
   },
   transition: {
     primary: '0.5s ease-in-out',
+    secondary: '1.5s ease-in-out',
   },
   borderRadius: {
     primary: '2px',
@@ -46,6 +47,9 @@ export const styles = {
   borderProperty: {
     primary: '1px solid',
     secondary: '2px solid',
+  },
+  boxShadowProperty: {
+    primary: '0 0 3px',
   },
 } as const
 

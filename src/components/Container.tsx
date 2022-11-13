@@ -57,7 +57,7 @@ export const Div_InputContainer = styled.div`
     border-color: ${styles.colors.primaryGreen};
   }
   &:focus-within {
-    box-shadow: 0 0 3px ${styles.colors.primaryGreen};
+    box-shadow: ${styles.boxShadowProperty.primary} ${styles.colors.primaryGreen};
   }
   & > input {
     width: 100%;
