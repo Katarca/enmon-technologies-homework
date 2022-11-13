@@ -14,12 +14,12 @@ import { RouterLink } from '../../components/Link'
 import { SelectElement } from '../../components/Select'
 import { UPDATE_INVENTORY_METER } from '../../graphql/mutations/updateInventoryMeter'
 import { UserStateContext } from '../../context/UserContext'
-import { accessability, meterTypes } from '../../helpers/variables'
 import { client } from '../../index'
+import { meterTypes } from '../../helpers/variables'
 import { styles } from '../../helpers/theme'
 import { ReactComponent as thinArrowIcon } from '../../icons/thin-arrow-icon.svg'
 import { urls } from '../../helpers/urls'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
@@ -37,8 +37,6 @@ export const InventoryMeterDetail = () => {
     null as null | 'Monitored entity is required'
   )
   const [meterTypeErr, setMeterTypeErr] = useState(null as null | 'Meter type is required')
-
-  const navigate = useNavigate()
 
   const fetchData = async () => {
     try {
@@ -104,81 +102,96 @@ export const InventoryMeterDetail = () => {
   }
 
   return (
-    <div>
-      <Div_SubContainer column={true}>
-        <div>
-          <P_BodyText color={styles.colors.grey900}>
-            Enmon Tools / Inventory Meters / <Span_BlackSpan>{inventoryMeter?.id}</Span_BlackSpan>
-          </P_BodyText>
-        </div>
-        <Div_Box>
+    <>
+      {inventoryMeter ? (
+        <>
+          <Div_SubContainer column={true}>
+            <div>
+              <P_BodyText color={styles.colors.grey900}>
+                Enmon Tools / Inventory Meters /{' '}
+                <Span_BlackSpan>{inventoryMeter?.id}</Span_BlackSpan>
+              </P_BodyText>
+            </div>
+            <Div_Box>
+              <RouterLink to={urls.inventoryMeters}>
+                <ThinArrowIcon />
+              </RouterLink>
+              <Div_PaddingContainer>
+                <H1_Heading fontSize={styles.fontSize.l}>{inventoryMeter?.id}</H1_Heading>
+              </Div_PaddingContainer>
+              {inventoryMeter?.inventory_location?.name ? (
+                <Div_PaddingContainer padding={`0 ${styles.spacing.s} 0 0`}>
+                  <P_BodyText color={styles.colors.grey900}>
+                    {inventoryMeter?.inventory_location?.name}
+                  </P_BodyText>
+                </Div_PaddingContainer>
+              ) : null}
+              <Label>{inventoryMeter?.meter_type!}</Label>
+            </Div_Box>
+          </Div_SubContainer>
+          <Div_SubContainer padding='0' column={true}>
+            <Div_BorderContainer>
+              <H2_Heading fontSize={styles.fontSize.m}>Details</H2_Heading>
+            </Div_BorderContainer>
+            <Div_FormContainer>
+              <InputElement
+                type='text'
+                defaultValue={inventoryMeter?.serial_number!}
+                className='borderElement'
+                label='Serial Number'
+                onChange={e => setSerialNum(e.target.value)}
+              />
+              <div>
+                <InputElement
+                  type='text'
+                  defaultValue={inventoryMeter?.monitored_entity!}
+                  className='borderElement'
+                  label='Monitored Entity'
+                  onChange={e => setMonitoredEntity(e.target.value)}
+                />
+                <div>
+                  {monitoredEntityErr ? (
+                    <P_BodyText color={styles.colors.red200}>{monitoredEntityErr}</P_BodyText>
+                  ) : null}
+                </div>
+              </div>
+              <div>
+                <SelectElement
+                  label='Meter Type'
+                  className='borderElement'
+                  options={meterTypes}
+                  onChange={e => {
+                    setMeterType(e.target.value)
+                  }}
+                  defaultValue={inventoryMeter?.meter_type!}
+                />
+                <div>
+                  {meterTypeErr ? (
+                    <P_BodyText color={styles.colors.red200}>{meterTypeErr}</P_BodyText>
+                  ) : null}
+                </div>
+              </div>
+              <Div_ButtonContainer>
+                <CustomButton
+                  color='green'
+                  onClick={() => handleUpdate()}
+                  disabled={Object.keys(dataObj).length === 0 ? true : false}
+                >
+                  <P_BodyText>Save</P_BodyText>
+                </CustomButton>
+              </Div_ButtonContainer>
+            </Div_FormContainer>
+          </Div_SubContainer>
+        </>
+      ) : (
+        <Div_SubContainer column={true}>
           <RouterLink to={urls.inventoryMeters}>
             <ThinArrowIcon />
           </RouterLink>
-          <Div_PaddingContainer>
-            <H1_Heading fontSize={styles.fontSize.l}>{inventoryMeter?.id}</H1_Heading>
-          </Div_PaddingContainer>
-          {inventoryMeter?.inventory_location?.name ? (
-            <Div_PaddingContainer padding={`0 ${styles.spacing.s} 0 0`}>
-              <P_BodyText color={styles.colors.grey900}>
-                {inventoryMeter?.inventory_location?.name}
-              </P_BodyText>
-            </Div_PaddingContainer>
-          ) : null}
-          <Label>{inventoryMeter?.meter_type!}</Label>
-        </Div_Box>
-      </Div_SubContainer>
-      <Div_SubContainer padding='0' column={true}>
-        <Div_BorderContainer>
-          <H2_Heading fontSize={styles.fontSize.m}>Details</H2_Heading>
-        </Div_BorderContainer>
-        <Div_FormContainer>
-          <InputElement
-            type='text'
-            defaultValue={inventoryMeter?.serial_number!}
-            className='borderElement'
-            label='Serial Number'
-            onChange={e => setSerialNum(e.target.value)}
-          />
-          <div>
-            <InputElement
-              type='text'
-              defaultValue={inventoryMeter?.monitored_entity!}
-              className='borderElement'
-              label='Monitored Entity'
-              onChange={e => setMonitoredEntity(e.target.value)}
-            />
-            <div>
-              {monitoredEntityErr ? (
-                <P_BodyText color={styles.colors.red200}>{monitoredEntityErr}</P_BodyText>
-              ) : null}
-            </div>
-          </div>
-          <div>
-            <SelectElement
-              label='Meter Type'
-              className='borderElement'
-              options={meterTypes}
-              onChange={e => {
-                setMeterType(e.target.value)
-              }}
-              selected={inventoryMeter?.meter_type!}
-              defaultValue={''}
-            />
-            <div>
-              {meterTypeErr ? (
-                <P_BodyText color={styles.colors.red200}>{meterTypeErr}</P_BodyText>
-              ) : null}
-            </div>
-          </div>
-          <Div_ButtonContainer>
-            <CustomButton color='green' onClick={() => handleUpdate()}>
-              <P_BodyText>Save</P_BodyText>
-            </CustomButton>
-          </Div_ButtonContainer>
-        </Div_FormContainer>
-      </Div_SubContainer>
-    </div>
+          <P_BodyText>Inventory meter not found</P_BodyText>
+        </Div_SubContainer>
+      )}
+    </>
   )
 }
 const Span_BlackSpan = styled.span`

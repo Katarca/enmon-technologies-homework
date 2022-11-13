@@ -19,6 +19,7 @@ export const InventoryTable = (props: TableProps) => {
               <Div_HeaderContainer
                 sortField={props.sortField}
                 active={props.sortField.includes('id')}
+                clickable={true}
                 onClick={() => props.handleSort('id')}
               >
                 <P_BodyText>ID</P_BodyText>
@@ -29,6 +30,7 @@ export const InventoryTable = (props: TableProps) => {
               <Div_HeaderContainer
                 sortField={props.sortField}
                 active={props.sortField.includes('serial_number')}
+                clickable={true}
                 onClick={() => props.handleSort('serial_number')}
               >
                 <P_BodyText>Serial key</P_BodyText>
@@ -39,6 +41,7 @@ export const InventoryTable = (props: TableProps) => {
               <Div_HeaderContainer
                 sortField={props.sortField}
                 active={props.sortField.includes('meter_type')}
+                clickable={true}
                 onClick={() => props.handleSort('meter_type')}
               >
                 <P_BodyText>Meter Type</P_BodyText>
@@ -59,6 +62,7 @@ export const InventoryTable = (props: TableProps) => {
               <Div_HeaderContainer
                 sortField={props.sortField}
                 active={props.sortField.includes('inventory_location_building.name')}
+                clickable={true}
                 onClick={() => props.handleSort('inventory_location_building.name')}
               >
                 <P_BodyText>Building</P_BodyText>
@@ -129,15 +133,16 @@ const Thead_InventoryThead = styled.thead`
 const Div_HeaderContainer = styled.div<{
   sortField?: string
   active?: boolean
+  clickable?: boolean
 }>`
   display: flex;
   padding: ${styles.spacing.l} ${styles.spacing.m};
   justify-content: space-between;
+  cursor: ${props => (props.clickable ? 'pointer' : 'auto')};
   ${({ active, sortField }) =>
     active &&
     sortField &&
     css`
-      cursor: pointer;
       & > svg {
         ${sortField?.includes('desc') && 'transform: rotate(0deg)'};
         fill: ${styles.colors.black};

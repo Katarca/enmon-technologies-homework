@@ -22,10 +22,20 @@ export const CustomButton = styled(Button)<{ color: 'green' | 'white'; width?: s
     color: ${props => (props.color === 'green' ? styles.colors.white : styles.colors.black)};
   }
   &:hover {
-    opacity: ${props => (props.color === 'green' ? 0.8 : 1)};
-    border-color: ${props => (props.color === 'white' ? styles.colors.primaryGreen : 'none')};
+    &:enabled {
+      opacity: ${props => (props.color === 'green' ? 0.8 : 1)};
+      border-color: ${props => (props.color === 'white' ? styles.colors.primaryGreen : 'none')};
+      & > p {
+        color: ${props => (props.color === 'white' ? styles.colors.primaryGreen : 'none')};
+      }
+    }
+  }
+  &:disabled {
+    background-color: ${styles.colors.grey300};
+    border-color: ${styles.colors.grey300};
+    cursor: not-allowed;
     & > p {
-      color: ${props => (props.color === 'white' ? styles.colors.primaryGreen : 'none')};
+      color: ${styles.colors.white};
     }
   }
 `
