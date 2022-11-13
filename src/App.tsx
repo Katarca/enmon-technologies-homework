@@ -1,4 +1,5 @@
 import { Login } from './scenes/Login'
+import { Navbar } from './components/Navbar'
 import { PageNotFound } from './scenes/404'
 import { ProtectedRoute } from './scenes/ProtectedRoute'
 import { Route, Routes } from 'react-router-dom'
@@ -11,6 +12,7 @@ import React from 'react'
 export function App() {
   return (
     <UserContextProvider>
+      <Navbar />
       <Routes>
         <Route path={urls.login} element={<Login />} />
         <Route

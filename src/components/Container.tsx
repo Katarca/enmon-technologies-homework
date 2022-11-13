@@ -11,15 +11,17 @@ export const Div_Container = styled.div`
 export const Div_SubContainer = styled.div<{
   backgroundcolor?: string
   column?: boolean
+  margin?: string
+  justifyContent?: string
   alignItems?: string
   padding?: string
 }>`
   background-color: ${props =>
     props.backgroundcolor ? props.backgroundcolor : styles.colors.white};
   padding: ${props => (props.padding ? props.padding : `${styles.spacing.m} ${styles.spacing.l}`)};
-  margin: ${styles.spacing.m};
+  margin: ${props => (props.margin ? props.margin : styles.spacing.m)};
   display: flex;
-  justify-content: space-between;
+  justify-content: ${props => (props.justifyContent ? props.justifyContent : 'space-between')};
   align-items: ${props => (props.alignItems ? props.alignItems : null)};
   ${({ column }) =>
     column &&
@@ -34,7 +36,6 @@ export const Div_PaddingContainer = styled.div<{ padding?: string }>`
 
 export const Div_BorderContainer = styled.div`
   width: 100%;
-  min-height: 100vh;
   border-bottom: ${styles.borderProperty.primary} ${styles.colors.grey100};
   padding: ${styles.spacing.l};
 `

@@ -104,7 +104,7 @@ export const InventoryMeterDetail = () => {
   }
 
   return (
-    <>
+    <div>
       <Div_SubContainer column={true}>
         <div>
           <P_BodyText color={styles.colors.grey900}>
@@ -163,6 +163,7 @@ export const InventoryMeterDetail = () => {
                 setMeterType(e.target.value)
               }}
               selected={inventoryMeter?.meter_type!}
+              defaultValue={''}
             />
             <div>
               {meterTypeErr ? (
@@ -177,7 +178,7 @@ export const InventoryMeterDetail = () => {
           </Div_ButtonContainer>
         </Div_FormContainer>
       </Div_SubContainer>
-    </>
+    </div>
   )
 }
 const Span_BlackSpan = styled.span`
