@@ -34,6 +34,7 @@ export const Div_PaddingContainer = styled.div<{ padding?: string }>`
 
 export const Div_BorderContainer = styled.div`
   width: 100%;
+  min-height: 100vh;
   border-bottom: ${styles.borderProperty.primary} ${styles.colors.grey100};
   padding: ${styles.spacing.l};
 `

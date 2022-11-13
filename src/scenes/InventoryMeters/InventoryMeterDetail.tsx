@@ -56,9 +56,6 @@ export const InventoryMeterDetail = () => {
         },
       })
       setInventoryMeter(getInventoryMeter.data.inventoryMeters[0])
-      setMonitoredEntity(getInventoryMeter.data.inventoryMeters[0].monitored_entity)
-      setMeterType(getInventoryMeter.data.inventoryMeters[0].meter_type)
-      setSerialNum(getInventoryMeter.data.inventoryMeters[0].serial_number)
     } catch (error) {
       console.error(error)
     }
@@ -68,16 +65,18 @@ export const InventoryMeterDetail = () => {
     fetchData()
   }, [])
 
+  const dataObj = {
+    ...(serialNum !== null && { serial_number: serialNum }),
+    ...(monitoredEntity && { monitored_entity: monitoredEntity }),
+    ...(meterType && { meter_type: meterType }),
+  }
+
   const handleUpdate = async () => {
     setMonitoredEntityErr(null)
     setMeterTypeErr(null)
     let isValid = true
-    if (monitoredEntity?.trim().length === 0 || !monitoredEntity) {
+    if (monitoredEntity?.trim().length === 0) {
       setMonitoredEntityErr('Monitored entity is required')
-      isValid = false
-    }
-    if (meterType?.trim().length === 0 || !meterType) {
-      setMeterTypeErr('Meter type is required')
       isValid = false
     }
     if (!isValid) return
@@ -86,11 +85,7 @@ export const InventoryMeterDetail = () => {
         mutation: UPDATE_INVENTORY_METER,
         variables: {
           input: {
-            data: {
-              serial_number: serialNum,
-              monitored_entity: monitoredEntity,
-              meter_type: meterType,
-            },
+            data: dataObj,
             where: {
               id: inventoryMeter?.id,
             },
@@ -102,7 +97,7 @@ export const InventoryMeterDetail = () => {
           },
         },
       })
-      navigate(urls.inventoryMeters)
+      fetchData()
     } catch (error) {
       console.error(error)
     }
@@ -164,10 +159,10 @@ export const InventoryMeterDetail = () => {
               label='Meter Type'
               className='borderElement'
               options={meterTypes}
-              value={meterType!}
               onChange={e => {
                 setMeterType(e.target.value)
               }}
+              selected={inventoryMeter?.meter_type!}
             />
             <div>
               {meterTypeErr ? (
@@ -185,7 +180,6 @@ export const InventoryMeterDetail = () => {
     </>
   )
 }
-
 const Span_BlackSpan = styled.span`
   color: ${styles.colors.black};
 `

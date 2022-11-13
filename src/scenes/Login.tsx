@@ -5,11 +5,11 @@ import { InputElement } from '../components/Input'
 import { LOGIN } from '../graphql/mutations/loginMutation'
 import { P_BodyText } from '../components/BodyText'
 import { UserStateContext } from '../context/UserContext'
+import { breakpoint, styles } from '../helpers/theme'
 import { client } from '../index'
 import { ReactComponent as invalidIcon } from '../icons/invalid-icon.svg'
 import { ReactComponent as lockIcon } from '../icons/lock-icon.svg'
 import { ReactComponent as personIcon } from '../icons/person-icon.svg'
-import { styles } from '../helpers/theme'
 import { urls } from '../helpers/urls'
 import { useNavigate } from 'react-router-dom'
 import React, { useContext, useState } from 'react'
@@ -101,6 +101,9 @@ const Div_LoginContainer = styled.div`
   & > button,
   div:not(:first-child) {
     margin-top: ${styles.spacing.m};
+  }
+  ${breakpoint.phone} {
+    width: 80%;
   }
 `
 

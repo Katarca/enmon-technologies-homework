@@ -8,11 +8,13 @@ export const SelectElement = ({
   options,
   label,
   className,
+  selected,
   ...props
 }: {
   options: string[]
   label?: string
   className?: string
+  selected?: string
 } & ComponentProps<'select'>) => {
   return (
     <div>
@@ -24,7 +26,7 @@ export const SelectElement = ({
       <Div_InputContainer className={className}>
         <select {...props}>
           {options.map(option => (
-            <option value={option} key={option}>
+            <option value={option} key={option} selected={selected === option && true}>
               {option}
             </option>
           ))}
