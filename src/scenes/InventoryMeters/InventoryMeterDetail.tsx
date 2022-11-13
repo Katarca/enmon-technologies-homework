@@ -30,6 +30,13 @@ export const InventoryMeterDetail = () => {
   const [inventoryMeter, setInventoryMeter] = useState(null as null | InventoryMeter)
 
   const [monitoredEntity, setMonitoredEntity] = useState(null as null | string)
+  const [meterType, setMeterType] = useState(null as null | string)
+  const [serialNum, setSerialNum] = useState(null as null | string)
+
+  const [monitoredEntityErr, setMonitoredEntityErr] = useState(
+    null as null | 'Monitored entity is required'
+  )
+  const [meterTypeErr, setMeterTypeErr] = useState(null as null | 'Meter type is required')
 
   const navigate = useNavigate()
 
@@ -49,6 +56,9 @@ export const InventoryMeterDetail = () => {
         },
       })
       setInventoryMeter(getInventoryMeter.data.inventoryMeters[0])
+      setMonitoredEntity(getInventoryMeter.data.inventoryMeters[0].monitored_entity)
+      setMeterType(getInventoryMeter.data.inventoryMeters[0].meter_type)
+      setSerialNum(getInventoryMeter.data.inventoryMeters[0].serial_number)
     } catch (error) {
       console.error(error)
     }
@@ -59,13 +69,27 @@ export const InventoryMeterDetail = () => {
   }, [])
 
   const handleUpdate = async () => {
+    setMonitoredEntityErr(null)
+    setMeterTypeErr(null)
+    let isValid = true
+    if (monitoredEntity?.trim().length === 0 || !monitoredEntity) {
+      setMonitoredEntityErr('Monitored entity is required')
+      isValid = false
+    }
+    if (meterType?.trim().length === 0 || !meterType) {
+      setMeterTypeErr('Meter type is required')
+      isValid = false
+    }
+    if (!isValid) return
     try {
       await client.mutate({
         mutation: UPDATE_INVENTORY_METER,
         variables: {
           input: {
             data: {
+              serial_number: serialNum,
               monitored_entity: monitoredEntity,
+              meter_type: meterType,
             },
             where: {
               id: inventoryMeter?.id,
@@ -78,10 +102,12 @@ export const InventoryMeterDetail = () => {
           },
         },
       })
+      navigate(urls.inventoryMeters)
     } catch (error) {
       console.error(error)
     }
   }
+
   return (
     <>
       <Div_SubContainer column={true}>
@@ -117,29 +143,38 @@ export const InventoryMeterDetail = () => {
             defaultValue={inventoryMeter?.serial_number!}
             className='borderElement'
             label='Serial Number'
-            onChange={() => {}}
+            onChange={e => setSerialNum(e.target.value)}
           />
-          <InputElement
-            type='text'
-            defaultValue={inventoryMeter?.monitored_entity!}
-            className='borderElement'
-            label='Monitored Entity'
-            onChange={e => setMonitoredEntity(e.target.value)}
-          />
-          <SelectElement
-            label='Meter Type'
-            className='borderElement'
-            options={meterTypes}
-            value={inventoryMeter?.meter_type ? inventoryMeter.meter_type : ''}
-            onChange={() => {}}
-          />
-          <SelectElement
-            label='Accessibility'
-            className='borderElement'
-            options={accessability}
-            value={inventoryMeter?.accessibility ? inventoryMeter.accessibility : ''}
-            onChange={() => {}}
-          />
+          <div>
+            <InputElement
+              type='text'
+              defaultValue={inventoryMeter?.monitored_entity!}
+              className='borderElement'
+              label='Monitored Entity'
+              onChange={e => setMonitoredEntity(e.target.value)}
+            />
+            <div>
+              {monitoredEntityErr ? (
+                <P_BodyText color={styles.colors.red200}>{monitoredEntityErr}</P_BodyText>
+              ) : null}
+            </div>
+          </div>
+          <div>
+            <SelectElement
+              label='Meter Type'
+              className='borderElement'
+              options={meterTypes}
+              value={meterType!}
+              onChange={e => {
+                setMeterType(e.target.value)
+              }}
+            />
+            <div>
+              {meterTypeErr ? (
+                <P_BodyText color={styles.colors.red200}>{meterTypeErr}</P_BodyText>
+              ) : null}
+            </div>
+          </div>
           <Div_ButtonContainer>
             <CustomButton color='green' onClick={() => handleUpdate()}>
               <P_BodyText>Save</P_BodyText>

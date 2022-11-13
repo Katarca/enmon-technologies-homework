@@ -12,7 +12,9 @@ export const CustomButton = styled(Button)<{ color: 'green' | 'white'; width?: s
   background-color: ${props =>
     props.color === 'green' ? styles.colors.primaryGreen : styles.colors.white};
   border: ${props =>
-    props.color === 'green' ? 'none' : `${styles.borderProperty.primary} ${styles.colors.grey200}`};
+    props.color === 'green'
+      ? `${styles.borderProperty.primary} ${styles.colors.primaryGreen}`
+      : `${styles.borderProperty.primary} ${styles.colors.grey200}`};
   cursor: pointer;
   transition: ${styles.transition.primary};
   border-radius: ${styles.borderRadius.primary};
@@ -21,9 +23,9 @@ export const CustomButton = styled(Button)<{ color: 'green' | 'white'; width?: s
   }
   &:hover {
     opacity: ${props => (props.color === 'green' ? 0.8 : 1)};
-    border-color: ${props => (props.color === 'white' ? styles.colors.primaryGreen : '')};
+    border-color: ${props => (props.color === 'white' ? styles.colors.primaryGreen : 'none')};
     & > p {
-      color: ${props => (props.color === 'white' ? styles.colors.primaryGreen : '')};
+      color: ${props => (props.color === 'white' ? styles.colors.primaryGreen : 'none')};
     }
   }
 `
