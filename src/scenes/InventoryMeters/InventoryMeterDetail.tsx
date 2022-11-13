@@ -33,10 +33,7 @@ export const InventoryMeterDetail = () => {
   const [meterType, setMeterType] = useState(null as null | string)
   const [serialNum, setSerialNum] = useState(null as null | string)
 
-  const [monitoredEntityErr, setMonitoredEntityErr] = useState(
-    null as null | 'Monitored entity is required'
-  )
-  const [meterTypeErr, setMeterTypeErr] = useState(null as null | 'Meter type is required')
+  const [err, setErr] = useState(false)
 
   const fetchData = async () => {
     try {
@@ -55,6 +52,7 @@ export const InventoryMeterDetail = () => {
       })
       setInventoryMeter(getInventoryMeter.data.inventoryMeters[0])
     } catch (error) {
+      setErr(true)
       console.error(error)
     }
   }
@@ -64,20 +62,16 @@ export const InventoryMeterDetail = () => {
   }, [])
 
   const dataObj = {
-    ...(serialNum !== null && { serial_number: serialNum }),
-    ...(monitoredEntity && { monitored_entity: monitoredEntity }),
-    ...(meterType && { meter_type: meterType }),
+    ...(serialNum !== null &&
+      serialNum !== inventoryMeter?.serial_number && { serial_number: serialNum }),
+    ...(monitoredEntity &&
+      monitoredEntity !== inventoryMeter?.monitored_entity && {
+        monitored_entity: monitoredEntity,
+      }),
+    ...(meterType && meterType !== inventoryMeter?.meter_type && { meter_type: meterType }),
   }
 
   const handleUpdate = async () => {
-    setMonitoredEntityErr(null)
-    setMeterTypeErr(null)
-    let isValid = true
-    if (monitoredEntity?.trim().length === 0) {
-      setMonitoredEntityErr('Monitored entity is required')
-      isValid = false
-    }
-    if (!isValid) return
     try {
       await client.mutate({
         mutation: UPDATE_INVENTORY_METER,
@@ -98,6 +92,8 @@ export const InventoryMeterDetail = () => {
       fetchData()
     } catch (error) {
       console.error(error)
+      setErr(true)
+      setInventoryMeter(null)
     }
   }
 
@@ -141,36 +137,22 @@ export const InventoryMeterDetail = () => {
                 label='Serial Number'
                 onChange={e => setSerialNum(e.target.value)}
               />
-              <div>
-                <InputElement
-                  type='text'
-                  defaultValue={inventoryMeter?.monitored_entity!}
-                  className='borderElement'
-                  label='Monitored Entity'
-                  onChange={e => setMonitoredEntity(e.target.value)}
-                />
-                <div>
-                  {monitoredEntityErr ? (
-                    <P_BodyText color={styles.colors.red200}>{monitoredEntityErr}</P_BodyText>
-                  ) : null}
-                </div>
-              </div>
-              <div>
-                <SelectElement
-                  label='Meter Type'
-                  className='borderElement'
-                  options={meterTypes}
-                  onChange={e => {
-                    setMeterType(e.target.value)
-                  }}
-                  defaultValue={inventoryMeter?.meter_type!}
-                />
-                <div>
-                  {meterTypeErr ? (
-                    <P_BodyText color={styles.colors.red200}>{meterTypeErr}</P_BodyText>
-                  ) : null}
-                </div>
-              </div>
+              <InputElement
+                type='text'
+                defaultValue={inventoryMeter?.monitored_entity!}
+                className='borderElement'
+                label='Monitored Entity'
+                onChange={e => setMonitoredEntity(e.target.value)}
+              />
+              <SelectElement
+                label='Meter Type'
+                className='borderElement'
+                options={meterTypes}
+                onChange={e => {
+                  setMeterType(e.target.value)
+                }}
+                defaultValue={inventoryMeter?.meter_type!}
+              />
               <Div_ButtonContainer>
                 <CustomButton
                   color='green'
@@ -183,6 +165,17 @@ export const InventoryMeterDetail = () => {
             </Div_FormContainer>
           </Div_SubContainer>
         </>
+      ) : inventoryMeter === null ? (
+        <Div_SubContainer>
+          <P_BodyText>Loading...</P_BodyText>
+        </Div_SubContainer>
+      ) : inventoryMeter === null && err ? (
+        <Div_SubContainer column={true}>
+          <RouterLink to={urls.inventoryMeters}>
+            <ThinArrowIcon />
+          </RouterLink>
+          <P_BodyText>Error occurred while fetching data</P_BodyText>
+        </Div_SubContainer>
       ) : (
         <Div_SubContainer column={true}>
           <RouterLink to={urls.inventoryMeters}>
