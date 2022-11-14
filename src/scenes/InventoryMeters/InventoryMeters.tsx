@@ -1,4 +1,4 @@
-import { Div_SubContainer } from '../../components/Container'
+import { Div_SubContainer } from '../../components/Container/styles'
 import { GET_INVENTORY_METERS, GET_INVENTORY_METERS_COUNT } from '../../graphql/getInventoryMeters'
 import { H1_Heading } from '../../components/typo/Heading'
 import { InventoryMeter } from '../../../generated/types'
@@ -77,7 +77,7 @@ export const InventoryMeters = () => {
       <Div_SubContainer>
         <H1_Heading className='l'>Inventory Meters List</H1_Heading>
       </Div_SubContainer>
-      <Div_SubContainer column={true} alignItems='flex-end'>
+      <Div_SubContainer>
         {err ? (
           <P_BodyText>Error occurred while fetching data</P_BodyText>
         ) : (

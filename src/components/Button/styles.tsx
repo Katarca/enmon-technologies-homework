@@ -12,7 +12,7 @@ export const CustomButton = styled(Button)`
   }
   &.green {
     background-color: ${colors.primaryGreen};
-    border: ${styles.borderProperty.primary} ${styles.colors.primaryGreen};
+    border: ${styles.borderProperty.primary} ${colors.primaryGreen};
     & > p {
       color: ${colors.white};
     }
@@ -24,7 +24,7 @@ export const CustomButton = styled(Button)`
   }
   &.white {
     background-color: ${colors.white};
-    border: ${styles.borderProperty.primary} ${styles.colors.grey200};
+    border: ${styles.borderProperty.primary} ${colors.grey200};
     & > p {
       color: ${colors.black};
     }

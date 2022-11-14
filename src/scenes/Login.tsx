@@ -1,11 +1,11 @@
 import { CustomButton } from '../components/Button/styles'
-import { Div_Container } from '../components/Container'
+import { Div_Container } from '../components/Container/styles'
 import { H1_Heading } from '../components/typo/Heading'
 import { Input } from '../components/Input'
 import { LOGIN } from '../graphql/mutations/loginMutation'
 import { P_BodyText } from '../components/typo/BodyText'
 import { UserStateContext } from '../context/UserContext'
-import { breakpoint, styles } from '../helpers/theme'
+import { breakpoint, colors, styles } from '../helpers/theme'
 import { client } from '../apollo/client'
 import { ReactComponent as invalidIcon } from '../icons/invalid-icon.svg'
 import { ReactComponent as lockIcon } from '../icons/lock-icon.svg'
@@ -111,13 +111,13 @@ const Div_LoginContainer = styled.div`
 
 const Div_HeadingContainer = styled.div`
   padding: ${styles.spacing.s} 0;
-  border-bottom: ${styles.borderProperty.secondary} ${styles.colors.primaryGreen};
+  border-bottom: ${styles.borderProperty.secondary} ${colors.primaryGreen};
   width: fit-content;
   margin-bottom: ${styles.spacing.s};
 `
 
 const inputIconStyles = css`
-  fill: ${styles.colors.primaryGreen};
+  fill: ${colors.primaryGreen};
   width: ${styles.iconWidth.s};
 `
 
@@ -129,13 +129,13 @@ const LockIcon = styled(lockIcon)`
 `
 const InvalidIcon = styled(invalidIcon)`
   width: ${styles.iconWidth.s};
-  fill: ${styles.colors.red200};
+  fill: ${colors.red200};
   margin-right: ${styles.spacing.s};
 `
 
 const Div_InvalidContainer = styled.div`
   display: flex;
   padding: ${styles.spacing.s} ${styles.spacing.m};
-  background-color: ${styles.colors.pink100};
-  border: ${styles.borderProperty.primary} ${styles.colors.pink200};
+  background-color: ${colors.pink100};
+  border: ${styles.borderProperty.primary} ${colors.pink200};
 `

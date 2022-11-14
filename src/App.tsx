@@ -4,8 +4,8 @@ import { PageNotFound } from './scenes/404'
 import { ProtectedRoute } from './scenes/ProtectedRoute'
 import { Route, Routes } from 'react-router-dom'
 import { UserContextProvider } from './context/UserContext'
+import { colors } from './helpers/theme'
 import { createGlobalStyle } from 'styled-components'
-import { styles } from './helpers/theme'
 import { urls } from './helpers/urls'
 import React from 'react'
 
@@ -40,13 +40,13 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Poppins', sans-serif;
     }
     *::selection {
-    background: ${styles.colors.primaryGreen};
-    color: ${styles.colors.white};
+    background: ${colors.primaryGreen};
+    color: ${colors.white};
     }
 
     html {
     font-size: 62.5%;
-    background-color: ${styles.colors.grey100};
+    background-color: ${colors.grey100};
     }
 
     body {

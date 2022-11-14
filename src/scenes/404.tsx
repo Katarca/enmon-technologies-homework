@@ -1,4 +1,4 @@
-import { Div_Container } from '../components/Container'
+import { Div_Container } from '../components/Container/styles'
 import { H1_Heading } from '../components/typo/Heading'
 import { Link } from 'react-router-dom'
 import { P_BodyText } from '../components/typo/BodyText'

@@ -1,9 +1,8 @@
-import { CustomButton } from './Button/styles'
-import { Div_SubContainer } from './Container'
-import { P_BodyText } from './typo/BodyText'
-import { UserStateContext } from '../context/UserContext'
-import { styles } from '../helpers/theme'
-import { urls } from '../helpers/urls'
+import { CustomButton } from '../Button/styles'
+import { Div_NavbarWrapper } from './styles'
+import { P_BodyText } from '../typo/BodyText'
+import { UserStateContext } from '../../context/UserContext'
+import { urls } from '../../helpers/urls'
 import { useLocation, useNavigate } from 'react-router-dom'
 import React, { useContext } from 'react'
 
@@ -22,11 +21,11 @@ export const Navbar = () => {
     return null
   } else {
     return (
-      <Div_SubContainer margin={`0 0 ${styles.spacing.m} 0`} justifyContent='flex-end'>
+      <Div_NavbarWrapper>
         <CustomButton className='white' onClick={() => handleLogout()}>
           <P_BodyText>Logout</P_BodyText>
         </CustomButton>
-      </Div_SubContainer>
+      </Div_NavbarWrapper>
     )
   }
 }

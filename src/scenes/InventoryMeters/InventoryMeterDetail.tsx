@@ -3,7 +3,8 @@ import {
   Div_BorderContainer,
   Div_PaddingContainer,
   Div_SubContainer,
-} from '../../components/Container'
+} from '../../components/Container/styles'
+
 import { GET_INVENTORY_METER } from '../../graphql/getInventoryMeters'
 import { H1_Heading, H2_Heading } from '../../components/typo/Heading'
 import { Input } from '../../components/Input'
@@ -11,12 +12,12 @@ import { InventoryMeter } from '../../../generated/types'
 import { Label } from './components/Label'
 import { P_BodyText } from '../../components/typo/BodyText'
 import { RouterLink } from '../../components/Link'
-import { SelectElement } from '../../components/Select'
+import { Select } from '../../components/Select'
 import { UPDATE_INVENTORY_METER } from '../../graphql/mutations/updateInventoryMeter'
 import { UserStateContext } from '../../context/UserContext'
 import { client } from '../../apollo/client'
+import { colors, styles } from '../../helpers/theme'
 import { meterTypes } from '../../helpers/variables'
-import { styles } from '../../helpers/theme'
 import { ReactComponent as thinArrowIcon } from '../../icons/thin-arrow-icon.svg'
 import { urls } from '../../helpers/urls'
 import { useParams } from 'react-router-dom'
@@ -112,7 +113,7 @@ export const InventoryMeterDetail = () => {
       </Div_UpdatedContainer>
       {inventoryMeter ? (
         <>
-          <Div_SubContainer column={true}>
+          <Div_SubContainer>
             <div>
               <P_BodyText className='grey900'>
                 Enmon Tools / Inventory Meters /{' '}
@@ -128,7 +129,7 @@ export const InventoryMeterDetail = () => {
               </Div_PaddingContainer>
               {inventoryMeter?.inventory_location?.name ? (
                 <Div_PaddingContainer padding={`0 ${styles.spacing.s} 0 0`}>
-                  <P_BodyText color={styles.colors.grey900}>
+                  <P_BodyText className='grey900'>
                     {inventoryMeter?.inventory_location?.name}
                   </P_BodyText>
                 </Div_PaddingContainer>
@@ -136,7 +137,7 @@ export const InventoryMeterDetail = () => {
               <Label>{inventoryMeter?.meter_type!}</Label>
             </Div_Box>
           </Div_SubContainer>
-          <Div_SubContainer padding='0' column={true}>
+          <Div_SubContainer className='fullWidth'>
             <Div_BorderContainer>
               <H2_Heading className='m'>Details</H2_Heading>
             </Div_BorderContainer>
@@ -155,7 +156,7 @@ export const InventoryMeterDetail = () => {
                 label='Monitored Entity'
                 onChange={e => setMonitoredEntity(e.target.value)}
               />
-              <SelectElement
+              <Select
                 label='Meter Type'
                 className='borderElement'
                 options={meterTypes}
@@ -181,14 +182,14 @@ export const InventoryMeterDetail = () => {
           <P_BodyText>Loading...</P_BodyText>
         </Div_SubContainer>
       ) : inventoryMeter === null && err ? (
-        <Div_SubContainer column={true}>
+        <Div_SubContainer>
           <RouterLink to={urls.inventoryMeters}>
             <ThinArrowIcon />
           </RouterLink>
           <P_BodyText>Error occurred while fetching data</P_BodyText>
         </Div_SubContainer>
       ) : (
-        <Div_SubContainer column={true}>
+        <Div_SubContainer>
           <RouterLink to={urls.inventoryMeters}>
             <ThinArrowIcon />
           </RouterLink>
@@ -206,15 +207,15 @@ const Div_Wrapper = styled.div`
 
 const Div_UpdatedContainer = styled.div<{ updated: boolean }>`
   position: absolute;
-  background-color: ${styles.colors.white};
+  background-color: ${colors.white};
   top: 0;
   right: -500px;
   margin: ${styles.spacing.m};
   padding: ${styles.spacing.m};
   transition: ${styles.transition.secondary};
-  border: ${styles.borderProperty.primary} ${styles.colors.grey200};
+  border: ${styles.borderProperty.primary} ${colors.grey200};
   border-radius: ${styles.borderRadius.primary};
-  box-shadow: ${styles.boxShadowProperty.primary} ${styles.colors.blue100};
+  box-shadow: ${styles.boxShadowProperty.primary} ${colors.blue100};
   ${({ updated }) =>
     updated &&
     css`
@@ -223,13 +224,13 @@ const Div_UpdatedContainer = styled.div<{ updated: boolean }>`
 `
 
 const Span_BlackSpan = styled.span`
-  color: ${styles.colors.black};
+  color: ${colors.black};
 `
 const ThinArrowIcon = styled(thinArrowIcon)`
   width: ${styles.iconWidth.m};
   transition: ${styles.transition.primary};
   &:hover {
-    fill: ${styles.colors.primaryGreen};
+    fill: ${colors.primaryGreen};
   }
 `
 

@@ -4,7 +4,7 @@ import { P_BodyText } from '../../../components/typo/BodyText'
 import { RouterLink } from '../../../components/Link'
 import { TableProps } from '../types'
 import { ReactComponent as arrowIcon } from '../../../icons/arrow-icon.svg'
-import { styles } from '../../../helpers/theme'
+import { colors, fontSizes, styles } from '../../../helpers/theme'
 import { urls } from '../../../helpers/urls'
 import React from 'react'
 import styled, { css } from 'styled-components'
@@ -126,8 +126,8 @@ const Table_InventoryTable = styled.table`
   border-collapse: collapse;
 `
 const Thead_InventoryThead = styled.thead`
-  background-color: ${styles.colors.grey50};
-  border-bottom: ${styles.borderProperty.primary} ${styles.colors.grey100};
+  background-color: ${colors.grey50};
+  border-bottom: ${styles.borderProperty.primary} ${colors.grey100};
 `
 
 const Div_HeaderContainer = styled.div<{
@@ -145,27 +145,27 @@ const Div_HeaderContainer = styled.div<{
     css`
       & > svg {
         ${sortField?.includes('desc') && 'transform: rotate(0deg)'};
-        fill: ${styles.colors.black};
+        fill: ${colors.black};
       }
     `}
 `
 const Tr_InventoryTr = styled.tr`
-  border-bottom: ${styles.borderProperty.primary} ${styles.colors.grey50};
+  border-bottom: ${styles.borderProperty.primary} ${colors.grey50};
   transition: ${styles.transition.primary};
   &:hover {
-    background-color: ${styles.colors.grey50};
+    background-color: ${colors.grey50};
   }
 `
 
 const Td_InventoryTd = styled.td`
-  font-size: ${styles.fontSize.s};
-  color: ${styles.colors.black};
+  font-size: ${fontSizes.s};
+  color: ${colors.black};
   padding: ${styles.spacing.l};
 `
 
 const ArrowIcon = styled(arrowIcon)`
   width: ${styles.iconWidth.xs};
-  fill: ${styles.colors.grey300};
+  fill: ${colors.grey300};
   margin-left: ${styles.spacing.xs};
   transform: rotate(-180deg);
 `

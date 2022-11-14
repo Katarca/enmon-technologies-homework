@@ -1,23 +1,4 @@
 export const styles = {
-  colors: {
-    white: '#ffffff',
-    black: '#252525',
-    pink100: '#FFF2F0',
-    pink200: '#FFCCC7',
-    red200: '#FF4D6A',
-    orange100: '#FFF7E6',
-    orange200: '#D46B65',
-    primaryGreen: '#1B9991',
-    green100: '#F6FFED',
-    grey50: '#FAFAFA',
-    grey100: '#F0F2F5',
-    grey200: '#D9D9D9',
-    grey300: '#BFBFBF',
-    grey900: '#00000073',
-    blue100: '#E6F7FF',
-    blue200: '#AADFFF',
-    blue500: '#096DD9',
-  },
   spacing: {
     xxs: '2px',
     xs: '5px',
@@ -25,12 +6,6 @@ export const styles = {
     m: '15px',
     l: '25px',
     xl: '50px',
-  },
-  fontSize: {
-    xs: '1.2rem',
-    s: '1.4rem',
-    m: '1.6rem',
-    l: '2rem',
   },
   iconWidth: {
     xs: '10px',
