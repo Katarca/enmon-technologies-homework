@@ -16,8 +16,8 @@ import {
 } from './styles'
 import { GET_INVENTORY_METER } from '../../graphql/getInventoryMeters'
 import { H1_Heading, H2_Heading } from '../../components/typo/Heading'
+import { InitialInventoryMeterState, inventoryMeterReducer } from './hooks'
 import { Input } from '../../components/Input'
-import { InventoryMeter } from '../../../generated/types'
 import { P_BodyText } from '../../components/typo/BodyText'
 import { RouterLink } from '../../components/Link'
 import { Select } from '../../components/Select'
@@ -29,23 +29,17 @@ import { meterTypes } from '../../helpers/variables'
 import { styles } from '../../helpers/theme'
 import { urls } from '../../helpers/urls'
 import { useParams } from 'react-router-dom'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useReducer } from 'react'
 
 export const InventoryMeterDetail = () => {
+  const userContext = useContext(UserStateContext)
+
+  const [state, dispatch] = useReducer(inventoryMeterReducer, InitialInventoryMeterState)
+
   const params = useParams<{ id: string }>()
   const id = params.id
-  const userContext = useContext(UserStateContext)
-  const [inventoryMeter, setInventoryMeter] = useState(null as null | InventoryMeter)
 
-  const [monitoredEntity, setMonitoredEntity] = useState(null as null | string)
-  const [meterType, setMeterType] = useState(null as null | string)
-  const [serialNum, setSerialNum] = useState(null as null | string)
-
-  const [err, setErr] = useState(false)
-
-  const [dataUpdated, setDataUpdated] = useState(false)
-
-  const fetchData = async () => {
+  const fetchInventoryMeter = async () => {
     try {
       const getInventoryMeter = await client.query({
         query: GET_INVENTORY_METER,
@@ -60,29 +54,32 @@ export const InventoryMeterDetail = () => {
           },
         },
       })
-      setInventoryMeter(
-        getInventoryMeter.data.inventoryMeters
+      dispatch({
+        type: 'updateData',
+        payload: getInventoryMeter.data.inventoryMeters
           ? getInventoryMeter.data.inventoryMeters[0]
-          : undefined
-      )
+          : undefined,
+      })
     } catch (error) {
-      setErr(true)
       console.error(error)
+      dispatch({ type: 'updateFetchingError', payload: 'Error occurred while fetching data' })
+      dispatch({ type: 'updateData', payload: null })
     }
   }
 
   useEffect(() => {
-    fetchData()
+    fetchInventoryMeter()
   }, [])
 
   const dataObj = {
-    ...(serialNum !== null &&
-      serialNum !== inventoryMeter?.serial_number && { serial_number: serialNum }),
-    ...(monitoredEntity &&
-      monitoredEntity !== inventoryMeter?.monitored_entity && {
-        monitored_entity: monitoredEntity,
+    ...(state.serialNumber !== null &&
+      state.serialNumber !== state.data?.serial_number && { serial_number: state.serialNumber }),
+    ...(state.monitoredEntity &&
+      state.monitoredEntity !== state.data?.monitored_entity && {
+        monitored_entity: state.monitoredEntity,
       }),
-    ...(meterType && meterType !== inventoryMeter?.meter_type && { meter_type: meterType }),
+    ...(state.meterType &&
+      state.meterType !== state.data?.meter_type && { meter_type: state.meterType }),
   }
 
   const handleUpdate = async () => {
@@ -93,7 +90,7 @@ export const InventoryMeterDetail = () => {
           input: {
             data: dataObj,
             where: {
-              id: inventoryMeter?.id,
+              id: state.data?.id,
             },
           },
         },
@@ -103,28 +100,27 @@ export const InventoryMeterDetail = () => {
           },
         },
       })
-      setDataUpdated(true)
-      setTimeout(() => setDataUpdated(false), 3000)
-      fetchData()
+      dispatch({ type: 'changeDataUpdated', payload: true })
+      setTimeout(() => dispatch({ type: 'changeDataUpdated', payload: false }), 3000)
+      fetchInventoryMeter()
     } catch (error) {
       console.error(error)
-      setErr(true)
-      setInventoryMeter(null)
+      dispatch({ type: 'updateFetchingError', payload: 'Error occurred while fetching data' })
+      dispatch({ type: 'updateData', payload: null })
     }
   }
 
   return (
     <Div_Wrapper>
-      <Div_UpdatedContainer updated={dataUpdated}>
+      <Div_UpdatedContainer updated={state.dataUpdated}>
         <P_BodyText className='primaryGreen'>Inventory meter updated</P_BodyText>
       </Div_UpdatedContainer>
-      {inventoryMeter ? (
+      {state.data ? (
         <>
           <Div_SubContainer>
             <div>
               <P_BodyText className='grey900'>
-                Enmon Tools / Inventory Meters /{' '}
-                <Span_BlackSpan>{inventoryMeter?.id}</Span_BlackSpan>
+                Enmon Tools / Inventory Meters / <Span_BlackSpan>{state.data?.id}</Span_BlackSpan>
               </P_BodyText>
             </div>
             <Div_Box>
@@ -132,16 +128,16 @@ export const InventoryMeterDetail = () => {
                 <ThinArrowIcon />
               </RouterLink>
               <Div_PaddingContainer>
-                <H1_Heading className='l'>{inventoryMeter?.id}</H1_Heading>
+                <H1_Heading className='l'>{state.data?.id}</H1_Heading>
               </Div_PaddingContainer>
-              {inventoryMeter?.inventory_location?.name ? (
+              {state.data?.inventory_location?.name ? (
                 <Div_PaddingContainer padding={`0 ${styles.spacing.s} 0 0`}>
                   <P_BodyText className='grey900'>
-                    {inventoryMeter?.inventory_location?.name}
+                    {state.data?.inventory_location?.name}
                   </P_BodyText>
                 </Div_PaddingContainer>
               ) : null}
-              <Span_TextBox>{inventoryMeter?.meter_type!}</Span_TextBox>
+              <Span_TextBox>{state.data?.meter_type!}</Span_TextBox>
             </Div_Box>
           </Div_SubContainer>
           <Div_SubContainer className='fullWidth'>
@@ -151,26 +147,24 @@ export const InventoryMeterDetail = () => {
             <Div_InputsContainer>
               <Input
                 type='text'
-                defaultValue={inventoryMeter?.serial_number!}
+                defaultValue={state.data?.serial_number!}
                 className='borderElement'
                 label='Serial Number'
-                onChange={e => setSerialNum(e.target.value)}
+                onChange={e => dispatch({ type: 'updateSerialNumber', payload: e.target.value })}
               />
               <Input
                 type='text'
-                defaultValue={inventoryMeter?.monitored_entity!}
+                defaultValue={state.data?.monitored_entity!}
                 className='borderElement'
                 label='Monitored Entity'
-                onChange={e => setMonitoredEntity(e.target.value)}
+                onChange={e => dispatch({ type: 'updateMonitoredEntity', payload: e.target.value })}
               />
               <Select
                 label='Meter Type'
                 className='borderElement'
                 options={meterTypes}
-                onChange={e => {
-                  setMeterType(e.target.value)
-                }}
-                defaultValue={inventoryMeter?.meter_type!}
+                onChange={e => dispatch({ type: 'updateMeterType', payload: e.target.value })}
+                defaultValue={state.data?.meter_type!}
               />
               <Div_ButtonContainer>
                 <CustomButton
@@ -184,11 +178,11 @@ export const InventoryMeterDetail = () => {
             </Div_InputsContainer>
           </Div_SubContainer>
         </>
-      ) : inventoryMeter === null && !err ? (
+      ) : state.data === null && !state.fetchingError ? (
         <Div_SubContainer>
           <P_BodyText>Loading...</P_BodyText>
         </Div_SubContainer>
-      ) : inventoryMeter === null && err ? (
+      ) : state.data === null && state.fetchingError ? (
         <Div_SubContainer>
           <RouterLink to={urls.inventoryMeters}>
             <ThinArrowIcon />

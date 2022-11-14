@@ -11,7 +11,7 @@ export const Div_UpdatedContainer = styled.div<{ updated: boolean }>`
   position: absolute;
   background-color: ${colors.white};
   top: 0;
-  right: 0;
+  right: -500px;
   margin: ${styles.spacing.m};
   padding: ${styles.spacing.m};
   transition: ${styles.transition.secondary};

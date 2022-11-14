@@ -14,36 +14,32 @@ import { LOGIN } from '../../graphql/mutations/loginMutation'
 import { P_BodyText } from '../../components/typo/BodyText'
 import { UserStateContext } from '../../context/UserContext'
 import { client } from '../../apollo/client'
+import { initialLoginState, loginReducer } from './hooks'
 import { urls } from '../../helpers/urls'
 import { useNavigate } from 'react-router-dom'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useReducer } from 'react'
 
 export const Login = () => {
-  const [email, setEmail] = useState(null as null | string)
-  const [password, setPassword] = useState(null as null | string)
-  const [errorMsg, setErrorMsg] = useState(null as null | 'Something went wrong')
-  const [emailError, setEmailError] = useState(
-    null as null | 'Please enter email' | 'Email is not valid'
-  )
-  const [passwordError, setPasswordError] = useState(null as null | 'Please enter password')
-
   const userContext = useContext(UserStateContext)
+
+  const [state, dispatch] = useReducer(loginReducer, initialLoginState)
+
   const navigate = useNavigate()
 
   const handleLogin = async () => {
-    setEmailError(null)
-    setPasswordError(null)
-    setErrorMsg(null)
+    dispatch({ type: 'updateEmailError', payload: null })
+    dispatch({ type: 'updatePasswordError', payload: null })
+    dispatch({ type: 'updateLoginError', payload: null })
     let isValid = true
-    if (email?.trim().length === 0 || !email) {
-      setEmailError('Please enter email')
+    if (!state.email) {
+      dispatch({ type: 'updateEmailError', payload: 'Please enter email' })
       isValid = false
-    } else if (!email?.trim().includes('@')) {
-      setEmailError('Email is not valid')
+    } else if (!state.email.trim().includes('@')) {
+      dispatch({ type: 'updateEmailError', payload: 'Email is not valid' })
       isValid = false
     }
-    if (password?.trim().length === 0 || !password) {
-      setPasswordError('Please enter password')
+    if (!state.password) {
+      dispatch({ type: 'updatePasswordError', payload: 'Please enter password' })
       isValid = false
     }
     if (!isValid) return
@@ -52,15 +48,15 @@ export const Login = () => {
         mutation: LOGIN,
         variables: {
           input: {
-            identifier: email?.trim(),
-            password: password?.trim(),
+            identifier: state.email?.trim(),
+            password: state.password?.trim(),
           },
         },
       })
       userContext.setUserJwt(response.data.login.jwt)
       navigate(urls.inventoryMeters)
     } catch (error) {
-      setErrorMsg('Something went wrong')
+      dispatch({ type: 'updateLoginError', payload: 'Something went wrong' })
     }
   }
 
@@ -70,25 +66,29 @@ export const Login = () => {
         <Div_HeadingContainer>
           <H1_Heading className='primaryGreen'>Log in</H1_Heading>
         </Div_HeadingContainer>
-        {errorMsg ? (
+        {state.loginError ? (
           <Div_ErrorContainer>
             <ErrorIcon />
-            <P_BodyText>{errorMsg}</P_BodyText>
+            <P_BodyText>{state.loginError}</P_BodyText>
           </Div_ErrorContainer>
         ) : null}
         <Input
           type='email'
           placeholder='email'
-          onChange={e => setEmail(e.target.value)}
-          inputError={emailError!}
+          onChange={e => {
+            dispatch({ type: 'updateEmail', payload: e.target.value })
+          }}
+          inputError={state.emailError!}
         >
           <PersonIcon />
         </Input>
         <Input
           type='password'
           placeholder='password'
-          onChange={e => setPassword(e.target.value)}
-          inputError={passwordError!}
+          onChange={e => {
+            dispatch({ type: 'updatePassword', payload: e.target.value })
+          }}
+          inputError={state.passwordError!}
         >
           <LockIcon />
         </Input>
