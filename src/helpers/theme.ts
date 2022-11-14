@@ -53,6 +53,51 @@ export const styles = {
   },
 } as const
 
+// Colors
+
+export const colors = {
+  white: '#ffffff',
+  black: '#252525',
+  pink100: '#FFF2F0',
+  pink200: '#FFCCC7',
+  red200: '#FF4D6A',
+  orange100: '#FFF7E6',
+  orange200: '#D46B65',
+  primaryGreen: '#1B9991',
+  green100: '#F6FFED',
+  grey50: '#FAFAFA',
+  grey100: '#F0F2F5',
+  grey200: '#D9D9D9',
+  grey300: '#BFBFBF',
+  grey900: '#00000073',
+  blue100: '#E6F7FF',
+  blue200: '#AADFFF',
+  blue500: '#096DD9',
+} as const
+
+export type Colors = typeof colors
+export type ColorKeys = keyof typeof colors
+
+export type ColorKeysArray = Array<ColorKeys>
+export type ColorValues = Colors[ColorKeys]
+
+// Font sizes
+
+export const fontSizes = {
+  xs: '1.2rem',
+  s: '1.4rem',
+  m: '1.6rem',
+  l: '2rem',
+}
+
+export type FontSizes = typeof fontSizes
+export type FontSizeKeys = keyof typeof fontSizes
+
+export type FontSizeKeysArray = Array<FontSizeKeys>
+export type FontSizeValues = FontSizes[FontSizeKeys]
+
+// Breakpoints
+
 export const device = {
   miniPhone: 380,
   phone: 650,

@@ -5,11 +5,11 @@ import {
   Div_SubContainer,
 } from '../../components/Container'
 import { GET_INVENTORY_METER } from '../../graphql/getInventoryMeters'
-import { H1_Heading, H2_Heading } from '../../components/Heading'
+import { H1_Heading, H2_Heading } from '../../components/typo/Heading'
 import { InputElement } from '../../components/Input'
 import { InventoryMeter } from '../../../generated/types'
 import { Label } from './components/Label'
-import { P_BodyText } from '../../components/BodyText'
+import { P_BodyText } from '../../components/typo/BodyText'
 import { RouterLink } from '../../components/Link'
 import { SelectElement } from '../../components/Select'
 import { UPDATE_INVENTORY_METER } from '../../graphql/mutations/updateInventoryMeter'
@@ -114,7 +114,7 @@ export const InventoryMeterDetail = () => {
         <>
           <Div_SubContainer column={true}>
             <div>
-              <P_BodyText color={styles.colors.grey900}>
+              <P_BodyText className='grey900'>
                 Enmon Tools / Inventory Meters /{' '}
                 <Span_BlackSpan>{inventoryMeter?.id}</Span_BlackSpan>
               </P_BodyText>
@@ -124,7 +124,7 @@ export const InventoryMeterDetail = () => {
                 <ThinArrowIcon />
               </RouterLink>
               <Div_PaddingContainer>
-                <H1_Heading fontSize={styles.fontSize.l}>{inventoryMeter?.id}</H1_Heading>
+                <H1_Heading className='l'>{inventoryMeter?.id}</H1_Heading>
               </Div_PaddingContainer>
               {inventoryMeter?.inventory_location?.name ? (
                 <Div_PaddingContainer padding={`0 ${styles.spacing.s} 0 0`}>
@@ -138,7 +138,7 @@ export const InventoryMeterDetail = () => {
           </Div_SubContainer>
           <Div_SubContainer padding='0' column={true}>
             <Div_BorderContainer>
-              <H2_Heading fontSize={styles.fontSize.m}>Details</H2_Heading>
+              <H2_Heading className='m'>Details</H2_Heading>
             </Div_BorderContainer>
             <Div_FormContainer>
               <InputElement

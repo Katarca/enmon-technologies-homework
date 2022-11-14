@@ -1,9 +1,9 @@
 import { Div_SubContainer } from '../../components/Container'
 import { GET_INVENTORY_METERS, GET_INVENTORY_METERS_COUNT } from '../../graphql/getInventoryMeters'
-import { H1_Heading } from '../../components/Heading'
+import { H1_Heading } from '../../components/typo/Heading'
 import { InventoryMeter } from '../../../generated/types'
 import { InventoryTable } from './components/InventoryTable'
-import { P_BodyText } from '../../components/BodyText'
+import { P_BodyText } from '../../components/typo/BodyText'
 import { Pagination } from '../../components/Pagination'
 import { SortField, SortValue } from './types'
 import { UserStateContext } from '../../context/UserContext'
@@ -76,7 +76,7 @@ export const InventoryMeters = () => {
   return (
     <>
       <Div_SubContainer>
-        <H1_Heading fontSize={styles.fontSize.l}>Inventory Meters List</H1_Heading>
+        <H1_Heading className='l'>Inventory Meters List</H1_Heading>
       </Div_SubContainer>
       <Div_SubContainer column={true} alignItems='flex-end'>
         {err ? (

@@ -1,9 +1,9 @@
 import { CustomButton } from '../components/Button'
 import { Div_Container } from '../components/Container'
-import { H1_Heading } from '../components/Heading'
+import { H1_Heading } from '../components/typo/Heading'
 import { InputElement } from '../components/Input'
 import { LOGIN } from '../graphql/mutations/loginMutation'
-import { P_BodyText } from '../components/BodyText'
+import { P_BodyText } from '../components/typo/BodyText'
 import { UserStateContext } from '../context/UserContext'
 import { breakpoint, styles } from '../helpers/theme'
 import { client } from '../apollo/client'
@@ -65,7 +65,7 @@ export const Login = () => {
     <Div_Container>
       <Div_LoginContainer>
         <Div_HeadingContainer>
-          <H1_Heading color={styles.colors.primaryGreen}>Log in</H1_Heading>
+          <H1_Heading className='primaryGreen'>Log in</H1_Heading>
         </Div_HeadingContainer>
         {invalidCredentials ? (
           <Div_InvalidContainer>

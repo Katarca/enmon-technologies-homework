@@ -1,5 +1,5 @@
 import { Div_InputContainer, Div_PaddingContainer } from './Container'
-import { P_BodyText } from './BodyText'
+import { P_BodyText } from './typo/BodyText'
 import { styles } from '../helpers/theme'
 import React, { ComponentProps, ReactNode } from 'react'
 

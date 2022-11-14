@@ -1,6 +1,6 @@
 import { CustomButton } from './Button'
 import { Div_SubContainer } from './Container'
-import { P_BodyText } from './BodyText'
+import { P_BodyText } from './typo/BodyText'
 import { UserStateContext } from '../context/UserContext'
 import { styles } from '../helpers/theme'
 import { urls } from '../helpers/urls'

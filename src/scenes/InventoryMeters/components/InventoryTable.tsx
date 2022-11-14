@@ -1,6 +1,6 @@
 import { CustomButton } from '../../../components/Button'
 import { Label } from './Label'
-import { P_BodyText } from '../../../components/BodyText'
+import { P_BodyText } from '../../../components/typo/BodyText'
 import { RouterLink } from '../../../components/Link'
 import { TableProps } from '../types'
 import { ReactComponent as arrowIcon } from '../../../icons/arrow-icon.svg'
