@@ -6,7 +6,7 @@ import {
 } from '../../components/Container'
 import { GET_INVENTORY_METER } from '../../graphql/getInventoryMeters'
 import { H1_Heading, H2_Heading } from '../../components/typo/Heading'
-import { InputElement } from '../../components/Input'
+import { Input } from '../../components/Input'
 import { InventoryMeter } from '../../../generated/types'
 import { Label } from './components/Label'
 import { P_BodyText } from '../../components/typo/BodyText'
@@ -141,14 +141,14 @@ export const InventoryMeterDetail = () => {
               <H2_Heading className='m'>Details</H2_Heading>
             </Div_BorderContainer>
             <Div_FormContainer>
-              <InputElement
+              <Input
                 type='text'
                 defaultValue={inventoryMeter?.serial_number!}
                 className='borderElement'
                 label='Serial Number'
                 onChange={e => setSerialNum(e.target.value)}
               />
-              <InputElement
+              <Input
                 type='text'
                 defaultValue={inventoryMeter?.monitored_entity!}
                 className='borderElement'

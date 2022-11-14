@@ -1,17 +1,19 @@
-import { Div_InputContainer, Div_PaddingContainer } from './Container'
-import { P_BodyText } from './typo/BodyText'
-import { styles } from '../helpers/theme'
+import { Div_InputContainer, Div_PaddingContainer } from '../Container'
+import { P_BodyText } from '../typo/BodyText'
+import { styles } from '../../helpers/theme'
 import React, { ComponentProps, ReactNode } from 'react'
 
-export const InputElement = ({
+export const Input = ({
   children,
   label,
   className,
+  inputError,
   ...props
 }: {
   children?: ReactNode
   label?: string
   className?: string
+  inputError?: string
 } & ComponentProps<'input'>) => {
   return (
     <div>
@@ -24,6 +26,7 @@ export const InputElement = ({
         {children}
         <input {...props} />
       </Div_InputContainer>
+      {inputError ? <P_BodyText className='red200'>{inputError}</P_BodyText> : null}
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { CustomButton } from '../components/Button/styles'
 import { Div_Container } from '../components/Container'
 import { H1_Heading } from '../components/typo/Heading'
-import { InputElement } from '../components/Input'
+import { Input } from '../components/Input'
 import { LOGIN } from '../graphql/mutations/loginMutation'
 import { P_BodyText } from '../components/typo/BodyText'
 import { UserStateContext } from '../context/UserContext'
@@ -73,20 +73,22 @@ export const Login = () => {
             <P_BodyText>{invalidCredentials}</P_BodyText>
           </Div_InvalidContainer>
         ) : null}
-        <InputElement type='email' placeholder='email' onChange={e => setEmail(e.target.value)}>
+        <Input
+          type='email'
+          placeholder='email'
+          onChange={e => setEmail(e.target.value)}
+          inputError={emailError!}
+        >
           <PersonIcon />
-        </InputElement>
-        {emailError ? <P_BodyText color={styles.colors.red200}>{emailError}</P_BodyText> : null}
-        <InputElement
+        </Input>
+        <Input
           type='password'
           placeholder='password'
           onChange={e => setPassword(e.target.value)}
+          inputError={passwordError!}
         >
           <LockIcon />
-        </InputElement>
-        {passwordError ? (
-          <P_BodyText color={styles.colors.red200}>{passwordError}</P_BodyText>
-        ) : null}
+        </Input>
         <CustomButton className='green fullWidth' onClick={() => handleLogin()}>
           <P_BodyText>Log in</P_BodyText>
         </CustomButton>
