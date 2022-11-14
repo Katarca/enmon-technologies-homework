@@ -116,7 +116,7 @@ export const InventoryMeterDetail = () => {
   return (
     <Div_Wrapper>
       <Div_UpdatedContainer updated={dataUpdated}>
-        <P_BodyText>Inventory meter updated</P_BodyText>
+        <P_BodyText className='primaryGreen'>Inventory meter updated</P_BodyText>
       </Div_UpdatedContainer>
       {inventoryMeter ? (
         <>

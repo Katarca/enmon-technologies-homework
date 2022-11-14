@@ -11,13 +11,12 @@ export const Div_UpdatedContainer = styled.div<{ updated: boolean }>`
   position: absolute;
   background-color: ${colors.white};
   top: 0;
-  right: -500px;
+  right: 0;
   margin: ${styles.spacing.m};
   padding: ${styles.spacing.m};
   transition: ${styles.transition.secondary};
-  border: ${styles.borderProperty.primary} ${colors.grey200};
   border-radius: ${styles.borderRadius.primary};
-  box-shadow: ${styles.boxShadowProperty.primary} ${colors.blue100};
+  box-shadow: ${styles.boxShadowProperty.secondary} ${colors.grey200};
   ${({ updated }) =>
     updated &&
     css`

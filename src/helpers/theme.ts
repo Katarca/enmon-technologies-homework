@@ -25,6 +25,7 @@ export const styles = {
   },
   boxShadowProperty: {
     primary: '0 0 3px',
+    secondary: '0 0 15px',
   },
 } as const
 
