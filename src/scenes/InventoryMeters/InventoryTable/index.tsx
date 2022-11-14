@@ -1,13 +1,19 @@
+import {
+  ArrowIcon,
+  Div_HeaderContainer,
+  Div_TableContainer,
+  Table_InventoryTable,
+  Td_InventoryTd,
+  Thead_InventoryThead,
+  Tr_InventoryTr,
+} from './styles'
 import { CustomButton } from '../../../components/Button/styles'
-import { Label } from './Label'
 import { P_BodyText } from '../../../components/typo/BodyText'
 import { RouterLink } from '../../../components/Link'
+import { Span_TextBox } from '../../../components/typo/TextBox'
 import { TableProps } from '../types'
-import { ReactComponent as arrowIcon } from '../../../icons/arrow-icon.svg'
-import { colors, fontSizes, styles } from '../../../helpers/theme'
 import { urls } from '../../../helpers/urls'
 import React from 'react'
-import styled, { css } from 'styled-components'
 
 export const InventoryTable = (props: TableProps) => {
   return (
@@ -96,9 +102,19 @@ export const InventoryTable = (props: TableProps) => {
               </Td_InventoryTd>
               <Td_InventoryTd>
                 {meter.accessibility?.split(';').map((accessibility, i) => (
-                  <Label key={i} accessibility={accessibility}>
+                  <Span_TextBox
+                    key={i}
+                    className={
+                      meter.accessibility === 'good'
+                        ? 'good'
+                        : meter.accessibility === 'floodedShaft' ||
+                          meter.accessibility === 'veryHigh'
+                        ? 'bad'
+                        : 'average'
+                    }
+                  >
                     {accessibility}
-                  </Label>
+                  </Span_TextBox>
                 ))}
               </Td_InventoryTd>
               <Td_InventoryTd>
@@ -115,57 +131,3 @@ export const InventoryTable = (props: TableProps) => {
     </Div_TableContainer>
   )
 }
-
-const Div_TableContainer = styled.div`
-  overflow: auto;
-  width: 100%;
-`
-
-const Table_InventoryTable = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-`
-const Thead_InventoryThead = styled.thead`
-  background-color: ${colors.grey50};
-  border-bottom: ${styles.borderProperty.primary} ${colors.grey100};
-`
-
-const Div_HeaderContainer = styled.div<{
-  sortField?: string
-  active?: boolean
-  clickable?: boolean
-}>`
-  display: flex;
-  padding: ${styles.spacing.l} ${styles.spacing.m};
-  justify-content: space-between;
-  cursor: ${props => (props.clickable ? 'pointer' : 'auto')};
-  ${({ active, sortField }) =>
-    active &&
-    sortField &&
-    css`
-      & > svg {
-        ${sortField?.includes('desc') && 'transform: rotate(0deg)'};
-        fill: ${colors.black};
-      }
-    `}
-`
-const Tr_InventoryTr = styled.tr`
-  border-bottom: ${styles.borderProperty.primary} ${colors.grey50};
-  transition: ${styles.transition.primary};
-  &:hover {
-    background-color: ${colors.grey50};
-  }
-`
-
-const Td_InventoryTd = styled.td`
-  font-size: ${fontSizes.s};
-  color: ${colors.black};
-  padding: ${styles.spacing.l};
-`
-
-const ArrowIcon = styled(arrowIcon)`
-  width: ${styles.iconWidth.xs};
-  fill: ${colors.grey300};
-  margin-left: ${styles.spacing.xs};
-  transform: rotate(-180deg);
-`

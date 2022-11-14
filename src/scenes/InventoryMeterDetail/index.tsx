@@ -5,24 +5,31 @@ import {
   Div_SubContainer,
 } from '../../components/Container/styles'
 
+import {
+  Div_Box,
+  Div_ButtonContainer,
+  Div_InputsContainer,
+  Div_UpdatedContainer,
+  Div_Wrapper,
+  Span_BlackSpan,
+  ThinArrowIcon,
+} from './styles'
 import { GET_INVENTORY_METER } from '../../graphql/getInventoryMeters'
 import { H1_Heading, H2_Heading } from '../../components/typo/Heading'
 import { Input } from '../../components/Input'
 import { InventoryMeter } from '../../../generated/types'
-import { Label } from './components/Label'
 import { P_BodyText } from '../../components/typo/BodyText'
 import { RouterLink } from '../../components/Link'
 import { Select } from '../../components/Select'
+import { Span_TextBox } from '../../components/typo/TextBox'
 import { UPDATE_INVENTORY_METER } from '../../graphql/mutations/updateInventoryMeter'
 import { UserStateContext } from '../../context/UserContext'
 import { client } from '../../apollo/client'
-import { colors, styles } from '../../helpers/theme'
 import { meterTypes } from '../../helpers/variables'
-import { ReactComponent as thinArrowIcon } from '../../icons/thin-arrow-icon.svg'
+import { styles } from '../../helpers/theme'
 import { urls } from '../../helpers/urls'
 import { useParams } from 'react-router-dom'
 import React, { useContext, useEffect, useState } from 'react'
-import styled, { css } from 'styled-components'
 
 export const InventoryMeterDetail = () => {
   const params = useParams<{ id: string }>()
@@ -134,14 +141,14 @@ export const InventoryMeterDetail = () => {
                   </P_BodyText>
                 </Div_PaddingContainer>
               ) : null}
-              <Label>{inventoryMeter?.meter_type!}</Label>
+              <Span_TextBox>{inventoryMeter?.meter_type!}</Span_TextBox>
             </Div_Box>
           </Div_SubContainer>
           <Div_SubContainer className='fullWidth'>
             <Div_BorderContainer>
               <H2_Heading className='m'>Details</H2_Heading>
             </Div_BorderContainer>
-            <Div_FormContainer>
+            <Div_InputsContainer>
               <Input
                 type='text'
                 defaultValue={inventoryMeter?.serial_number!}
@@ -174,7 +181,7 @@ export const InventoryMeterDetail = () => {
                   <P_BodyText>Save</P_BodyText>
                 </CustomButton>
               </Div_ButtonContainer>
-            </Div_FormContainer>
+            </Div_InputsContainer>
           </Div_SubContainer>
         </>
       ) : inventoryMeter === null && !err ? (
@@ -199,60 +206,3 @@ export const InventoryMeterDetail = () => {
     </Div_Wrapper>
   )
 }
-
-const Div_Wrapper = styled.div`
-  position: relative;
-  overflow-x: hidden;
-`
-
-const Div_UpdatedContainer = styled.div<{ updated: boolean }>`
-  position: absolute;
-  background-color: ${colors.white};
-  top: 0;
-  right: -500px;
-  margin: ${styles.spacing.m};
-  padding: ${styles.spacing.m};
-  transition: ${styles.transition.secondary};
-  border: ${styles.borderProperty.primary} ${colors.grey200};
-  border-radius: ${styles.borderRadius.primary};
-  box-shadow: ${styles.boxShadowProperty.primary} ${colors.blue100};
-  ${({ updated }) =>
-    updated &&
-    css`
-      right: 0;
-    `}
-`
-
-const Span_BlackSpan = styled.span`
-  color: ${colors.black};
-`
-const ThinArrowIcon = styled(thinArrowIcon)`
-  width: ${styles.iconWidth.m};
-  transition: ${styles.transition.primary};
-  &:hover {
-    fill: ${colors.primaryGreen};
-  }
-`
-
-const Div_Box = styled.div`
-  padding-top: ${styles.spacing.s};
-  display: flex;
-  align-items: center;
-`
-
-const Div_FormContainer = styled.div`
-  padding: ${styles.spacing.xl};
-  display: flex;
-  flex-wrap: wrap;
-  & > div {
-    margin-right: ${styles.spacing.m};
-    margin-bottom: ${styles.spacing.m};
-  }
-`
-const Div_ButtonContainer = styled.div`
-  display: flex;
-  align-items: flex-end;
-  & > button {
-    height: fit-content;
-  }
-`

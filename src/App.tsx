@@ -15,13 +15,10 @@ export function App() {
       <Navbar />
       <Routes>
         <Route path={urls.login} element={<Login />} />
-        <Route
-          path={urls.inventoryMeters}
-          element={<ProtectedRoute location='inventory-meters' />}
-        />
+        <Route path={urls.inventoryMeters} element={<ProtectedRoute scene='inventoryMeters' />} />
         <Route
           path={urls.inventoryMetersDetail}
-          element={<ProtectedRoute location='inventory-meter-detail' />}
+          element={<ProtectedRoute scene='inventoryMeterDetail' />}
         />
         <Route path='*' element={<PageNotFound />} />
       </Routes>
