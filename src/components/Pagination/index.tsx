@@ -8,7 +8,7 @@ type Pagination = {
   pageRangeDisplayed: number
 }
 
-export const Pagination: React.FC<Pagination> = props => {
+export const Pagination = (props: Pagination) => {
   return (
     <StyledReactPaginate
       breakLabel='...'

@@ -8,7 +8,6 @@ import { Pagination } from '../../components/Pagination'
 import { SortField, SortValue } from './types'
 import { UserStateContext } from '../../context/UserContext'
 import { client } from '../../apollo/client'
-import { styles } from '../../helpers/theme'
 import React, { useContext, useEffect, useState } from 'react'
 
 export const InventoryMeters = () => {

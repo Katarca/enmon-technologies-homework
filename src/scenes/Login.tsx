@@ -1,4 +1,4 @@
-import { CustomButton } from '../components/Button'
+import { CustomButton } from '../components/Button/styles'
 import { Div_Container } from '../components/Container'
 import { H1_Heading } from '../components/typo/Heading'
 import { InputElement } from '../components/Input'
@@ -87,7 +87,7 @@ export const Login = () => {
         {passwordError ? (
           <P_BodyText color={styles.colors.red200}>{passwordError}</P_BodyText>
         ) : null}
-        <CustomButton width='100%' color='green' onClick={() => handleLogin()}>
+        <CustomButton className='green fullWidth' onClick={() => handleLogin()}>
           <P_BodyText>Log in</P_BodyText>
         </CustomButton>
       </Div_LoginContainer>

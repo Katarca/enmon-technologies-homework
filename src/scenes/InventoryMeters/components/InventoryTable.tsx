@@ -1,4 +1,4 @@
-import { CustomButton } from '../../../components/Button'
+import { CustomButton } from '../../../components/Button/styles'
 import { Label } from './Label'
 import { P_BodyText } from '../../../components/typo/BodyText'
 import { RouterLink } from '../../../components/Link'
@@ -103,7 +103,7 @@ export const InventoryTable = (props: TableProps) => {
               </Td_InventoryTd>
               <Td_InventoryTd>
                 <RouterLink to={`${urls.inventoryMeters}/${meter.id}`}>
-                  <CustomButton color='white'>
+                  <CustomButton className='white'>
                     <P_BodyText>Detail</P_BodyText>
                   </CustomButton>
                 </RouterLink>

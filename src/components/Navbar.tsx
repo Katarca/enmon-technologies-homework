@@ -1,4 +1,4 @@
-import { CustomButton } from './Button'
+import { CustomButton } from './Button/styles'
 import { Div_SubContainer } from './Container'
 import { P_BodyText } from './typo/BodyText'
 import { UserStateContext } from '../context/UserContext'
@@ -23,7 +23,7 @@ export const Navbar = () => {
   } else {
     return (
       <Div_SubContainer margin={`0 0 ${styles.spacing.m} 0`} justifyContent='flex-end'>
-        <CustomButton color='white' onClick={() => handleLogout()}>
+        <CustomButton className='white' onClick={() => handleLogout()}>
           <P_BodyText>Logout</P_BodyText>
         </CustomButton>
       </Div_SubContainer>

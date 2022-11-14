@@ -1,4 +1,4 @@
-import { CustomButton } from '../../components/Button'
+import { CustomButton } from '../../components/Button/styles'
 import {
   Div_BorderContainer,
   Div_PaddingContainer,
@@ -166,7 +166,7 @@ export const InventoryMeterDetail = () => {
               />
               <Div_ButtonContainer>
                 <CustomButton
-                  color='green'
+                  className='green'
                   onClick={() => handleUpdate()}
                   disabled={Object.keys(dataObj).length === 0 ? true : false}
                 >
