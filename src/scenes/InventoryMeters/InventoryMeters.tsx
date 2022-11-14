@@ -7,7 +7,7 @@ import { P_BodyText } from '../../components/BodyText'
 import { Pagination } from '../../components/Pagination'
 import { SortField, SortValue } from './types'
 import { UserStateContext } from '../../context/UserContext'
-import { client } from '../../index'
+import { client } from '../../apollo/client'
 import { styles } from '../../helpers/theme'
 import React, { useContext, useEffect, useState } from 'react'
 

@@ -1,25 +1,9 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
+import { ApolloProvider } from '@apollo/client'
 import { App } from './App'
 import { BrowserRouter } from 'react-router-dom'
+import { client } from './apollo/client'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-
-const GQL_API = process.env.REACT_APP_GQL_API
-
-export const client = new ApolloClient({
-  uri: GQL_API,
-  cache: new InMemoryCache(),
-  defaultOptions: {
-    watchQuery: {
-      fetchPolicy: 'no-cache',
-      errorPolicy: 'ignore',
-    },
-    query: {
-      fetchPolicy: 'no-cache',
-      errorPolicy: 'all',
-    },
-  },
-})
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
