@@ -134,7 +134,7 @@ export const services = {
         },
       })
       return {
-        data: response.data.updateInventoryMeter.inventoryM,
+        data: response.data.updateInventoryMeter.inventoryMeter,
       }
     } catch (error) {
       console.error(error)

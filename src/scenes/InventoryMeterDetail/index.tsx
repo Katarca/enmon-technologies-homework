@@ -140,11 +140,11 @@ export const InventoryMeterDetail = () => {
             </Div_InputsContainer>
           </Div_SubContainer>
         </>
-      ) : state.data === null && !state.fetchingError ? (
+      ) : !state.data && !state.fetchingError ? (
         <Div_SubContainer>
           <P_BodyText>Loading...</P_BodyText>
         </Div_SubContainer>
-      ) : state.data === null && state.fetchingError ? (
+      ) : !state.data && state.fetchingError ? (
         <Div_SubContainer>
           <RouterLink to={urls.inventoryMeters}>
             <ThinArrowIcon />
