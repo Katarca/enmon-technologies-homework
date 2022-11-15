@@ -1,5 +1,4 @@
 import { Div_SubContainer } from '../../components/Container/styles'
-import { GET_INVENTORY_METERS, GET_INVENTORY_METERS_COUNT } from '../../graphql/getInventoryMeters'
 import { H1_Heading } from '../../components/typo/Heading'
 import { InitialInventoryMetersState, inventoryMetersReducer } from './hooks'
 import { InventoryTable } from './InventoryTable'
@@ -7,7 +6,7 @@ import { P_BodyText } from '../../components/typo/BodyText'
 import { Pagination } from '../../components/Pagination'
 import { SortValue } from './types'
 import { UserStateContext } from '../../context/UserContext'
-import { client } from '../../apollo/client'
+import { services } from '../../services/services'
 import React, { useContext, useEffect, useReducer } from 'react'
 
 export const InventoryMeters = () => {
@@ -19,32 +18,17 @@ export const InventoryMeters = () => {
 
   const fetchInventoryMeters = async () => {
     try {
-      const getInventoryMeters = await client.query({
-        query: GET_INVENTORY_METERS,
-        variables: {
-          sort: state.sortField,
-          start: state.offset,
-          publicationState: 'PREVIEW',
-          limit: itemsPerPage,
-        },
-        context: {
-          headers: {
-            Authorization: `Bearer ${userContext.userJwt}`,
-          },
-        },
+      const response = await services.getInventoryMeters({
+        jwt: userContext.userJwt!,
+        sort: state.sortField,
+        start: state.offset,
+        limit: itemsPerPage,
       })
-      dispatch({ type: 'updateData', payload: getInventoryMeters.data.inventoryMeters })
-      const getCount = await client.query({
-        query: GET_INVENTORY_METERS_COUNT,
-        context: {
-          headers: {
-            Authorization: `Bearer ${userContext.userJwt}`,
-          },
-        },
-      })
+      dispatch({ type: 'updateData', payload: response.data })
+      const responseCount = await services.getInventoryMetersCount({ jwt: userContext.userJwt! })
       dispatch({
         type: 'updateDataCount',
-        payload: getCount.data?.inventoryMetersConnection.aggregate.totalCount,
+        payload: responseCount.data,
       })
     } catch (error) {
       console.error(error)

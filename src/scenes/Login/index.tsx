@@ -10,11 +10,10 @@ import {
 } from './styles'
 import { H1_Heading } from '../../components/typo/Heading'
 import { Input } from '../../components/Input'
-import { LOGIN } from '../../graphql/mutations/loginMutation'
 import { P_BodyText } from '../../components/typo/BodyText'
 import { UserStateContext } from '../../context/UserContext'
-import { client } from '../../apollo/client'
 import { initialLoginState, loginReducer } from './hooks'
+import { services } from '../../services/services'
 import { urls } from '../../helpers/urls'
 import { useNavigate } from 'react-router-dom'
 import React, { useContext, useReducer } from 'react'
@@ -44,16 +43,13 @@ export const Login = () => {
     }
     if (!isValid) return
     try {
-      const response = await client.mutate({
-        mutation: LOGIN,
-        variables: {
-          input: {
-            identifier: state.email?.trim(),
-            password: state.password?.trim(),
-          },
+      const response = await services.loginMutation({
+        input: {
+          identifier: state.email!.trim(),
+          password: state.password!.trim(),
         },
       })
-      userContext.setUserJwt(response.data.login.jwt)
+      userContext.setUserJwt(response.data.jwt)
       navigate(urls.inventoryMeters)
     } catch (error) {
       dispatch({ type: 'updateLoginError', payload: 'Something went wrong' })

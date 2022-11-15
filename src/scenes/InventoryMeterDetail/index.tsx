@@ -4,7 +4,6 @@ import {
   Div_PaddingContainer,
   Div_SubContainer,
 } from '../../components/Container/styles'
-
 import {
   Div_Box,
   Div_ButtonContainer,
@@ -14,7 +13,6 @@ import {
   Span_BlackSpan,
   ThinArrowIcon,
 } from './styles'
-import { GET_INVENTORY_METER } from '../../graphql/getInventoryMeters'
 import { H1_Heading, H2_Heading } from '../../components/typo/Heading'
 import { InitialInventoryMeterState, inventoryMeterReducer } from './hooks'
 import { Input } from '../../components/Input'
@@ -22,10 +20,9 @@ import { P_BodyText } from '../../components/typo/BodyText'
 import { RouterLink } from '../../components/Link'
 import { Select } from '../../components/Select'
 import { Span_TextBox } from '../../components/typo/TextBox'
-import { UPDATE_INVENTORY_METER } from '../../graphql/mutations/updateInventoryMeter'
 import { UserStateContext } from '../../context/UserContext'
-import { client } from '../../apollo/client'
 import { meterTypes } from '../../helpers/variables'
+import { services } from '../../services/services'
 import { styles } from '../../helpers/theme'
 import { urls } from '../../helpers/urls'
 import { useParams } from 'react-router-dom'
@@ -41,27 +38,12 @@ export const InventoryMeterDetail = () => {
 
   const fetchInventoryMeter = async () => {
     try {
-      const getInventoryMeter = await client.query({
-        query: GET_INVENTORY_METER,
-        variables: {
-          where: {
-            id: id,
-          },
-        },
-        context: {
-          headers: {
-            Authorization: `Bearer ${userContext.userJwt}`,
-          },
-        },
-      })
+      const response = await services.getInventoryMeter({ id: id!, jwt: userContext.userJwt! })
       dispatch({
         type: 'updateData',
-        payload: getInventoryMeter.data.inventoryMeters
-          ? getInventoryMeter.data.inventoryMeters[0]
-          : undefined,
+        payload: response.data ? response.data[0] : undefined,
       })
     } catch (error) {
-      console.error(error)
       dispatch({ type: 'updateFetchingError', payload: 'Error occurred while fetching data' })
       dispatch({ type: 'updateData', payload: null })
     }
@@ -71,36 +53,20 @@ export const InventoryMeterDetail = () => {
     fetchInventoryMeter()
   }, [])
 
-  const dataObj = {
-    ...(state.serialNumber !== null &&
-      state.serialNumber !== state.data?.serial_number && { serial_number: state.serialNumber }),
-    ...(state.monitoredEntity &&
-      state.monitoredEntity !== state.data?.monitored_entity && {
-        monitored_entity: state.monitoredEntity,
-      }),
-    ...(state.meterType &&
-      state.meterType !== state.data?.meter_type && { meter_type: state.meterType }),
-  }
-
   const handleUpdate = async () => {
     try {
-      await client.mutate({
-        mutation: UPDATE_INVENTORY_METER,
-        variables: {
-          input: {
-            data: dataObj,
-            where: {
-              id: state.data?.id,
-            },
-          },
+      const response = await services.updateInventoryMeterMutation({
+        jwt: userContext.userJwt!,
+        data: {
+          ...(state.serialNumber !== null && { serial_number: state.serialNumber! }),
+          ...(state.monitoredEntity !== null && { monitored_entity: state.monitoredEntity! }),
+          ...(state.meterType !== null && { meter_type: state.meterType! }),
         },
-        context: {
-          headers: {
-            Authorization: `Bearer ${userContext.userJwt}`,
-          },
+        where: {
+          id: state.data?.id!,
         },
       })
-      dispatch({ type: 'changeDataUpdated', payload: true })
+      dispatch({ type: 'changeDataUpdated', payload: response.data ? true : false })
       setTimeout(() => dispatch({ type: 'changeDataUpdated', payload: false }), 3000)
       fetchInventoryMeter()
     } catch (error) {
@@ -167,11 +133,7 @@ export const InventoryMeterDetail = () => {
                 defaultValue={state.data?.meter_type!}
               />
               <Div_ButtonContainer>
-                <CustomButton
-                  className='green'
-                  onClick={() => handleUpdate()}
-                  disabled={Object.keys(dataObj).length === 0 ? true : false}
-                >
+                <CustomButton className='green' onClick={() => handleUpdate()}>
                   <P_BodyText>Save</P_BodyText>
                 </CustomButton>
               </Div_ButtonContainer>
