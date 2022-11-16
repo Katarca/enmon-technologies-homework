@@ -11,11 +11,14 @@ type InventoryMetersState = {
 }
 
 type InventoryMetersAction =
-  | { type: 'updateData'; payload: InventoryMetersState['data'] }
-  | { type: 'updateDataCount'; payload: InventoryMetersState['dataCount'] }
-  | { type: 'updateSortField'; payload: InventoryMetersState['sortField'] }
-  | { type: 'updateOffset'; payload: InventoryMetersState['offset'] }
-  | { type: 'updateFetchingError'; payload: InventoryMetersState['fetchingError'] }
+  | { type: 'update'; payload: { key: 'data'; value: InventoryMetersState['data'] } }
+  | { type: 'update'; payload: { key: 'dataCount'; value: InventoryMetersState['dataCount'] } }
+  | { type: 'update'; payload: { key: 'sortField'; value: InventoryMetersState['sortField'] } }
+  | { type: 'update'; payload: { key: 'offset'; value: InventoryMetersState['offset'] } }
+  | {
+      type: 'update'
+      payload: { key: 'fetchingError'; value: InventoryMetersState['fetchingError'] }
+    }
 
 export const InitialInventoryMetersState: InventoryMetersState = {
   data: null,
@@ -30,35 +33,10 @@ export const inventoryMetersReducer: Reducer<InventoryMetersState, InventoryMete
   action
 ) => {
   switch (action.type) {
-    case 'updateData': {
+    case 'update':
       return {
         ...state,
-        data: action.payload,
+        [action.payload.key]: action.payload.value,
       }
-    }
-    case 'updateDataCount': {
-      return {
-        ...state,
-        dataCount: action.payload,
-      }
-    }
-    case 'updateSortField': {
-      return {
-        ...state,
-        sortField: action.payload,
-      }
-    }
-    case 'updateOffset': {
-      return {
-        ...state,
-        offset: action.payload,
-      }
-    }
-    case 'updateFetchingError': {
-      return {
-        ...state,
-        fetchingError: action.payload,
-      }
-    }
   }
 }

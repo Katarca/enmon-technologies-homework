@@ -40,12 +40,15 @@ export const InventoryMeterDetail = () => {
     try {
       const response = await services.getInventoryMeter({ id: id!, jwt: userContext.userJwt! })
       dispatch({
-        type: 'updateData',
-        payload: response.data ? response.data[0] : undefined,
+        type: 'update',
+        payload: { key: 'data', value: response.data ? response.data[0] : undefined },
       })
     } catch (error) {
-      dispatch({ type: 'updateFetchingError', payload: 'Error occurred while fetching data' })
-      dispatch({ type: 'updateData', payload: null })
+      dispatch({
+        type: 'update',
+        payload: { key: 'fetchingError', value: 'Error occurred while fetching data' },
+      })
+      dispatch({ type: 'update', payload: { key: 'data', value: null } })
     }
   }
 
@@ -66,13 +69,26 @@ export const InventoryMeterDetail = () => {
           id: state.data?.id!,
         },
       })
-      dispatch({ type: 'changeDataUpdated', payload: response.data ? true : false })
-      setTimeout(() => dispatch({ type: 'changeDataUpdated', payload: false }), 3000)
+      dispatch({
+        type: 'update',
+        payload: { key: 'dataUpdated', value: response.data ? true : false },
+      })
+      setTimeout(
+        () =>
+          dispatch({
+            type: 'update',
+            payload: { key: 'dataUpdated', value: false },
+          }),
+        3000
+      )
       fetchInventoryMeter()
     } catch (error) {
       console.error(error)
-      dispatch({ type: 'updateFetchingError', payload: 'Error occurred while fetching data' })
-      dispatch({ type: 'updateData', payload: null })
+      dispatch({
+        type: 'update',
+        payload: { key: 'fetchingError', value: 'Error occurred while fetching data' },
+      })
+      dispatch({ type: 'update', payload: { key: 'data', value: null } })
     }
   }
 
@@ -116,20 +132,35 @@ export const InventoryMeterDetail = () => {
                 defaultValue={state.data?.serial_number!}
                 className='borderElement'
                 label='Serial Number'
-                onChange={e => dispatch({ type: 'updateSerialNumber', payload: e.target.value })}
+                onChange={e =>
+                  dispatch({
+                    type: 'update',
+                    payload: { key: 'serialNumber', value: e.target.value },
+                  })
+                }
               />
               <Input
                 type='text'
                 defaultValue={state.data?.monitored_entity!}
                 className='borderElement'
                 label='Monitored Entity'
-                onChange={e => dispatch({ type: 'updateMonitoredEntity', payload: e.target.value })}
+                onChange={e =>
+                  dispatch({
+                    type: 'update',
+                    payload: { key: 'monitoredEntity', value: e.target.value },
+                  })
+                }
               />
               <Select
                 label='Meter Type'
                 className='borderElement'
                 options={meterTypes}
-                onChange={e => dispatch({ type: 'updateMeterType', payload: e.target.value })}
+                onChange={e =>
+                  dispatch({
+                    type: 'update',
+                    payload: { key: 'meterType', value: e.target.value },
+                  })
+                }
                 defaultValue={state.data?.meter_type!}
               />
               <Div_ButtonContainer>
@@ -140,7 +171,7 @@ export const InventoryMeterDetail = () => {
             </Div_InputsContainer>
           </Div_SubContainer>
         </>
-      ) : !state.data && !state.fetchingError ? (
+      ) : state.data === null && !state.fetchingError ? (
         <Div_SubContainer>
           <P_BodyText>Loading...</P_BodyText>
         </Div_SubContainer>

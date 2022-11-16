@@ -25,20 +25,28 @@ export const Login = () => {
 
   const navigate = useNavigate()
 
+  type LoginState = {
+    email: null | string
+    password: null | string
+    loginError: null | 'Something went wrong'
+    emailError: null | 'Please enter email' | 'Email is not valid'
+    passwordError: null | 'Please enter password'
+  }
+
   const handleLogin = async () => {
-    dispatch({ type: 'updateEmailError', payload: null })
-    dispatch({ type: 'updatePasswordError', payload: null })
-    dispatch({ type: 'updateLoginError', payload: null })
+    dispatch({ type: 'update', payload: { key: 'emailError', value: null } })
+    dispatch({ type: 'update', payload: { key: 'passwordError', value: null } })
+    dispatch({ type: 'update', payload: { key: 'loginError', value: null } })
     let isValid = true
     if (!state.email) {
-      dispatch({ type: 'updateEmailError', payload: 'Please enter email' })
+      dispatch({ type: 'update', payload: { key: 'emailError', value: 'Please enter email' } })
       isValid = false
     } else if (!state.email.trim().includes('@')) {
-      dispatch({ type: 'updateEmailError', payload: 'Email is not valid' })
+      dispatch({ type: 'update', payload: { key: 'emailError', value: 'Email is not valid' } })
       isValid = false
     }
     if (!state.password) {
-      dispatch({ type: 'updatePasswordError', payload: 'Please enter password' })
+      dispatch({ type: 'update', payload: { key: 'emailError', value: 'Please enter email' } })
       isValid = false
     }
     if (!isValid) return
@@ -52,7 +60,7 @@ export const Login = () => {
       userContext.setUserJwt(response.data.jwt)
       navigate(urls.inventoryMeters)
     } catch (error) {
-      dispatch({ type: 'updateLoginError', payload: 'Something went wrong' })
+      dispatch({ type: 'update', payload: { key: 'loginError', value: 'Something went wrong' } })
     }
   }
 
@@ -72,7 +80,7 @@ export const Login = () => {
           type='email'
           placeholder='email'
           onChange={e => {
-            dispatch({ type: 'updateEmail', payload: e.target.value })
+            dispatch({ type: 'update', payload: { key: 'email', value: e.target.value } })
           }}
           inputError={state.emailError!}
         >
@@ -82,7 +90,7 @@ export const Login = () => {
           type='password'
           placeholder='password'
           onChange={e => {
-            dispatch({ type: 'updatePassword', payload: e.target.value })
+            dispatch({ type: 'update', payload: { key: 'password', value: e.target.value } })
           }}
           inputError={state.passwordError!}
         >

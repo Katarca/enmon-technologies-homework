@@ -9,11 +9,23 @@ type LoginState = {
 }
 
 type LoginAction =
-  | { type: 'updateEmail'; payload: LoginState['email'] }
-  | { type: 'updatePassword'; payload: LoginState['password'] }
-  | { type: 'updateLoginError'; payload: LoginState['loginError'] }
-  | { type: 'updateEmailError'; payload: LoginState['emailError'] }
-  | { type: 'updatePasswordError'; payload: LoginState['passwordError'] }
+  | { type: 'update'; payload: { key: 'email'; value: LoginState['email'] } }
+  | {
+      type: 'update'
+      payload: { key: 'password'; value: LoginState['password'] }
+    }
+  | {
+      type: 'update'
+      payload: { key: 'loginError'; value: LoginState['loginError'] }
+    }
+  | {
+      type: 'update'
+      payload: { key: 'emailError'; value: LoginState['emailError'] }
+    }
+  | {
+      type: 'update'
+      payload: { key: 'passwordError'; value: LoginState['passwordError'] }
+    }
 
 export const initialLoginState: LoginState = {
   email: null,
@@ -25,35 +37,10 @@ export const initialLoginState: LoginState = {
 
 export const loginReducer: Reducer<LoginState, LoginAction> = (state, action) => {
   switch (action.type) {
-    case 'updateEmail': {
+    case 'update':
       return {
         ...state,
-        email: action.payload,
+        [action.payload.key]: action.payload.value,
       }
-    }
-    case 'updatePassword': {
-      return {
-        ...state,
-        password: action.payload,
-      }
-    }
-    case 'updateLoginError': {
-      return {
-        ...state,
-        loginError: action.payload,
-      }
-    }
-    case 'updateEmailError': {
-      return {
-        ...state,
-        emailError: action.payload,
-      }
-    }
-    case 'updatePasswordError': {
-      return {
-        ...state,
-        passwordError: action.payload,
-      }
-    }
   }
 }

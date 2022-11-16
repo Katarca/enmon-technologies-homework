@@ -24,31 +24,34 @@ export const InventoryMeters = () => {
         start: state.offset,
         limit: itemsPerPage,
       })
-      dispatch({ type: 'updateData', payload: response.data })
+      dispatch({ type: 'update', payload: { key: 'data', value: response.data } })
       const responseCount = await services.getInventoryMetersCount({ jwt: userContext.userJwt! })
       dispatch({
-        type: 'updateDataCount',
-        payload: responseCount.data,
+        type: 'update',
+        payload: { key: 'dataCount', value: responseCount.data },
       })
     } catch (error) {
       console.error(error)
-      dispatch({ type: 'updateFetchingError', payload: 'Error occurred while fetching data' })
-      dispatch({ type: 'updateData', payload: null })
+      dispatch({
+        type: 'update',
+        payload: { key: 'fetchingError', value: 'Error occurred while fetching data' },
+      })
+      dispatch({ type: 'update', payload: { key: 'data', value: null } })
     }
   }
 
   const handlePageClick = (selectedItem: { selected: number }) => {
     const newOffset = (selectedItem.selected * itemsPerPage) % state.dataCount!
-    dispatch({ type: 'updateOffset', payload: newOffset })
+    dispatch({ type: 'update', payload: { key: 'offset', value: newOffset } })
   }
 
   const handleSort = (clickedField: SortValue) => {
     if (!state.sortField.includes(clickedField)) {
-      dispatch({ type: 'updateSortField', payload: `${clickedField}:asc` })
+      dispatch({ type: 'update', payload: { key: 'sortField', value: `${clickedField}:asc` } })
     } else if (state.sortField === `${clickedField}:asc`) {
-      dispatch({ type: 'updateSortField', payload: `${clickedField}:desc` })
+      dispatch({ type: 'update', payload: { key: 'sortField', value: `${clickedField}:desc` } })
     } else {
-      dispatch({ type: 'updateSortField', payload: `${clickedField}:asc` })
+      dispatch({ type: 'update', payload: { key: 'sortField', value: `${clickedField}:asc` } })
     }
   }
 
