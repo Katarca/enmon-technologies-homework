@@ -8,12 +8,18 @@ import {
   Tr_InventoryTr,
 } from './styles'
 import { CustomButton } from '../../../components/Button/styles'
+import { InventoryMeter } from '../../../../generated/types'
 import { P_BodyText } from '../../../components/typo/BodyText'
 import { RouterLink } from '../../../components/Link'
 import { Span_TextBox } from '../../../components/typo/TextBox'
-import { TableProps } from '../types'
 import { urls } from '../../../helpers/urls'
 import React from 'react'
+
+export type TableProps = {
+  sortField: string
+  handleSort: (clickedField: string) => void
+  inventoryMeters: null | InventoryMeter[]
+}
 
 export const InventoryTable = (props: TableProps) => {
   return (

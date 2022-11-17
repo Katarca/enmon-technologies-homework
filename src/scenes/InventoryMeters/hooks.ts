@@ -1,11 +1,10 @@
 import { InventoryMeter } from '../../../generated/types'
 import { Reducer } from 'react'
-import { SortField } from './types'
 
 type InventoryMetersState = {
   data: null | InventoryMeter[]
   dataCount: null | number
-  sortField: SortField
+  sortField: string
   offset: number
   fetchingError: null | 'Error occurred while fetching data'
 }

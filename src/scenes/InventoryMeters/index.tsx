@@ -4,7 +4,6 @@ import { InitialInventoryMetersState, inventoryMetersReducer } from './hooks'
 import { InventoryTable } from './InventoryTable'
 import { P_BodyText } from '../../components/typo/BodyText'
 import { Pagination } from '../../components/Pagination'
-import { SortValue } from './types'
 import { UserStateContext } from '../../context/UserContext'
 import { services } from '../../services/services'
 import React, { useContext, useEffect, useReducer } from 'react'
@@ -45,7 +44,7 @@ export const InventoryMeters = () => {
     dispatch({ type: 'update', payload: { key: 'offset', value: newOffset } })
   }
 
-  const handleSort = (clickedField: SortValue) => {
+  const handleSort = (clickedField: string) => {
     if (!state.sortField.includes(clickedField)) {
       dispatch({ type: 'update', payload: { key: 'sortField', value: `${clickedField}:asc` } })
     } else if (state.sortField === `${clickedField}:asc`) {

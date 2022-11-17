@@ -25,14 +25,6 @@ export const Login = () => {
 
   const navigate = useNavigate()
 
-  type LoginState = {
-    email: null | string
-    password: null | string
-    loginError: null | 'Something went wrong'
-    emailError: null | 'Please enter email' | 'Email is not valid'
-    passwordError: null | 'Please enter password'
-  }
-
   const handleLogin = async () => {
     dispatch({ type: 'update', payload: { key: 'emailError', value: null } })
     dispatch({ type: 'update', payload: { key: 'passwordError', value: null } })
@@ -46,21 +38,27 @@ export const Login = () => {
       isValid = false
     }
     if (!state.password) {
-      dispatch({ type: 'update', payload: { key: 'emailError', value: 'Please enter email' } })
+      dispatch({
+        type: 'update',
+        payload: { key: 'passwordError', value: 'Please enter password' },
+      })
       isValid = false
     }
-    if (!isValid) return
-    try {
-      const response = await services.loginMutation({
-        input: {
-          identifier: state.email!.trim(),
-          password: state.password!.trim(),
-        },
-      })
-      userContext.setUserJwt(response.data.jwt)
-      navigate(urls.inventoryMeters)
-    } catch (error) {
-      dispatch({ type: 'update', payload: { key: 'loginError', value: 'Something went wrong' } })
+    if (!isValid) {
+      return
+    } else if (state.email && state.password) {
+      try {
+        const response = await services.loginMutation({
+          input: {
+            identifier: state.email.trim(),
+            password: state.password!.trim(),
+          },
+        })
+        userContext.setUserJwt(response.data.jwt)
+        navigate(urls.inventoryMeters)
+      } catch (error) {
+        dispatch({ type: 'update', payload: { key: 'loginError', value: 'Something went wrong' } })
+      }
     }
   }
 
