@@ -5,6 +5,7 @@ import { InventoryTable } from './InventoryTable'
 import { P_BodyText } from '../../components/typo/BodyText'
 import { Pagination } from '../../components/Pagination'
 import { UserStateContext } from '../../context/UserContext'
+import { itemsPerPageOptions, pageRangeDisplay } from '../../helpers/variables'
 import { services } from '../../services/services'
 import React, { useContext, useEffect, useReducer } from 'react'
 
@@ -13,15 +14,13 @@ export const InventoryMeters = () => {
 
   const [state, dispatch] = useReducer(inventoryMetersReducer, InitialInventoryMetersState)
 
-  const itemsPerPage = 10
-
   const fetchInventoryMeters = async () => {
     try {
       const response = await services.getInventoryMeters({
         jwt: userContext.userJwt!,
         sort: state.sortField,
         start: state.offset,
-        limit: itemsPerPage,
+        limit: state.itemsPerPage,
       })
       dispatch({ type: 'update', payload: { key: 'data', value: response.data } })
       const responseCount = await services.getInventoryMetersCount({ jwt: userContext.userJwt! })
@@ -30,17 +29,20 @@ export const InventoryMeters = () => {
         payload: { key: 'dataCount', value: responseCount.data },
       })
     } catch (error) {
-      console.error(error)
       dispatch({
         type: 'update',
         payload: { key: 'fetchingError', value: 'Error occurred while fetching data' },
       })
       dispatch({ type: 'update', payload: { key: 'data', value: null } })
+      dispatch({
+        type: 'update',
+        payload: { key: 'dataCount', value: null },
+      })
     }
   }
 
   const handlePageClick = (selectedItem: { selected: number }) => {
-    const newOffset = (selectedItem.selected * itemsPerPage) % state.dataCount!
+    const newOffset = (selectedItem.selected * state.itemsPerPage) % state.dataCount!
     dispatch({ type: 'update', payload: { key: 'offset', value: newOffset } })
   }
 
@@ -56,12 +58,12 @@ export const InventoryMeters = () => {
 
   useEffect(() => {
     fetchInventoryMeters()
-  }, [state.sortField, state.offset])
+  }, [state.sortField, state.offset, state.itemsPerPage])
 
   return (
     <>
       <Div_SubContainer>
-        <H1_Heading className='l'>Inventory Meters List</H1_Heading>
+        <H1_Heading className='fontSizeL'>Inventory Meters List</H1_Heading>
       </Div_SubContainer>
       <Div_SubContainer>
         {state.fetchingError ? (
@@ -75,9 +77,20 @@ export const InventoryMeters = () => {
             />
             <Pagination
               handlePageClick={handlePageClick}
-              itemsPerPage={itemsPerPage}
+              itemsPerPage={state.itemsPerPage}
               itemsCount={state.dataCount!}
-              pageRangeDisplayed={5}
+              pageRangeDisplayed={pageRangeDisplay}
+              options={itemsPerPageOptions}
+              optionAddText='/page'
+              onOptionChange={e =>
+                dispatch({
+                  type: 'update',
+                  payload: {
+                    key: 'itemsPerPage',
+                    value: Number(e.target.value),
+                  },
+                })
+              }
             />
           </>
         )}

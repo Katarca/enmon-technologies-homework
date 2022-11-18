@@ -48,7 +48,7 @@ export const Div_InputContainer = styled.div`
     width: 100%;
     border: none;
     text-align: center;
-    font-size: ${fontSizes.s};
+    font-size: ${fontSizes.fontSizeS};
     &:focus {
       outline: none;
     }

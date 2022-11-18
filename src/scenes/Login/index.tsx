@@ -1,13 +1,14 @@
-import { CustomButton } from '../../components/Button/styles'
-import { Div_Container } from '../../components/Container/styles'
 import {
+  AvatarIcon,
   Div_ErrorContainer,
   Div_HeadingContainer,
   Div_LoginContainer,
   ErrorIcon,
   LockIcon,
-  PersonIcon,
 } from './styles'
+import { CustomButton } from '../../components/Button/styles'
+import { CustomForm } from '../../components/Form/styles'
+import { Div_Container } from '../../components/Container/styles'
 import { H1_Heading } from '../../components/typo/Heading'
 import { Input } from '../../components/Input'
 import { P_BodyText } from '../../components/typo/BodyText'
@@ -51,13 +52,14 @@ export const Login = () => {
         const response = await services.loginMutation({
           input: {
             identifier: state.email.trim(),
-            password: state.password!.trim(),
+            password: state.password.trim(),
           },
         })
         userContext.setUserJwt(response.data.jwt)
         navigate(urls.inventoryMeters)
       } catch (error) {
         dispatch({ type: 'update', payload: { key: 'loginError', value: 'Something went wrong' } })
+        userContext.setUserJwt(null)
       }
     }
   }
@@ -74,29 +76,36 @@ export const Login = () => {
             <P_BodyText>{state.loginError}</P_BodyText>
           </Div_ErrorContainer>
         ) : null}
-        <Input
-          type='email'
-          placeholder='email'
-          onChange={e => {
-            dispatch({ type: 'update', payload: { key: 'email', value: e.target.value } })
+        <CustomForm
+          onSubmit={e => {
+            e.preventDefault()
+            handleLogin()
           }}
-          inputError={state.emailError!}
         >
-          <PersonIcon />
-        </Input>
-        <Input
-          type='password'
-          placeholder='password'
-          onChange={e => {
-            dispatch({ type: 'update', payload: { key: 'password', value: e.target.value } })
-          }}
-          inputError={state.passwordError!}
-        >
-          <LockIcon />
-        </Input>
-        <CustomButton className='green fullWidth' onClick={() => handleLogin()}>
-          <P_BodyText>Log in</P_BodyText>
-        </CustomButton>
+          <Input
+            type='text'
+            placeholder='email'
+            onChange={e => {
+              dispatch({ type: 'update', payload: { key: 'email', value: e.target.value } })
+            }}
+            inputError={state.emailError}
+          >
+            <AvatarIcon />
+          </Input>
+          <Input
+            type='password'
+            placeholder='password'
+            onChange={e => {
+              dispatch({ type: 'update', payload: { key: 'password', value: e.target.value } })
+            }}
+            inputError={state.passwordError}
+          >
+            <LockIcon />
+          </Input>
+          <CustomButton className='green fullWidth' type='submit'>
+            <P_BodyText>Log in</P_BodyText>
+          </CustomButton>
+        </CustomForm>
       </Div_LoginContainer>
     </Div_Container>
   )

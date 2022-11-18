@@ -7,6 +7,7 @@ type InventoryMetersState = {
   sortField: string
   offset: number
   fetchingError: null | 'Error occurred while fetching data'
+  itemsPerPage: number
 }
 
 type InventoryMetersAction =
@@ -18,6 +19,10 @@ type InventoryMetersAction =
       type: 'update'
       payload: { key: 'fetchingError'; value: InventoryMetersState['fetchingError'] }
     }
+  | {
+      type: 'update'
+      payload: { key: 'itemsPerPage'; value: InventoryMetersState['itemsPerPage'] }
+    }
 
 export const InitialInventoryMetersState: InventoryMetersState = {
   data: null,
@@ -25,6 +30,7 @@ export const InitialInventoryMetersState: InventoryMetersState = {
   sortField: 'id:asc',
   offset: 0,
   fetchingError: null,
+  itemsPerPage: 10,
 }
 
 export const inventoryMetersReducer: Reducer<InventoryMetersState, InventoryMetersAction> = (

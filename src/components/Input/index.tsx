@@ -13,7 +13,7 @@ export const Input = ({
   children?: ReactNode
   label?: string
   className?: string
-  inputError?: string
+  inputError?: string | null
 } & ComponentProps<'input'>) => {
   return (
     <div>

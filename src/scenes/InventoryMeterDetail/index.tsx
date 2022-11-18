@@ -21,12 +21,14 @@ import { RouterLink } from '../../components/Link'
 import { Select } from '../../components/Select'
 import { Span_TextBox } from '../../components/typo/TextBox'
 import { UserStateContext } from '../../context/UserContext'
+import { delay } from '../../utils/delay'
 import { meterTypes } from '../../helpers/variables'
 import { services } from '../../services/services'
 import { styles } from '../../helpers/theme'
 import { urls } from '../../helpers/urls'
+import { useComponentDidMount } from '../../utils/useComponentDidMout'
 import { useParams } from 'react-router-dom'
-import React, { useContext, useEffect, useReducer } from 'react'
+import React, { useContext, useReducer } from 'react'
 
 export const InventoryMeterDetail = () => {
   const userContext = useContext(UserStateContext)
@@ -52,9 +54,9 @@ export const InventoryMeterDetail = () => {
     }
   }
 
-  useEffect(() => {
+  useComponentDidMount(async () => {
     fetchInventoryMeter()
-  }, [])
+  })
 
   const handleUpdate = async () => {
     try {
@@ -73,17 +75,13 @@ export const InventoryMeterDetail = () => {
         type: 'update',
         payload: { key: 'dataUpdated', value: response.data ? true : false },
       })
-      setTimeout(
-        () =>
-          dispatch({
-            type: 'update',
-            payload: { key: 'dataUpdated', value: false },
-          }),
-        3000
-      )
-      fetchInventoryMeter()
+      await delay(3000)
+      dispatch({
+        type: 'update',
+        payload: { key: 'dataUpdated', value: false },
+      }),
+        fetchInventoryMeter()
     } catch (error) {
-      console.error(error)
       dispatch({
         type: 'update',
         payload: { key: 'fetchingError', value: 'Error occurred while fetching data' },
@@ -110,7 +108,7 @@ export const InventoryMeterDetail = () => {
                 <ThinArrowIcon />
               </RouterLink>
               <Div_PaddingContainer>
-                <H1_Heading className='l'>{state.data?.id}</H1_Heading>
+                <H1_Heading className='fontSizeL'>{state.data?.id}</H1_Heading>
               </Div_PaddingContainer>
               {state.data?.inventory_location?.name ? (
                 <Div_PaddingContainer padding={`0 ${styles.spacing.s} 0 0`}>
@@ -124,7 +122,7 @@ export const InventoryMeterDetail = () => {
           </Div_SubContainer>
           <Div_SubContainer className='fullWidth'>
             <Div_BorderContainer>
-              <H2_Heading className='m'>Details</H2_Heading>
+              <H2_Heading className='fontSizeM'>Details</H2_Heading>
             </Div_BorderContainer>
             <Div_InputsContainer>
               <Input

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 export const Span_TextBox = styled.span<{ accessibility?: string }>`
   display: inline-block;
   padding: ${styles.spacing.xxs} ${styles.spacing.xs};
-  font-size: ${fontSizes.xs};
+  font-size: ${fontSizes.fontSizeXS};
   border-radius: ${styles.borderRadius.primary};
   margin: ${props => props.accessibility && `0 ${styles.spacing.xs} ${styles.spacing.xs} 0`};
   background-color: ${colors.blue100};

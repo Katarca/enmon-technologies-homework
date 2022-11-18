@@ -1,16 +1,12 @@
+import { ReactComponent as avatarIcon } from '../../icons/avatar-icon.svg'
 import { breakpoint, colors, styles } from '../../helpers/theme'
 import { ReactComponent as errorIcon } from '../../icons/error-icon.svg'
 import { ReactComponent as lockIcon } from '../../icons/lock-icon.svg'
-import { ReactComponent as personIcon } from '../../icons/person-icon.svg'
 import styled, { css } from 'styled-components'
 
 export const Div_LoginContainer = styled.div`
   padding: ${styles.spacing.s};
   width: 400px;
-  & > button,
-  div:not(:first-child) {
-    margin-top: ${styles.spacing.m};
-  }
   ${breakpoint.phone} {
     width: 80%;
   }
@@ -28,7 +24,7 @@ const inputIconStyles = css`
   width: ${styles.iconWidth.s};
 `
 
-export const PersonIcon = styled(personIcon)`
+export const AvatarIcon = styled(avatarIcon)`
   ${inputIconStyles}
 `
 export const LockIcon = styled(lockIcon)`

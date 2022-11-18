@@ -44,7 +44,7 @@ export const Tr_InventoryTr = styled.tr`
 `
 
 export const Td_InventoryTd = styled.td`
-  font-size: ${fontSizes.s};
+  font-size: ${fontSizes.fontSizeS};
   color: ${colors.black};
   padding: ${styles.spacing.l};
 `

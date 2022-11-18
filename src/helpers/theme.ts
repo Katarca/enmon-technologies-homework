@@ -60,10 +60,10 @@ export type ColorValues = Colors[ColorKeys]
 // Font sizes
 
 export const fontSizes = {
-  xs: '1.2rem',
-  s: '1.4rem',
-  m: '1.6rem',
-  l: '2rem',
+  fontSizeXS: '1.2rem',
+  fontSizeS: '1.4rem',
+  fontSizeM: '1.6rem',
+  fontSizeL: '2rem',
 }
 
 export type FontSizes = typeof fontSizes

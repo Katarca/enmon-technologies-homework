@@ -23,7 +23,7 @@ export const StyledReactPaginate = styled(ReactPaginate).attrs({
     width: 100%;
     text-align: center;
     margin: auto;
-    font-size: ${fontSizes.s};
+    font-size: ${fontSizes.fontSizeS};
     color: ${colors.black};
   }
   li.break {
@@ -46,4 +46,10 @@ export const StyledReactPaginate = styled(ReactPaginate).attrs({
     width: 100%;
     flex-wrap: wrap;
   }
+`
+
+export const Div_PaginationContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 `

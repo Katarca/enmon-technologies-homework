@@ -5,6 +5,7 @@ import React, { ComponentProps } from 'react'
 
 export const Select = ({
   options,
+  optionAddText,
   label,
   className,
   ...props
@@ -12,6 +13,7 @@ export const Select = ({
   options: string[]
   label?: string
   className?: string
+  optionAddText?: string
 } & ComponentProps<'select'>) => {
   return (
     <div>
@@ -24,7 +26,7 @@ export const Select = ({
         <select {...props}>
           {options.map(option => (
             <option value={option} key={option}>
-              {option}
+              {optionAddText ? `${option}${optionAddText}` : option}
             </option>
           ))}
         </select>
