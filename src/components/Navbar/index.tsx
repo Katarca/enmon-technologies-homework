@@ -1,7 +1,7 @@
 import { CustomButton } from '../Button/styles'
 import { Div_NavbarWrapper } from './styles'
 import { P_BodyText } from '../typo/BodyText'
-import { UserStateContext } from '../../context/UserContext'
+import { UserStateContext } from '../../globalContext/UserContext'
 import { urls } from '../../helpers/urls'
 import { useLocation, useNavigate } from 'react-router-dom'
 import React, { useContext } from 'react'

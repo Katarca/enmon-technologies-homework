@@ -8,20 +8,16 @@ import {
   Tr_InventoryTr,
 } from './styles'
 import { CustomButton } from '../../../components/Button/styles'
-import { InventoryMeter } from '../../../../generated/types'
+import { InventoryMetersStateContext } from '../context'
 import { P_BodyText } from '../../../components/typo/BodyText'
 import { RouterLink } from '../../../components/Link'
 import { Span_TextBox } from '../../../components/typo/TextBox'
 import { urls } from '../../../helpers/urls'
-import React from 'react'
+import React, { useContext } from 'react'
 
-export type TableProps = {
-  sortField: string
-  handleSort: (clickedField: string) => void
-  inventoryMeters: null | InventoryMeter[]
-}
+export const InventoryTable = () => {
+  const inventoryMetersContext = useContext(InventoryMetersStateContext)
 
-export const InventoryTable = (props: TableProps) => {
   return (
     <Div_TableContainer>
       <Table_InventoryTable>
@@ -29,10 +25,10 @@ export const InventoryTable = (props: TableProps) => {
           <tr>
             <th>
               <Div_HeaderContainer
-                sortField={props.sortField}
-                active={props.sortField.includes('id')}
+                sortField={inventoryMetersContext.state.sortField}
+                active={inventoryMetersContext.state.sortField.includes('id')}
                 clickable={true}
-                onClick={() => props.handleSort('id')}
+                onClick={() => inventoryMetersContext.handleSort('id')}
               >
                 <P_BodyText>ID</P_BodyText>
                 <ArrowIcon />
@@ -40,10 +36,10 @@ export const InventoryTable = (props: TableProps) => {
             </th>
             <th>
               <Div_HeaderContainer
-                sortField={props.sortField}
-                active={props.sortField.includes('serial_number')}
+                sortField={inventoryMetersContext.state.sortField}
+                active={inventoryMetersContext.state.sortField.includes('serial_number')}
                 clickable={true}
-                onClick={() => props.handleSort('serial_number')}
+                onClick={() => inventoryMetersContext.handleSort('serial_number')}
               >
                 <P_BodyText>Serial key</P_BodyText>
                 <ArrowIcon />
@@ -51,10 +47,10 @@ export const InventoryTable = (props: TableProps) => {
             </th>
             <th>
               <Div_HeaderContainer
-                sortField={props.sortField}
-                active={props.sortField.includes('meter_type')}
+                sortField={inventoryMetersContext.state.sortField}
+                active={inventoryMetersContext.state.sortField.includes('meter_type')}
                 clickable={true}
-                onClick={() => props.handleSort('meter_type')}
+                onClick={() => inventoryMetersContext.handleSort('meter_type')}
               >
                 <P_BodyText>Meter Type</P_BodyText>
                 <ArrowIcon />
@@ -72,10 +68,14 @@ export const InventoryTable = (props: TableProps) => {
             </th>
             <th>
               <Div_HeaderContainer
-                sortField={props.sortField}
-                active={props.sortField.includes('inventory_location_building.name')}
+                sortField={inventoryMetersContext.state.sortField}
+                active={inventoryMetersContext.state.sortField.includes(
+                  'inventory_location_building.name'
+                )}
                 clickable={true}
-                onClick={() => props.handleSort('inventory_location_building.name')}
+                onClick={() =>
+                  inventoryMetersContext.handleSort('inventory_location_building.name')
+                }
               >
                 <P_BodyText>Building</P_BodyText>
                 <ArrowIcon />
@@ -94,7 +94,7 @@ export const InventoryTable = (props: TableProps) => {
           </tr>
         </Thead_InventoryThead>
         <tbody>
-          {props.inventoryMeters?.map(meter => (
+          {inventoryMetersContext.state.data?.map(meter => (
             <Tr_InventoryTr key={meter.id}>
               <Td_InventoryTd>{meter.id}</Td_InventoryTd>
               <Td_InventoryTd>{meter.serial_number}</Td_InventoryTd>
