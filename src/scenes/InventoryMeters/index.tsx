@@ -26,6 +26,8 @@ export const InventoryMetersComponent = () => {
               itemsPerPage={inventoryMetersContext.state.itemsPerPage}
               itemsCount={inventoryMetersContext.state.dataCount!}
               pageRangeDisplayed={pageRangeDisplay}
+              offset={inventoryMetersContext.state.offset}
+              itemsName='Inventory Meters'
               options={itemsPerPageOptions}
               optionAddText='/page'
               onOptionChange={e =>

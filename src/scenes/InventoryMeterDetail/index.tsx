@@ -13,6 +13,7 @@ import {
   Span_BlackSpan,
   ThinArrowIcon,
 } from './styles'
+import { Enum_Inventorymeter_Meter_Type } from '../../generated/types'
 import { H1_Heading, H2_Heading } from '../../components/typo/Heading'
 import { Input } from '../../components/Input'
 import { InventoryMeterStateContext } from './context'
@@ -20,7 +21,6 @@ import { P_BodyText } from '../../components/typo/BodyText'
 import { RouterLink } from '../../components/Link'
 import { Select } from '../../components/Select'
 import { Span_TextBox } from '../../components/typo/TextBox'
-import { meterTypes } from '../../helpers/variables'
 import { styles } from '../../helpers/theme'
 import { urls } from '../../helpers/urls'
 import React, { useContext } from 'react'
@@ -93,7 +93,7 @@ export const InventoryMeterComponent = () => {
               <Select
                 label='Meter Type'
                 className='borderElement'
-                options={meterTypes}
+                options={Object.values(Enum_Inventorymeter_Meter_Type)}
                 onChange={e =>
                   inventoryMeterContext.dispatch({
                     type: 'update',

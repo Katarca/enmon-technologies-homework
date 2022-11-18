@@ -16,7 +16,7 @@ export const Div_HeadingContainer = styled.div`
   padding: ${styles.spacing.s} 0;
   border-bottom: ${styles.borderProperty.secondary} ${colors.primaryGreen};
   width: fit-content;
-  margin-bottom: ${styles.spacing.s};
+  margin-bottom: ${styles.spacing.m};
 `
 
 const inputIconStyles = css`
@@ -41,4 +41,5 @@ export const Div_ErrorContainer = styled.div`
   padding: ${styles.spacing.s} ${styles.spacing.m};
   background-color: ${colors.pink100};
   border: ${styles.borderProperty.primary} ${colors.pink200};
+  margin-bottom: ${styles.spacing.s};
 `

@@ -53,12 +53,12 @@ const useLogicState = () => {
         type: 'update',
         payload: { key: 'dataUpdated', value: response.data ? true : false },
       })
+      fetchInventoryMeter()
       await delay(3000)
       dispatch({
         type: 'update',
         payload: { key: 'dataUpdated', value: false },
-      }),
-        fetchInventoryMeter()
+      })
     } catch (error) {
       dispatch({
         type: 'update',

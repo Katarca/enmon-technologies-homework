@@ -1,4 +1,4 @@
-import { InventoryMeter } from '../../../generated/types'
+import { InventoryMeter } from '../../generated/types'
 import { Reducer } from 'react'
 
 type InventoryMetersState = {

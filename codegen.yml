@@ -1,6 +1,6 @@
 overwrite: true
 schema: https://tools.dev.enmon.tech/graphql
 generates:
-  generated/types.ts:
+  src/generated/types.ts:
     plugins:
       - typescript
