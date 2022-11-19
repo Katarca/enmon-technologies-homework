@@ -1,12 +1,17 @@
 import { InitialInventoryMetersState, inventoryMetersReducer } from './hooks'
 import { InventoryMetersComponent } from './index'
 import { UserStateContext } from '../../globalContext/UserContext'
+import { device } from '../../helpers/theme'
 import { genericHookContextBuilder } from '../../utils/genericHookContextBuilder'
 import { services } from '../../services/services'
+import { useWindowSize } from '../../utils/useWindowSize'
 import React, { useContext, useEffect, useReducer } from 'react'
 
 const useLogicState = () => {
   const userContext = useContext(UserStateContext)
+
+  const { w } = useWindowSize()
+  const isPhone = w <= device.phone
 
   const [state, dispatch] = useReducer(inventoryMetersReducer, InitialInventoryMetersState)
 
@@ -61,6 +66,7 @@ const useLogicState = () => {
     dispatch,
     handlePageClick,
     handleSort,
+    isPhone,
   }
 }
 

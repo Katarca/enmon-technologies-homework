@@ -5,6 +5,7 @@ import { InventoryTable } from './InventoryTable'
 import { P_BodyText } from '../../components/typo/BodyText'
 import { Pagination } from '../../components/Pagination'
 import { itemsPerPageOptions, pageRangeDisplay } from '../../helpers/variables'
+import { useWindowSize } from '../../utils/useWindowSize'
 import React, { useContext } from 'react'
 
 export const InventoryMetersComponent = () => {
@@ -25,7 +26,9 @@ export const InventoryMetersComponent = () => {
               handlePageClick={inventoryMetersContext.handlePageClick}
               itemsPerPage={inventoryMetersContext.state.itemsPerPage}
               itemsCount={inventoryMetersContext.state.dataCount!}
-              pageRangeDisplayed={pageRangeDisplay}
+              pageRangeDisplayed={
+                inventoryMetersContext.isPhone ? pageRangeDisplay.phone : pageRangeDisplay.default
+              }
               offset={inventoryMetersContext.state.offset}
               itemsName='Inventory Meters'
               options={itemsPerPageOptions}

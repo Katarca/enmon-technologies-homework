@@ -8,7 +8,6 @@ export const StyledReactPaginate = styled(ReactPaginate).attrs({
   display: flex;
   justify-content: flex-end;
   list-style-type: none;
-  padding: ${styles.spacing.l};
   li {
     min-width: 30px;
     height: 30px;
@@ -52,4 +51,7 @@ export const Div_PaginationContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  flex-wrap: wrap-reverse;
+  padding: ${styles.spacing.l} 0;
+  gap: ${styles.spacing.s};
 `

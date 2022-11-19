@@ -11,4 +11,7 @@ export const accessability = [
 
 export const itemsPerPageOptions = ['10', '20', '30']
 
-export const pageRangeDisplay = 5
+export const pageRangeDisplay = {
+  default: 5,
+  phone: 3,
+}

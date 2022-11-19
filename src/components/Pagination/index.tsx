@@ -22,13 +22,11 @@ export const Pagination = (props: Pagination) => {
   return (
     <Div_PaginationContainer>
       {props.itemsCount ? (
-        <Div_PaddingContainer padding={`0 ${styles.spacing.l} 0 0`}>
-          <P_BodyText>
-            {`${getPaginationItemsRange(props.offset, props.itemsPerPage, props.itemsCount)} ${
-              props.itemsName
-            }`}
-          </P_BodyText>
-        </Div_PaddingContainer>
+        <P_BodyText>
+          {`${getPaginationItemsRange(props.offset, props.itemsPerPage, props.itemsCount)} ${
+            props.itemsName
+          }`}
+        </P_BodyText>
       ) : null}
       <Select
         options={props.options}
