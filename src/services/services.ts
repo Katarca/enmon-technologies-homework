@@ -1,15 +1,13 @@
-import {
-  GET_INVENTORY_METER,
-  GET_INVENTORY_METERS,
-  GET_INVENTORY_METERS_COUNT,
-} from '../graphql/getInventoryMeters'
+import { GET_INVENTORY_METER } from '../graphql/queries/getInventoryMeter'
+import { GET_INVENTORY_METERS } from '../graphql/queries/getInventoryMeters'
+import { GET_INVENTORY_METERS_COUNT } from '../graphql/queries/getInventoryMetersCount'
 import { LOGIN } from '../graphql/mutations/loginMutation'
 import {
   MutationLoginArgs,
   QueryInventoryMeterArgs,
   QueryInventoryMetersArgs,
   Scalars,
-} from '../../generated/types'
+} from '../generated/types'
 import { UPDATE_INVENTORY_METER } from '../graphql/mutations/updateInventoryMeter'
 import { client } from '../apollo/client'
 
