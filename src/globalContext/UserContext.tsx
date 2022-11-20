@@ -3,7 +3,7 @@ import { useLocalStorage } from '../utils/useLocalStorage'
 import React from 'react'
 
 const useLogicState = () => {
-  const [userJwt, setUserJwt] = useLocalStorage('JWT_KEY', null as null | string)
+  const [userJwt, setUserJwt] = useLocalStorage<null | string>('JWT_KEY', null)
 
   return {
     userJwt,

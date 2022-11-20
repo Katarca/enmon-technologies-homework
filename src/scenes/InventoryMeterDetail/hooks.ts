@@ -2,7 +2,7 @@ import { InventoryMeter } from '../../generated/types'
 import { Reducer } from 'react'
 
 type InventoryMeterState = {
-  data: null | InventoryMeter
+  data: null | InventoryMeter | undefined
   monitoredEntity: null | string
   meterType: null | string
   serialNumber: null | string
