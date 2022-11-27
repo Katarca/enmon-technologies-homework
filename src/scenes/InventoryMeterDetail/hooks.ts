@@ -1,17 +1,14 @@
-import { InventoryMeter } from '../../generated/types'
+import { Enum_Inventorymeter_Meter_Type } from '../../generated/types'
 import { Reducer } from 'react'
 
 type InventoryMeterState = {
-  data: null | InventoryMeter | undefined
   monitoredEntity: null | string
-  meterType: null | string
+  meterType: null | Enum_Inventorymeter_Meter_Type
   serialNumber: null | string
-  dataUpdated: boolean
-  fetchingError: null | 'Error occurred while fetching data'
+  isUpdating: boolean
 }
 
 type InventoryMeterAction =
-  | { type: 'update'; payload: { key: 'data'; value: InventoryMeterState['data'] } }
   | {
       type: 'update'
       payload: { key: 'monitoredEntity'; value: InventoryMeterState['monitoredEntity'] }
@@ -26,20 +23,14 @@ type InventoryMeterAction =
     }
   | {
       type: 'update'
-      payload: { key: 'dataUpdated'; value: InventoryMeterState['dataUpdated'] }
-    }
-  | {
-      type: 'update'
-      payload: { key: 'fetchingError'; value: InventoryMeterState['fetchingError'] }
+      payload: { key: 'isUpdating'; value: InventoryMeterState['isUpdating'] }
     }
 
 export const InitialInventoryMeterState: InventoryMeterState = {
-  data: null,
   monitoredEntity: null,
   meterType: null,
   serialNumber: null,
-  dataUpdated: false,
-  fetchingError: null,
+  isUpdating: false,
 }
 
 export const inventoryMeterReducer: Reducer<InventoryMeterState, InventoryMeterAction> = (

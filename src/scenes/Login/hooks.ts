@@ -3,7 +3,6 @@ import { Reducer } from 'react'
 type LoginState = {
   email: null | string
   password: null | string
-  loginError: null | 'Something went wrong'
   emailError: null | 'Please enter email' | 'Email is not valid'
   passwordError: null | 'Please enter password'
 }
@@ -13,10 +12,6 @@ type LoginAction =
   | {
       type: 'update'
       payload: { key: 'password'; value: LoginState['password'] }
-    }
-  | {
-      type: 'update'
-      payload: { key: 'loginError'; value: LoginState['loginError'] }
     }
   | {
       type: 'update'
@@ -30,7 +25,6 @@ type LoginAction =
 export const initialLoginState: LoginState = {
   email: null,
   password: null,
-  loginError: null,
   emailError: null,
   passwordError: null,
 }

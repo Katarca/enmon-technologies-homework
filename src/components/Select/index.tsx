@@ -10,7 +10,7 @@ export const Select = ({
   className,
   ...props
 }: {
-  options: string[]
+  options: string[] | number[]
   label?: string
   className?: string
   optionAddText?: string

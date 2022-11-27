@@ -1,5 +1,5 @@
-import { genericHookContextBuilder } from '../utils/genericHookContextBuilder'
-import { useLocalStorage } from '../utils/useLocalStorage'
+import { genericHookContextBuilder } from '../hooks/genericHookContextBuilder'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 import React from 'react'
 
 const useLogicState = () => {

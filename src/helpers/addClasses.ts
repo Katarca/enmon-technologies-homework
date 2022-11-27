@@ -7,7 +7,7 @@ import {
   FontSizeValues,
   colors,
   fontSizes,
-} from '../helpers/theme'
+} from './theme'
 
 export const addColorClasses = (css?: (colors: ColorValues) => string) => {
   const colorArray = Object.keys(colors) as ColorKeysArray

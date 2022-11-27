@@ -7,13 +7,13 @@ export const Input = ({
   children,
   label,
   className,
-  inputError,
+  validationError,
   ...props
 }: {
   children?: ReactNode
   label?: string
   className?: string
-  inputError?: string | null
+  validationError?: string | null
 } & ComponentProps<'input'>) => {
   return (
     <div>
@@ -26,7 +26,7 @@ export const Input = ({
         {children}
         <input {...props} />
       </Div_InputContainer>
-      {inputError ? <P_BodyText className='red200'>{inputError}</P_BodyText> : null}
+      {validationError ? <P_BodyText className='red200'>{validationError}</P_BodyText> : null}
     </div>
   )
 }

@@ -9,7 +9,7 @@ export const accessability = [
   'veryHigh',
 ]
 
-export const itemsPerPageOptions = ['10', '20', '30']
+export const itemsPerPageOptions = [10, 20, 30]
 
 export const pageRangeDisplay = {
   default: 5,

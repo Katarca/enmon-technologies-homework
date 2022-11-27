@@ -1,4 +1,4 @@
-import { addColorClasses, addFontSizeClasses } from '../../utils/addClasses'
+import { addColorClasses, addFontSizeClasses } from '../../helpers/addClasses'
 import { colors, fontSizes } from '../../helpers/theme'
 import styled from 'styled-components'
 

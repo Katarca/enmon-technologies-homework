@@ -1,24 +1,21 @@
-import { Div_PaddingContainer } from '../Container/styles'
 import { Div_PaginationContainer, StyledReactPaginate } from './styles'
 import { P_BodyText } from '../typo/BodyText'
 import { Select } from '../Select'
-import { getPaginationItemsRange } from '../../utils/getPaginationItemsRange'
-import { styles } from '../../helpers/theme'
+import { getPaginationItemsRange } from '../../helpers/getPaginationItemsRange'
 import React from 'react'
 
-type Pagination = {
+type PaginationProps = {
   handlePageClick: (selectedItem: { selected: number }) => void
   itemsPerPage: number
   itemsCount: number
   pageRangeDisplayed: number
-  options: string[]
-  optionAddText?: string
-  onOptionChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
+  itemsPerPageOptions: number[]
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
   offset: number
   itemsName: string
 }
 
-export const Pagination = (props: Pagination) => {
+export const Pagination = (props: PaginationProps) => {
   return (
     <Div_PaginationContainer>
       {props.itemsCount ? (
@@ -29,10 +26,10 @@ export const Pagination = (props: Pagination) => {
         </P_BodyText>
       ) : null}
       <Select
-        options={props.options}
-        optionAddText={props.optionAddText}
+        options={props.itemsPerPageOptions}
+        optionAddText='/page'
         className='borderElement'
-        onChange={props.onOptionChange}
+        onChange={props.onChange}
         defaultValue={props.itemsPerPage}
       />
       <StyledReactPaginate

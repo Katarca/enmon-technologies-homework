@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
-export const GET_INVENTORY_METERS = gql`
-  query inventoryMeters(
+export const GET_INVENTORY_METERS_DATA = gql`
+  query inventoryMetersData(
     $sort: String
     $start: Int
     $publicationState: PublicationState
@@ -24,6 +24,11 @@ export const GET_INVENTORY_METERS = gql`
         name
       }
       accessibility
+    }
+    inventoryMetersConnection {
+      aggregate {
+        totalCount
+      }
     }
   }
 `

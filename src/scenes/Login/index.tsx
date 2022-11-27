@@ -24,18 +24,13 @@ export const LoginComponent = () => {
         <Div_HeadingContainer>
           <H1_Heading className='primaryGreen'>Log in</H1_Heading>
         </Div_HeadingContainer>
-        {loginContext.state.loginError ? (
+        {loginContext.error ? (
           <Div_ErrorContainer>
             <ErrorIcon />
-            <P_BodyText>{loginContext.state.loginError}</P_BodyText>
+            <P_BodyText>{loginContext.error.message}</P_BodyText>
           </Div_ErrorContainer>
         ) : null}
-        <CustomForm
-          onSubmit={e => {
-            e.preventDefault()
-            loginContext.handleLogin()
-          }}
-        >
+        <CustomForm onSubmit={loginContext.handleSubmit}>
           <Input
             type='text'
             placeholder='email'
@@ -45,7 +40,7 @@ export const LoginComponent = () => {
                 payload: { key: 'email', value: e.target.value },
               })
             }}
-            inputError={loginContext.state.emailError}
+            validationError={loginContext.state.emailError}
           >
             <AvatarIcon />
           </Input>
@@ -58,12 +53,12 @@ export const LoginComponent = () => {
                 payload: { key: 'password', value: e.target.value },
               })
             }}
-            inputError={loginContext.state.passwordError}
+            validationError={loginContext.state.passwordError}
           >
             <LockIcon />
           </Input>
           <CustomButton className='green fullWidth' type='submit'>
-            <P_BodyText>Log in</P_BodyText>
+            <P_BodyText>{loginContext.loading ? 'Loading...' : 'Log in'}</P_BodyText>
           </CustomButton>
         </CustomForm>
       </Div_LoginContainer>

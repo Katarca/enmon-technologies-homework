@@ -2,28 +2,6 @@ import { colors, styles } from '../../helpers/theme'
 import { ReactComponent as thinArrowIcon } from '../../icons/thin-arrow-icon.svg'
 import styled, { css } from 'styled-components'
 
-export const Div_Wrapper = styled.div`
-  position: relative;
-  overflow-x: hidden;
-`
-
-export const Div_UpdatedContainer = styled.div<{ updated: boolean }>`
-  position: absolute;
-  background-color: ${colors.white};
-  top: 0;
-  right: -500px;
-  margin: ${styles.spacing.m};
-  padding: ${styles.spacing.m};
-  transition: ${styles.transition.secondary};
-  border-radius: ${styles.borderRadius.primary};
-  box-shadow: ${styles.boxShadowProperty.secondary} ${colors.grey200};
-  ${({ updated }) =>
-    updated &&
-    css`
-      right: 0;
-    `}
-`
-
 export const Span_BlackSpan = styled.span`
   color: ${colors.black};
 `

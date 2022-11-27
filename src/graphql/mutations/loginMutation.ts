@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 
 export const LOGIN = gql`
-  mutation login($input: UsersPermissionsLoginInput!) {
+  mutation ($input: UsersPermissionsLoginInput!) {
     login(input: $input) {
       jwt
       user {

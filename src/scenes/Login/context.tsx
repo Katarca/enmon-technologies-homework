@@ -1,11 +1,17 @@
+import { LOGIN } from '../../graphql/mutations/loginMutation'
 import { LoginComponent } from './index'
-import { UserStateContext } from '../../globalContext/UserContext'
-import { genericHookContextBuilder } from '../../utils/genericHookContextBuilder'
+import { MutationLoginArgs, UsersPermissionsLoginPayload } from '../../generated/types'
+import { UserStateContext } from '../../userContext/UserContext'
+import { genericHookContextBuilder } from '../../hooks/genericHookContextBuilder'
 import { initialLoginState, loginReducer } from './hooks'
-import { services } from '../../services/services'
 import { urls } from '../../helpers/urls'
+import { useApolloMutation } from '../../hooks/useApolloMutation'
 import { useNavigate } from 'react-router-dom'
 import React, { useContext, useReducer } from 'react'
+
+type LoginMutationResult = {
+  login: UsersPermissionsLoginPayload
+}
 
 const useLogicState = () => {
   const userContext = useContext(UserStateContext)
@@ -14,10 +20,27 @@ const useLogicState = () => {
 
   const navigate = useNavigate()
 
-  const handleLogin = async () => {
+  const {
+    mutationFunction: login,
+    loading,
+    error,
+  } = useApolloMutation<LoginMutationResult, MutationLoginArgs>({
+    mutation: LOGIN,
+    variables: {
+      input: {
+        identifier: state.email ? state.email.trim() : '',
+        password: state.password ? state.password.trim() : '',
+      },
+    },
+    onCompleted: data => {
+      data?.login.jwt ? userContext.setUserJwt(data.login.jwt) : userContext.setUserJwt(null)
+      navigate(urls.inventoryMeters)
+    },
+  })
+
+  const validateInputs = () => {
     dispatch({ type: 'update', payload: { key: 'emailError', value: null } })
     dispatch({ type: 'update', payload: { key: 'passwordError', value: null } })
-    dispatch({ type: 'update', payload: { key: 'loginError', value: null } })
     let isValid = true
     if (!state.email) {
       dispatch({ type: 'update', payload: { key: 'emailError', value: 'Please enter email' } })
@@ -33,28 +56,22 @@ const useLogicState = () => {
       })
       isValid = false
     }
-    if (!isValid) {
-      return
-    } else if (state.email && state.password) {
-      try {
-        const response = await services.loginMutation({
-          input: {
-            identifier: state.email.trim(),
-            password: state.password.trim(),
-          },
-        })
-        userContext.setUserJwt(response.data.jwt)
-        navigate(urls.inventoryMeters)
-      } catch (error) {
-        dispatch({ type: 'update', payload: { key: 'loginError', value: 'Something went wrong' } })
-        userContext.setUserJwt(null)
-      }
-    }
+    return { isValid }
   }
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+    const { isValid } = validateInputs()
+    if (!isValid) return
+    login()
+  }
+
   return {
     state,
     dispatch,
-    handleLogin,
+    handleSubmit,
+    loading,
+    error,
   }
 }
 
