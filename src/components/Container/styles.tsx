@@ -71,6 +71,9 @@ export const Div_InputContainer = styled.div`
     }
   }
 `
-export const Div_PaddingContainer = styled.div<{ padding?: string }>`
-  padding: ${props => (props.padding ? props.padding : styles.spacing.s)};
+export const Div_PaddingContainer = styled.div`
+  padding: ${styles.spacing.s};
+`
+export const Div_PaddingLeftContainer = styled.div`
+  padding-left: ${styles.spacing.s};
 `

@@ -10,8 +10,13 @@ export const PageNotFound = () => {
     <Div_Container>
       <H1_Heading>Page not found</H1_Heading>
       <Div_PaddingContainer>
+        <Link to={urls.inventoryMeters}>
+          <P_BodyText>Return to inventory meters</P_BodyText>
+        </Link>
+      </Div_PaddingContainer>
+      <Div_PaddingContainer>
         <Link to={urls.login}>
-          <P_BodyText>Return to login page</P_BodyText>
+          <P_BodyText>Return to login</P_BodyText>
         </Link>
       </Div_PaddingContainer>
     </Div_Container>

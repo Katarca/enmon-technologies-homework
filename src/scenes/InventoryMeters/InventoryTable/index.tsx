@@ -8,7 +8,6 @@ import {
   Tr_InventoryTr,
 } from './styles'
 import { CustomButton } from '../../../components/Button/styles'
-import { InventoryMetersQueryResults } from '..'
 import { InventoryMetersStateContext } from '../context'
 import { P_BodyText } from '../../../components/typo/BodyText'
 import { RouterLink } from '../../../components/Link'
@@ -16,11 +15,7 @@ import { Span_TextBox } from '../../../components/typo/TextBox'
 import { urls } from '../../../helpers/urls'
 import React, { useContext } from 'react'
 
-type TableProps = {
-  data: InventoryMetersQueryResults | undefined
-}
-
-export const InventoryTable = (props: TableProps) => {
+export const InventoryTable = () => {
   const inventoryMetersContext = useContext(InventoryMetersStateContext)
 
   return (
@@ -99,7 +94,7 @@ export const InventoryTable = (props: TableProps) => {
           </tr>
         </Thead_InventoryThead>
         <tbody>
-          {props.data?.inventoryMeters?.map(meter => (
+          {inventoryMetersContext.data?.inventoryMeters?.map(meter => (
             <Tr_InventoryTr key={meter.id}>
               <Td_InventoryTd>{meter.id}</Td_InventoryTd>
               <Td_InventoryTd>{meter.serial_number}</Td_InventoryTd>

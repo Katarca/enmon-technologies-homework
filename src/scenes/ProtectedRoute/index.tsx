@@ -1,5 +1,5 @@
 import { InventoryMeterContext } from '../InventoryMeterDetail/context'
-import { InventoryMeters } from '../InventoryMeters/context'
+import { InventoryMetersContext } from '../InventoryMeters/context'
 import { Navigate } from 'react-router-dom'
 import { UserStateContext } from '../../userContext/UserContext'
 import { urls } from '../../helpers/urls'
@@ -13,7 +13,7 @@ export const ProtectedRoute = (props: ProtectedRouteProps) => {
   const userContext = useContext(UserStateContext)
 
   return userContext.userJwt && props.scene === 'inventoryMeters' ? (
-    <InventoryMeters />
+    <InventoryMetersContext />
   ) : userContext.userJwt && props.scene === 'inventoryMeterDetail' ? (
     <InventoryMeterContext />
   ) : (

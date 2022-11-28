@@ -15,3 +15,7 @@ export const pageRangeDisplay = {
   default: 5,
   phone: 3,
 }
+
+export const localStorageKeys = {
+  jwt: 'JWT_KEY',
+}

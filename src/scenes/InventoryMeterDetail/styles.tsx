@@ -35,3 +35,7 @@ export const Div_ButtonContainer = styled.div`
     height: fit-content;
   }
 `
+
+export const Div_TextContainer = styled.div`
+  padding-right: ${styles.spacing.s};
+`

@@ -1,4 +1,4 @@
-import { Div_InputContainer, Div_PaddingContainer } from '../Container/styles'
+import { Div_InputContainer, Div_PaddingLeftContainer } from '../Container/styles'
 import { P_BodyText } from '../typo/BodyText'
 import { styles } from '../../helpers/theme'
 import React, { ComponentProps, ReactNode } from 'react'
@@ -18,9 +18,9 @@ export const Input = ({
   return (
     <div>
       {label ? (
-        <Div_PaddingContainer padding={` 0 0 ${styles.spacing.s} 0`}>
+        <Div_PaddingLeftContainer>
           <P_BodyText>{label}</P_BodyText>
-        </Div_PaddingContainer>
+        </Div_PaddingLeftContainer>
       ) : null}
       <Div_InputContainer className={className}>
         {children}

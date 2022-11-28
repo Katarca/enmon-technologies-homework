@@ -1,9 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 
-const GQL_API = process.env.REACT_APP_GQL_API_URL
-
 export const client = new ApolloClient({
-  uri: GQL_API,
+  uri: 'https://tools.dev.enmon.tech/graphql',
   cache: new InMemoryCache(),
   defaultOptions: {
     watchQuery: {

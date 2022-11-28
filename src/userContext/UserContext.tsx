@@ -1,9 +1,10 @@
 import { genericHookContextBuilder } from '../hooks/genericHookContextBuilder'
+import { localStorageKeys } from '../helpers/variables'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import React from 'react'
 
 const useLogicState = () => {
-  const [userJwt, setUserJwt] = useLocalStorage<null | string>('JWT_KEY', null)
+  const [userJwt, setUserJwt] = useLocalStorage<null | string>(localStorageKeys.jwt, null)
 
   return {
     userJwt,
